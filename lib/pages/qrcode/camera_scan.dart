@@ -8,6 +8,7 @@ import 'package:easymoveinapp/pages/general_widgets/widget_progress.dart';
 import 'package:easymoveinapp/pages/general_widgets/widget_snackbar.dart';
 import 'package:easymoveinapp/pages/qrcode/show_data_qr.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class WidgetCameraScan extends StatefulWidget {
   final String type;
@@ -111,13 +112,32 @@ class _WidgetCameraScanState extends State<WidgetCameraScan> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
     return WillPopScope(
       // ignore: missing_return
       onWillPop: () {
         back();
       },
-      child: PlatformAiBarcodeScannerWidget(
-        platformScannerController: _scannerController,
+      child: Scaffold(
+        body: Stack(
+          children: [
+            PlatformAiBarcodeScannerWidget(
+              platformScannerController: _scannerController,
+            ),
+            Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                      color: Colors.white,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                            "PLEASE SCAN BARCODE " + widget.type.toUpperCase()),
+                      )),
+                ))
+          ],
+        ),
       ),
     );
   }
