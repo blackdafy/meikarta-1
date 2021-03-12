@@ -68,8 +68,8 @@ class FabWithIconsState extends State<FabWithIcons>
           _controller.reverse();
         }
       },
-      tooltip: 'Increment',
-      child: Icon(Icons.add),
+      tooltip: 'SCAN',
+      child: Icon(Icons.qr_code),
       elevation: 2.0,
     );
   }

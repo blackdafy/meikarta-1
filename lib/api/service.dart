@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:easymoveinapp/api/base_url.dart';
 import 'package:easymoveinapp/models/auth/post_model_login.dart';
 import 'package:easymoveinapp/models/auth/res_model_login.dart';
+import 'package:easymoveinapp/models/general_response.dart';
+import 'package:easymoveinapp/models/post_qrcode.dart';
 import 'package:easymoveinapp/models/post_search_by_qr.dart';
 import 'package:easymoveinapp/models/res_mkrt_unit.dart';
 import 'package:retrofit/retrofit.dart';
@@ -26,4 +28,10 @@ abstract class RestClient {
 
   @POST("get_mkrt_units.php")
   Future<ModelResponMkrtUnit> postQrCode(@Body() ModelPostQr param);
+
+  @POST("post_qr_code.php")
+  Future<ModelGeneralResponse> postQrCodeInput(@Body() ModelPostQrCode param);
+
+  @GET("get_range_input.php")
+  Future<ModelGeneralResponse> getRangeInput();
 }

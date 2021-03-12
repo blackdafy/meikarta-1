@@ -69,7 +69,7 @@ class _WidgetCameraScanState extends State<WidgetCameraScan> {
     getClient().postQrCode(dataSubmit).then((res) async {
       Navigator.pop(context);
       if (res.status) {
-        navigateTo(res.mkrtUnit);
+        navigateTo(res, widget.type);
       } else {
         back();
         WidgetSnackbar(context: context, message: res.remarks, warna: "merah");
@@ -84,9 +84,13 @@ class _WidgetCameraScanState extends State<WidgetCameraScan> {
     });
   }
 
-  navigateTo(MkrtUnit mkrtUnit) {
+  navigateTo(ModelResponMkrtUnit res, String type) {
     Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => ShowDataQR(mkrtUnit: mkrtUnit)),
+        MaterialPageRoute(
+            builder: (context) => ShowDataQR(
+                  res: res,
+                  type: type,
+                )),
         (Route<dynamic> route) => false);
   }
 

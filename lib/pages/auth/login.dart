@@ -34,6 +34,7 @@ class _LoginPageState extends State<LoginPage> {
         pref.setString("PREF_IDUSER", res.dataUser.idUser);
         pref.setString("PREF_NICK", res.dataUser.nick);
         pref.setString("PREF_NICKNAME", res.dataUser.nickname);
+        pref.setString("PREF_FULLNAME", res.dataUser.fullName);
         pref.setString("PREF_EMAIL", res.dataUser.email);
         pref.setString("PREF_PROFILEID", res.dataUser.profileId);
         navigateToHome();

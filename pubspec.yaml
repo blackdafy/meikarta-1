@@ -52,6 +52,7 @@ dependencies:
   photo_view: ^0.4.1
   ai_barcode: ^1.1.4
   easy_permission_validator: ^1.0.5
+  image_picker: any
 
 dev_dependencies:
   retrofit_generator: any

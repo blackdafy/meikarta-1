@@ -14,21 +14,31 @@ class ModelResponMkrtUnit {
   ModelResponMkrtUnit({
     this.status,
     this.remarks,
+    this.lastMeteranE,
+    this.lastMeteranA,
     this.electric,
     this.water,
+    this.curMonth,
     this.mkrtUnit,
   });
 
   bool status;
   String remarks;
+  String lastMeteranE;
+  String lastMeteranA;
   List<Electric> electric;
   List<Electric> water;
+  String curMonth;
   MkrtUnit mkrtUnit;
 
   factory ModelResponMkrtUnit.fromJson(Map<String, dynamic> json) =>
       ModelResponMkrtUnit(
-        status: json["status"] == null ? "" : json["status"],
-        remarks: json["remarks"] == null ? "" : json["remarks"],
+        status: json["status"] == null ? null : json["status"],
+        remarks: json["remarks"] == null ? null : json["remarks"],
+        lastMeteranE:
+            json["last_meteran_e"] == null ? null : json["last_meteran_e"],
+        lastMeteranA:
+            json["last_meteran_a"] == null ? null : json["last_meteran_a"],
         electric: json["electric"] == null
             ? null
             : List<Electric>.from(
@@ -37,21 +47,25 @@ class ModelResponMkrtUnit {
             ? null
             : List<Electric>.from(
                 json["water"].map((x) => Electric.fromJson(x))),
+        curMonth: json["cur_month"] == null ? null : json["cur_month"],
         mkrtUnit: json["mkrt_unit"] == null
             ? null
             : MkrtUnit.fromJson(json["mkrt_unit"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "status": status == null ? "" : status,
-        "remarks": remarks == null ? "" : remarks,
+        "status": status == null ? null : status,
+        "remarks": remarks == null ? null : remarks,
+        "last_meteran_e": lastMeteranE == null ? null : lastMeteranE,
+        "last_meteran_a": lastMeteranA == null ? null : lastMeteranA,
         "electric": electric == null
             ? null
             : List<dynamic>.from(electric.map((x) => x.toJson())),
         "water": water == null
             ? null
             : List<dynamic>.from(water.map((x) => x.toJson())),
-        "mkrt_unit": mkrtUnit == null ? "" : mkrtUnit.toJson(),
+        "cur_month": curMonth == null ? null : curMonth,
+        "mkrt_unit": mkrtUnit == null ? null : mkrtUnit.toJson(),
       };
 }
 
@@ -59,51 +73,52 @@ class Electric {
   Electric({
     this.idx,
     this.unitCode,
+    this.bulanText,
     this.bulan,
-    this.nomorSeri,
+    this.tahun,
+    this.meteran,
     this.foto,
-    this.insertDate,
-    this.insertBy,
-    this.updateBy,
-    this.updateDate,
+    this.tanggalinput,
     this.petugas,
+    this.pemakaian,
   });
 
   String idx;
   String unitCode;
+  String bulanText;
   String bulan;
-  String nomorSeri;
+  String tahun;
+  String meteran;
   String foto;
-  String insertDate;
-  String insertBy;
-  String updateBy;
-  String updateDate;
+  String tanggalinput;
   String petugas;
+  String pemakaian;
 
   factory Electric.fromJson(Map<String, dynamic> json) => Electric(
-        idx: json["idx"] == null ? "" : json["idx"],
-        unitCode: json["unit_code"] == null ? "" : json["unit_code"],
-        bulan: json["bulan"] == null ? "" : json["bulan"],
-        nomorSeri: json["nomor_seri"] == null ? "" : json["nomor_seri"],
-        foto: json["foto"] == null ? "" : json["foto"],
-        insertDate: json["insert_date"] == null ? "" : json["insert_date"],
-        insertBy: json["insert_by"] == null ? "" : json["insert_by"],
-        updateBy: json["update_by"] == null ? "" : json["update_by"],
-        updateDate: json["update_date"] == null ? "" : json["update_date"],
-        petugas: json["petugas"] == null ? "" : json["petugas"],
+        idx: json["idx"] == null ? null : json["idx"],
+        unitCode: json["unit_code"] == null ? null : json["unit_code"],
+        bulanText: json["bulan_text"] == null ? null : json["bulan_text"],
+        bulan: json["bulan"] == null ? null : json["bulan"],
+        tahun: json["tahun"] == null ? null : json["tahun"],
+        meteran: json["meteran"] == null ? null : json["meteran"],
+        foto: json["foto"] == null ? null : json["foto"],
+        tanggalinput:
+            json["tanggalinput"] == null ? null : json["tanggalinput"],
+        petugas: json["petugas"] == null ? null : json["petugas"],
+        pemakaian: json["pemakaian"] == null ? null : json["pemakaian"],
       );
 
   Map<String, dynamic> toJson() => {
-        "idx": idx == null ? "" : idx,
-        "unit_code": unitCode == null ? "" : unitCode,
-        "bulan": bulan == null ? "" : bulan,
-        "nomor_seri": nomorSeri == null ? "" : nomorSeri,
-        "foto": foto == null ? "" : foto,
-        "insert_date": insertDate == null ? "" : insertDate,
-        "insert_by": insertBy == null ? "" : insertBy,
-        "update_by": updateBy == null ? "" : updateBy,
-        "update_date": updateDate == null ? "" : updateDate,
-        "petugas": petugas == null ? "" : petugas,
+        "idx": idx == null ? null : idx,
+        "unit_code": unitCode == null ? null : unitCode,
+        "bulan_text": bulanText == null ? null : bulanText,
+        "bulan": bulan == null ? null : bulan,
+        "tahun": tahun == null ? null : tahun,
+        "meteran": meteran == null ? null : meteran,
+        "foto": foto == null ? null : foto,
+        "tanggalinput": tanggalinput == null ? null : tanggalinput,
+        "petugas": petugas == null ? null : petugas,
+        "pemakaian": pemakaian == null ? null : pemakaian,
       };
 }
 
@@ -139,37 +154,37 @@ class MkrtUnit {
   String tanggalSampai;
 
   factory MkrtUnit.fromJson(Map<String, dynamic> json) => MkrtUnit(
-        unitCode: json["unit_code"] == null ? "" : json["unit_code"],
+        unitCode: json["unit_code"] == null ? null : json["unit_code"],
         customerName:
-            json["customer_name"] == null ? "" : json["customer_name"],
+            json["customer_name"] == null ? null : json["customer_name"],
         customerAddress:
-            json["customer_address"] == null ? "" : json["customer_address"],
-        email: json["email"] == null ? "" : json["email"],
-        electricId: json["electric_id"] == null ? "" : json["electric_id"],
-        waterId: json["water_id"] == null ? "" : json["water_id"],
-        phone: json["phone"] == null ? "" : json["phone"],
-        pppu: json["pppu"] == null ? "" : json["pppu"],
-        datePppu: json["date_pppu"] == null ? "" : json["date_pppu"],
-        dateHo: json["date_ho"] == null ? "" : json["date_ho"],
-        eligible: json["eligible"] == null ? "" : json["eligible"],
-        tanggalDari: json["tanggal_dari"] == null ? "" : json["tanggal_dari"],
+            json["customer_address"] == null ? null : json["customer_address"],
+        email: json["email"] == null ? null : json["email"],
+        electricId: json["electric_id"] == null ? null : json["electric_id"],
+        waterId: json["water_id"] == null ? null : json["water_id"],
+        phone: json["phone"] == null ? null : json["phone"],
+        pppu: json["pppu"] == null ? null : json["pppu"],
+        datePppu: json["date_pppu"] == null ? null : json["date_pppu"],
+        dateHo: json["date_ho"] == null ? null : json["date_ho"],
+        eligible: json["eligible"] == null ? null : json["eligible"],
+        tanggalDari: json["tanggal_dari"] == null ? null : json["tanggal_dari"],
         tanggalSampai:
-            json["tanggal_sampai"] == null ? "" : json["tanggal_sampai"],
+            json["tanggal_sampai"] == null ? null : json["tanggal_sampai"],
       );
 
   Map<String, dynamic> toJson() => {
-        "unit_code": unitCode == null ? "" : unitCode,
-        "customer_name": customerName == null ? "" : customerName,
-        "customer_address": customerAddress == null ? "" : customerAddress,
-        "email": email == null ? "" : email,
-        "electric_id": electricId == null ? "" : electricId,
-        "water_id": waterId == null ? "" : waterId,
-        "phone": phone == null ? "" : phone,
-        "pppu": pppu == null ? "" : pppu,
-        "date_pppu": datePppu == null ? "" : datePppu,
-        "date_ho": dateHo == null ? "" : dateHo,
-        "eligible": eligible == null ? "" : eligible,
-        "tanggal_dari": tanggalDari == null ? "" : tanggalDari,
-        "tanggal_sampai": tanggalSampai == null ? "" : tanggalSampai,
+        "unit_code": unitCode == null ? null : unitCode,
+        "customer_name": customerName == null ? null : customerName,
+        "customer_address": customerAddress == null ? null : customerAddress,
+        "email": email == null ? null : email,
+        "electric_id": electricId == null ? null : electricId,
+        "water_id": waterId == null ? null : waterId,
+        "phone": phone == null ? null : phone,
+        "pppu": pppu == null ? null : pppu,
+        "date_pppu": datePppu == null ? null : datePppu,
+        "date_ho": dateHo == null ? null : dateHo,
+        "eligible": eligible == null ? null : eligible,
+        "tanggal_dari": tanggalDari == null ? null : tanggalDari,
+        "tanggal_sampai": tanggalSampai == null ? null : tanggalSampai,
       };
 }

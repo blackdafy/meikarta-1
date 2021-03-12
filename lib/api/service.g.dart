@@ -54,4 +54,41 @@ class _RestClient implements RestClient {
     final value = ModelResponMkrtUnit.fromJson(_result.data);
     return value;
   }
+
+  @override
+  Future<ModelGeneralResponse> postQrCodeInput(param) async {
+    ArgumentError.checkNotNull(param, 'param');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(param?.toJson() ?? <String, dynamic>{});
+    final _result = await _dio.request<Map<String, dynamic>>('post_qr_code.php',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = ModelGeneralResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<ModelGeneralResponse> getRangeInput() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'get_range_input.php',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = ModelGeneralResponse.fromJson(_result.data);
+    return value;
+  }
 }
