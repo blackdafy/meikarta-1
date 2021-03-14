@@ -60,17 +60,20 @@ class FabWithIconsState extends State<FabWithIcons>
   }
 
   Widget _buildFab() {
-    return FloatingActionButton(
-      onPressed: () {
-        if (_controller.isDismissed) {
-          _controller.forward();
-        } else {
-          _controller.reverse();
-        }
-      },
-      tooltip: 'SCAN',
-      child: Icon(Icons.qr_code),
-      elevation: 2.0,
+    return Visibility(
+      // visible: false,
+      child: FloatingActionButton(
+        onPressed: () {
+          if (_controller.isDismissed) {
+            _controller.forward();
+          } else {
+            _controller.reverse();
+          }
+        },
+        tooltip: 'SCAN',
+        child: Icon(Icons.scanner),
+        elevation: 2.0,
+      ),
     );
   }
 

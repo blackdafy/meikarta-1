@@ -36,8 +36,8 @@ dependencies:
   cached_network_image: ^2.0.0
   dio: ^3.0.1
   retrofit: any
-  sqfentity: ^1.2.2+8
-  sqfentity_gen: ^1.2.0+9
+  sqfentity: ^1.4.0+3
+  sqfentity_gen: ^1.4.0+2
   path_provider: 1.6.14
   flutter_money_formatter: ^0.8.3
   flutter_html: ^1.0.0
@@ -80,7 +80,6 @@ flutter:
   uses-material-design: true
   assets: 
     - assets/images/
-    - assets/ilustration/
     - assets/launcher/
 
   # To add assets to your application, add an assets section, like this:

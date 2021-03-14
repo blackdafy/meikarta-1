@@ -2,19 +2,28 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:easymoveinapp/api/service.dart';
+import 'package:easymoveinapp/models/post_qrcode_list.dart';
+import 'package:easymoveinapp/models/sync/res_electrics.dart';
+import 'package:easymoveinapp/models/sync/res_units.dart';
+import 'package:easymoveinapp/models/sync/res_waters.dart';
 import 'package:easymoveinapp/pages/auth/login.dart';
 import 'package:easymoveinapp/pages/bottom_nav/fab_bottom_app_bar.dart';
 import 'package:easymoveinapp/pages/bottom_nav/fab_with_icons.dart';
 import 'package:easymoveinapp/pages/bottom_nav/layout.dart';
 import 'package:easymoveinapp/pages/general_widgets/widget_snackbar.dart';
 import 'package:easymoveinapp/pages/qrcode/camera_scan.dart';
+import 'package:easymoveinapp/sqlite/db.dart';
 import 'package:easymoveinapp/style/colors.dart';
 import 'package:easymoveinapp/pages/menu/data_electric.dart';
 import 'package:easymoveinapp/pages/menu/data_water.dart';
 import 'package:easy_permission_validator/easy_permission_validator.dart';
 import 'package:easymoveinapp/style/size.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
+
+import 'pages/general_widgets/widget_progress.dart';
 
 class MainNav extends StatefulWidget {
   final String title;
@@ -28,6 +37,9 @@ class _MainNavState extends State<MainNav> with TickerProviderStateMixin {
   String title = "Data Electric";
   bool permissionCamera = false;
   bool isConnect = true;
+  List<Tbl_electric> listElectric = [];
+  List<Tbl_water> listWater = [];
+  List<Tbl_mkrt_unit> listMkrtUnit = [];
 
   void _selectedTab(int ind) {
     setState(() {
@@ -207,6 +219,179 @@ class _MainNavState extends State<MainNav> with TickerProviderStateMixin {
     });
   }
 
+  syncUpload() async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) => WidgetProgressSubmit());
+
+    ModelPostQrCodeList dataPost = new ModelPostQrCodeList();
+    List<Electric> electrics = [];
+    List<Electric> waters = [];
+    var dataElectric = await Tbl_electrics_temp()
+        .select()
+        .orderBy("bulan")
+        .orderBy("insert_date")
+        .toList();
+
+    var dataWater = await Tbl_waters_temp()
+        .select()
+        .orderBy("bulan")
+        .orderBy("insert_date")
+        .toList();
+
+    for (var e in dataElectric) {
+      electrics.add(new Electric(
+          unitCode: e.unit_code,
+          type: "Electric",
+          bulan: e.bulan,
+          tahun: e.tahun,
+          nomorSeri: e.nomor_seri,
+          pemakaian: e.pemakaian,
+          foto: e.foto,
+          insertBy: e.insert_by,
+          insertDate: e.insert_date));
+    }
+    for (var w in dataWater) {
+      waters.add(new Electric(
+          unitCode: w.unit_code,
+          type: "Water",
+          bulan: w.bulan,
+          tahun: w.tahun,
+          nomorSeri: w.nomor_seri,
+          pemakaian: w.pemakaian,
+          insertBy: w.insert_by,
+          insertDate: w.insert_date));
+    }
+
+    dataPost.electrics = electrics;
+    dataPost.waters = waters;
+    Navigator.pop(context);
+    print(dataPost.toJson().toString());
+    // getClient().synchronize(dataPost).then((res) async {
+
+    //   if (res.status) {
+    //     WidgetSnackbar(context: context, message: res.remarks, warna: "hijau");
+    //   } else {
+    //     WidgetSnackbar(context: context, message: res.remarks, warna: "merah");
+    //   }
+    // }).catchError((Object obj) {
+    //   print(obj.toString());
+    //   Navigator.pop(context);
+    //   WidgetSnackbar(
+    //       context: context,
+    //       message: "Failed connect to server!",
+    //       warna: "merah");
+    // });
+  }
+
+  syncUnits() {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) => WidgetProgressSubmit());
+    getClient().getUnits().then((res) async {
+      Navigator.pop(context);
+      if (res.status) {
+        listMkrtUnit = res.mkrtUnit;
+        await Tbl_mkrt_unit().select().delete();
+        final results = await Tbl_mkrt_unit().upsertAll(listMkrtUnit);
+        WidgetSnackbar(context: context, message: res.remarks, warna: "hijau");
+      } else {
+        WidgetSnackbar(context: context, message: res.remarks, warna: "merah");
+      }
+    }).catchError((Object obj) {
+      print(obj.toString());
+      Navigator.pop(context);
+      WidgetSnackbar(
+          context: context,
+          message: "Failed connect to server!",
+          warna: "merah");
+    });
+  }
+
+  syncElectrics() {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) => WidgetProgressSubmit());
+    getClient().getElectrics().then((res) async {
+      Navigator.pop(context);
+      if (res.status) {
+        listElectric = res.listElectric;
+        await Tbl_electric().select().delete();
+        final results = await Tbl_electric().upsertAll(listElectric);
+        getElectrics();
+        WidgetSnackbar(context: context, message: res.remarks, warna: "hijau");
+      } else {
+        WidgetSnackbar(context: context, message: res.remarks, warna: "merah");
+      }
+    }).catchError((Object obj) {
+      print(obj.toString());
+      Navigator.pop(context);
+      WidgetSnackbar(
+          context: context,
+          message: "Failed connect to server!",
+          warna: "merah");
+    });
+  }
+
+  syncWaters() {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) => WidgetProgressSubmit());
+    getClient().getWaters().then((res) async {
+      Navigator.pop(context);
+      if (res.status) {
+        listWater = res.listWater;
+        await Tbl_water().select().delete();
+        final results = await Tbl_water().upsertAll(listWater);
+        print(results.toString());
+        getWaters();
+
+        WidgetSnackbar(context: context, message: res.remarks, warna: "hijau");
+      } else {
+        WidgetSnackbar(context: context, message: res.remarks, warna: "merah");
+      }
+    }).catchError((Object obj) {
+      print(obj.toString());
+      Navigator.pop(context);
+      WidgetSnackbar(
+          context: context,
+          message: "Failed connect to server!",
+          warna: "merah");
+    });
+  }
+
+  getElectrics() async {
+    final el = await Tbl_electric().select().toList();
+    for (int i = 0; i < el.length; i++) {
+      // print(el[i].toMap());
+    }
+  }
+
+  getWaters() async {
+    final wa = await Tbl_water().select().toList();
+    for (int i = 0; i < wa.length; i++) {
+      // print(wa[i].toMap());
+    }
+  }
+
+  getLocalElectric() async {
+    final el = await Tbl_electrics_temp().select().toList();
+    for (int i = 0; i < el.length; i++) {
+      print(el[i].toMap());
+    }
+  }
+
+  getLocalWater() async {
+    final el = await Tbl_waters_temp().select().toList();
+    for (int i = 0; i < el.length; i++) {
+      print(el[i].toMap());
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -215,6 +400,10 @@ class _MainNavState extends State<MainNav> with TickerProviderStateMixin {
       checkConnection();
     });
     getRange();
+    // getElectrics();
+    // getWaters();
+    getLocalElectric();
+    getLocalWater();
   }
 
   @override
@@ -251,11 +440,39 @@ class _MainNavState extends State<MainNav> with TickerProviderStateMixin {
               onSelected: (val) {
                 if (val == "Logout") {
                   displayDialog();
+                } else if (val == "Upload") {
+                  syncUpload();
+                } else if (val == "Sync Units") {
+                  syncUnits();
+                } else if (val == "Sync Electrics") {
+                  syncElectrics();
+                } else if (val == "Sync Waters") {
+                  syncWaters();
                 }
               },
               itemBuilder: (context) => [
                 PopupMenuItem(
-                  height: SizeConfig.screenHeight * 0.03,
+                  height: SizeConfig.screenHeight * 0.05,
+                  child: Text("Upload"),
+                  value: "Upload",
+                ),
+                PopupMenuItem(
+                  height: SizeConfig.screenHeight * 0.05,
+                  child: Text("Sync Units"),
+                  value: "Sync Units",
+                ),
+                PopupMenuItem(
+                  height: SizeConfig.screenHeight * 0.05,
+                  child: Text("Sync Electrics"),
+                  value: "Sync Electrics",
+                ),
+                PopupMenuItem(
+                  height: SizeConfig.screenHeight * 0.05,
+                  child: Text("Sync Waters"),
+                  value: "Sync Waters",
+                ),
+                PopupMenuItem(
+                  height: SizeConfig.screenHeight * 0.05,
                   child: Text("Logout"),
                   value: "Logout",
                 ),
@@ -288,7 +505,7 @@ class _MainNavState extends State<MainNav> with TickerProviderStateMixin {
   }
 
   Widget _buildFab(BuildContext context) {
-    final icons = [Icons.electrical_services, Icons.water_damage];
+    final icons = [CupertinoIcons.add, CupertinoIcons.add_circled];
     return AnchoredOverlay(
       showOverlay: true,
       overlayBuilder: (context, offset) {
@@ -305,7 +522,7 @@ class _MainNavState extends State<MainNav> with TickerProviderStateMixin {
         child: FloatingActionButton(
           onPressed: () {},
           tooltip: 'SCAN1',
-          child: Icon(Icons.qr_code_rounded),
+          child: Icon(Icons.scanner),
         ),
       ),
     );

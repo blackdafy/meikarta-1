@@ -4,10 +4,12 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easymoveinapp/api/service.dart';
 import 'package:easymoveinapp/models/post_qrcode.dart';
+import 'package:easymoveinapp/pages/general_widgets/widget_loading_page.dart';
 import 'package:easymoveinapp/pages/general_widgets/widget_progress.dart';
 import 'package:easymoveinapp/pages/general_widgets/widget_snackbar.dart';
 import 'package:easymoveinapp/pages/general_widgets/widget_view_image.dart';
 import 'package:easymoveinapp/main_nav.dart';
+import 'package:easymoveinapp/sqlite/db.dart';
 import 'package:easymoveinapp/style/colors.dart';
 import 'package:easymoveinapp/style/size.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +19,7 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ShowDataQR extends StatefulWidget {
-  final ModelResponMkrtUnit res;
+  final Tbl_mkrt_unit res;
   final String type;
   ShowDataQR({Key key, this.res, this.type}) : super(key: key);
   @override
@@ -25,7 +27,7 @@ class ShowDataQR extends StatefulWidget {
 }
 
 class _ShowDataQRState extends State<ShowDataQR> {
-  MkrtUnit mkrtUnit;
+  Tbl_mkrt_unit mkrtUnit;
   List<Electric> dataList = [];
   String sesIduser = "";
   String sesName = "";
@@ -33,6 +35,8 @@ class _ShowDataQRState extends State<ShowDataQR> {
   bool camera;
   String img64;
   String lastMeteran = "0";
+  String curMonth = "";
+  bool loading = true;
 
   TextEditingController ctrlMeteran = TextEditingController();
   TextEditingController ctrlPemakaian = TextEditingController();
@@ -120,7 +124,7 @@ class _ShowDataQRState extends State<ShowDataQR> {
         });
   }
 
-  Future simpan(BuildContext context) async {
+  Future simpanServer(BuildContext context) async {
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -131,7 +135,7 @@ class _ShowDataQRState extends State<ShowDataQR> {
     String tahun = DateFormat('yyyy').format(now);
 
     ModelPostQrCode dataPost = new ModelPostQrCode();
-    dataPost.unitCode = mkrtUnit.unitCode;
+    dataPost.unitCode = mkrtUnit.unit_code;
     dataPost.type = widget.type;
     dataPost.bulan = bulan;
     dataPost.tahun = tahun;
@@ -147,6 +151,7 @@ class _ShowDataQRState extends State<ShowDataQR> {
       } else {
         WidgetSnackbar(context: context, message: res.remarks, warna: "merah");
       }
+      goToHome();
     }).catchError((Object obj) {
       print(obj.toString());
       Navigator.pop(context);
@@ -155,6 +160,98 @@ class _ShowDataQRState extends State<ShowDataQR> {
           message: "Failed connect to server!",
           warna: "merah");
     });
+  }
+
+  Future simpanLocal(BuildContext context) async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) => WidgetProgressSubmit());
+
+    DateTime now = DateTime.now();
+    String bulan = DateFormat('MM').format(now);
+    String tahun = DateFormat('yyyy').format(now);
+    String insertDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(now);
+
+    if (widget.type.toLowerCase() == 'water') {
+      var check = await Tbl_waters_temp()
+          .select()
+          .unit_code
+          .equals(mkrtUnit.unit_code)
+          .and
+          .bulan
+          .equals(bulan)
+          .toSingle();
+      if (check == null) {
+        final dataSave = Tbl_waters_temp();
+        dataSave.type = "Water";
+        dataSave.unit_code = mkrtUnit.unit_code;
+        dataSave.bulan = bulan;
+        dataSave.tahun = tahun;
+        dataSave.nomor_seri = ctrlMeteran.text;
+        dataSave.pemakaian = ctrlPemakaian.text;
+        dataSave.foto = img64;
+        dataSave.insert_date = insertDate;
+        dataSave.insert_by = sesIduser;
+        await dataSave.save();
+      } else {
+        await Tbl_waters_temp()
+            .select()
+            .unit_code
+            .equals(mkrtUnit.unit_code)
+            .and
+            .bulan
+            .equals(bulan)
+            .update({
+          "nomor_seri": ctrlMeteran.text,
+          "pemakaian": ctrlPemakaian.text,
+          "foto": img64,
+          "insert_date": insertDate,
+        });
+      }
+    } else {
+      var check = await Tbl_electrics_temp()
+          .select()
+          .unit_code
+          .equals(mkrtUnit.unit_code)
+          .and
+          .bulan
+          .equals(bulan)
+          .toSingle();
+      if (check == null) {
+        final dataSave = Tbl_electrics_temp();
+        dataSave.type = "Electric";
+        dataSave.unit_code = mkrtUnit.unit_code;
+        dataSave.bulan = bulan;
+        dataSave.tahun = tahun;
+        dataSave.nomor_seri = ctrlMeteran.text;
+        dataSave.pemakaian = ctrlPemakaian.text;
+        dataSave.foto = img64;
+        dataSave.insert_date = insertDate;
+        dataSave.insert_by = sesIduser;
+        await dataSave.save();
+      } else {
+        await Tbl_electrics_temp()
+            .select()
+            .unit_code
+            .equals(mkrtUnit.unit_code)
+            .and
+            .bulan
+            .equals(bulan)
+            .update({
+          "nomor_seri": ctrlMeteran.text,
+          "pemakaian": ctrlPemakaian.text,
+          "foto": img64,
+          "insert_date": insertDate,
+        });
+      }
+    }
+    Navigator.pop(context);
+    goToHome();
+    WidgetSnackbar(
+        context: context,
+        message: "Successfuly saving to local",
+        warna: "hijau");
   }
 
   checkMandatory() {
@@ -169,18 +266,120 @@ class _ShowDataQRState extends State<ShowDataQR> {
     }
   }
 
+  goToHome() {
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => MainNav()),
+        (Route<dynamic> route) => false);
+  }
+
+  textBulan(bulan) {
+    switch (bulan) {
+      case "01":
+        return "Jan";
+        break;
+      case "02":
+        return "Feb";
+        break;
+      case "03":
+        return "Mar";
+        break;
+      case "04":
+        return "Apr";
+        break;
+      case "05":
+        return "May";
+        break;
+      case "06":
+        return "Jun";
+        break;
+      case "07":
+        return "Jul";
+        break;
+      case "08":
+        return "Aug";
+        break;
+      case "09":
+        return "Aug";
+        break;
+      case "10":
+        return "Sep";
+        break;
+      case "11":
+        return "Nov";
+        break;
+      case "12":
+        return "Dec";
+        break;
+    }
+  }
+
+  Future getData() async {
+    DateTime now = DateTime.now();
+    String bulan = DateFormat('MMM').format(now);
+    print("=> GET DATA");
+    if (widget.type.toLowerCase() == 'water') {
+      var dataWater = await Tbl_water()
+          .select()
+          .unit_code
+          .equals(widget.res.unit_code)
+          .orderBy("bulan")
+          .toList();
+
+      for (var item in dataWater) {
+        dataList.add(new Electric(
+          idx: item.idx,
+          unitCode: item.unit_code,
+          bulanText: textBulan(item.bulan),
+          bulan: item.bulan,
+          tahun: item.tahun,
+          meteran: item.meteran,
+          foto: item.foto,
+          tanggalinput: item.tanggalinput,
+          petugas: item.petugas,
+          pemakaian: item.pemakaian,
+        ));
+        lastMeteran = item.meteran;
+      }
+    } else {
+      var dataElectric = await Tbl_electric()
+          .select()
+          .unit_code
+          .equals(widget.res.unit_code)
+          .orderBy("bulan")
+          .toList();
+
+      for (var item in dataElectric) {
+        dataList.add(new Electric(
+          idx: item.idx,
+          unitCode: item.unit_code,
+          bulanText: textBulan(item.bulan),
+          bulan: item.bulan,
+          tahun: item.tahun,
+          meteran: item.meteran,
+          foto: item.foto,
+          tanggalinput: item.tanggalinput,
+          petugas: item.petugas,
+          pemakaian: item.pemakaian,
+        ));
+        lastMeteran = item.meteran;
+      }
+    }
+
+    setState(() {
+      curMonth = bulan;
+      mkrtUnit = widget.res;
+      dataList = dataList;
+      lastMeteran = lastMeteran;
+      loading = false;
+      print("=> GET DATA LOADING FALSE");
+    });
+  }
+
   @override
   void initState() {
-    super.initState();
+    getData();
     getSession();
-    mkrtUnit = widget.res.mkrtUnit;
-    if (widget.type.toLowerCase() == 'water') {
-      dataList = widget.res.water;
-      lastMeteran = widget.res.lastMeteranA;
-    } else {
-      dataList = widget.res.electric;
-      lastMeteran = widget.res.lastMeteranE;
-    }
+    super.initState();
   }
 
   @override
@@ -192,7 +391,7 @@ class _ShowDataQRState extends State<ShowDataQR> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text(mkrtUnit.unitCode),
+          title: Text(widget.res.unit_code),
           leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () {
@@ -200,113 +399,165 @@ class _ShowDataQRState extends State<ShowDataQR> {
             },
           ),
         ),
-        body: InkWell(
-          onTap: () {
-            FocusScope.of(context).requestFocus(FocusNode());
-          },
-          child: SingleChildScrollView(
-            physics: AlwaysScrollableScrollPhysics(),
-            child: Padding(
-              padding: const EdgeInsets.all(4),
-              child: Column(
-                children: [
-                  Card(
+        body: loading
+            ? WidgetLoadingPage()
+            : RefreshIndicator(
+                // ignore: missing_return
+                onRefresh: () {
+                  setState(() {
+                    loading = true;
+                  });
+                  getData();
+                },
+                child: InkWell(
+                  onTap: () {
+                    FocusScope.of(context).requestFocus(FocusNode());
+                  },
+                  child: SingleChildScrollView(
+                    physics: AlwaysScrollableScrollPhysics(),
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(4),
                       child: Column(
                         children: [
-                          informasiPribadiRow("Nama", mkrtUnit.customerName),
-                          informasiPribadiRow("Tanggal HO", mkrtUnit.dateHo),
-                          informasiPribadiRow(
-                              "Tanggal MI", mkrtUnit.tanggalDari),
+                          Card(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  informasiPribadiRow(
+                                      "Nama", mkrtUnit.customer_name),
+                                  informasiPribadiRow(
+                                      "Tanggal HO", mkrtUnit.date_ho),
+                                  informasiPribadiRow(
+                                      "Tanggal MI", mkrtUnit.tanggal_dari)
+                                ],
+                              ),
+                            ),
+                          ),
+                          headerRow(),
+                          ListView.builder(
+                              padding: EdgeInsets.all(0),
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              itemCount: dataList.length,
+                              itemBuilder: (BuildContext content, int index) {
+                                Electric item = dataList[index];
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 6),
+                                      child: Text(
+                                        item.bulanText,
+                                        style: TextStyle(
+                                            fontSize: SizeConfig.fontSize3),
+                                      ),
+                                    ),
+                                    detailRow(
+                                        item.tanggalinput,
+                                        item.petugas,
+                                        item.foto,
+                                        item.meteran,
+                                        item.pemakaian),
+                                  ],
+                                );
+                              }),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(left: 6),
+                                child: Text(
+                                  "Input Data Periode " + curMonth,
+                                  style:
+                                      TextStyle(fontSize: SizeConfig.fontSize3),
+                                ),
+                              ),
+                              inputRow(sesIduser, sesName),
+                            ],
+                          ),
+                          Center(
+                            child: fileImage == null
+                                ?
+                                //JIKA FITUR ADD (BELUM SELECT GAMBAR)
+                                Container()
+
+                                //JIKA FITUR ADD (SUDAH SELECT GAMBAR)
+                                : Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Image.file(fileImage),
+                                  ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(6),
+                            child: Container(
+                              width: SizeConfig.screenWidth * 1,
+                              child: RaisedButton(
+                                padding: EdgeInsets.all(0),
+                                onPressed: () {
+                                  String check = checkMandatory();
+                                  if (check == "") {
+                                    simpanServer(context);
+                                  } else {
+                                    FocusScope.of(context)
+                                        .requestFocus(FocusNode());
+                                    WidgetSnackbar(
+                                        context: context,
+                                        message: check,
+                                        warna: "merah");
+                                  }
+                                },
+                                color: ColorsTheme.primary2,
+                                elevation: 0,
+                                textColor: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5)),
+                                child: Text(
+                                  'SAVE TO SEVER',
+                                  style:
+                                      TextStyle(fontSize: SizeConfig.fontSize3),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(6),
+                            child: Container(
+                              width: SizeConfig.screenWidth * 1,
+                              child: RaisedButton(
+                                padding: EdgeInsets.all(0),
+                                onPressed: () {
+                                  String check = checkMandatory();
+                                  if (check == "") {
+                                    simpanLocal(context);
+                                  } else {
+                                    FocusScope.of(context)
+                                        .requestFocus(FocusNode());
+                                    WidgetSnackbar(
+                                        context: context,
+                                        message: check,
+                                        warna: "merah");
+                                  }
+                                },
+                                color: ColorsTheme.primary1,
+                                elevation: 0,
+                                textColor: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5)),
+                                child: Text(
+                                  'SAVE TO LOCAL',
+                                  style:
+                                      TextStyle(fontSize: SizeConfig.fontSize3),
+                                ),
+                              ),
+                            ),
+                          )
                         ],
                       ),
                     ),
                   ),
-                  headerRow(),
-                  ListView.builder(
-                      padding: EdgeInsets.all(0),
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      itemCount: dataList.length,
-                      itemBuilder: (BuildContext content, int index) {
-                        Electric item = dataList[index];
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(left: 6),
-                              child: Text(
-                                item.bulanText,
-                                style:
-                                    TextStyle(fontSize: SizeConfig.fontSize3),
-                              ),
-                            ),
-                            detailRow(item.tanggalinput, item.petugas,
-                                item.foto, item.meteran, item.pemakaian),
-                          ],
-                        );
-                      }),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 6),
-                        child: Text(
-                          "Input Data Periode " + widget.res.curMonth,
-                          style: TextStyle(fontSize: SizeConfig.fontSize3),
-                        ),
-                      ),
-                      inputRow(sesIduser, sesName),
-                    ],
-                  ),
-                  Center(
-                    child: fileImage == null
-                        ?
-                        //JIKA FITUR ADD (BELUM SELECT GAMBAR)
-                        Container()
-
-                        //JIKA FITUR ADD (SUDAH SELECT GAMBAR)
-                        : Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Image.file(fileImage),
-                          ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(6),
-                    child: Container(
-                      width: SizeConfig.screenWidth * 1,
-                      child: RaisedButton(
-                        padding: EdgeInsets.all(0),
-                        onPressed: () {
-                          String check = checkMandatory();
-                          if (check == "") {
-                            simpan(context);
-                          } else {
-                            FocusScope.of(context).requestFocus(FocusNode());
-                            WidgetSnackbar(
-                                context: context,
-                                message: check,
-                                warna: "merah");
-                          }
-                        },
-                        color: ColorsTheme.primary1,
-                        elevation: 0,
-                        textColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5)),
-                        child: Text(
-                          'SIMPAN',
-                          style: TextStyle(fontSize: SizeConfig.fontSize3),
-                        ),
-                      ),
-                    ),
-                  )
-                ],
+                ),
               ),
-            ),
-          ),
-        ),
       ),
     );
   }

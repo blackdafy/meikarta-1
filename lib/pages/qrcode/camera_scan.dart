@@ -7,6 +7,7 @@ import 'package:easymoveinapp/models/res_mkrt_unit.dart';
 import 'package:easymoveinapp/pages/general_widgets/widget_progress.dart';
 import 'package:easymoveinapp/pages/general_widgets/widget_snackbar.dart';
 import 'package:easymoveinapp/pages/qrcode/show_data_qr.dart';
+import 'package:easymoveinapp/sqlite/db.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -62,29 +63,29 @@ class _WidgetCameraScanState extends State<WidgetCameraScan> {
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) => WidgetProgressSubmit());
-    ModelPostQr dataSubmit = new ModelPostQr();
-    dataSubmit.type = widget.type;
-    dataSubmit.unitCode = unitCode;
-    print(unitCode);
-    getClient().postQrCode(dataSubmit).then((res) async {
-      Navigator.pop(context);
-      if (res.status) {
-        navigateTo(res, widget.type);
-      } else {
-        back();
-        WidgetSnackbar(context: context, message: res.remarks, warna: "merah");
-      }
-    }).catchError((Object obj) {
-      Navigator.pop(context);
-      back();
+    Tbl_mkrt_unit dataQR;
+    if (widget.type.toLowerCase() == "water") {
+      dataQR =
+          await Tbl_mkrt_unit().select().water_id.equals(unitCode).toSingle();
+    } else {
+      dataQR = await Tbl_mkrt_unit()
+          .select()
+          .electric_id
+          .equals(unitCode)
+          .toSingle();
+    }
+    Navigator.pop(context);
+    if (dataQR == null) {
       WidgetSnackbar(
           context: context,
-          message: "Failed connect to server!",
+          message: "Unit not found, please synchronize before scan!",
           warna: "merah");
-    });
+    } else {
+      navigateTo(dataQR, widget.type);
+    }
   }
 
-  navigateTo(ModelResponMkrtUnit res, String type) {
+  navigateTo(Tbl_mkrt_unit res, String type) {
     Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
             builder: (context) => ShowDataQR(
