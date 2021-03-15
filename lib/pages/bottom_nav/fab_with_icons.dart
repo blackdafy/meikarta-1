@@ -71,7 +71,7 @@ class FabWithIconsState extends State<FabWithIcons>
           }
         },
         tooltip: 'SCAN',
-        child: Icon(Icons.scanner),
+        child: Icon(Icons.qr_code_rounded),
         elevation: 2.0,
       ),
     );

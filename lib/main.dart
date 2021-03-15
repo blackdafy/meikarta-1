@@ -1,10 +1,12 @@
+import 'package:easymoveinapp/sqlite/db.dart';
 import 'package:easymoveinapp/style/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:easymoveinapp/pages/auth/splash_screen.dart';
 import 'package:flutter/services.dart';
 
-void main() {
+void main() async {
   runApp(MyApp());
+  await DbModel().initializeDB();
 }
 
 class MyApp extends StatelessWidget {

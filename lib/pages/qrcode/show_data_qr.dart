@@ -315,8 +315,12 @@ class _ShowDataQRState extends State<ShowDataQR> {
 
   Future getData() async {
     DateTime now = DateTime.now();
+    // var now = new DateTime(2021, 3, 19);
+    if (now.day >= 19) {
+      now = new DateTime(now.year, now.month + 1, now.day);
+    }
     String bulan = DateFormat('MMM').format(now);
-    print("=> GET DATA");
+
     if (widget.type.toLowerCase() == 'water') {
       var dataWater = await Tbl_water()
           .select()
@@ -425,16 +429,25 @@ class _ShowDataQRState extends State<ShowDataQR> {
                               child: Column(
                                 children: [
                                   informasiPribadiRow(
-                                      "Nama", mkrtUnit.customer_name),
+                                      "Nama",
+                                      mkrtUnit.customer_name == null
+                                          ? ""
+                                          : mkrtUnit.customer_name),
                                   informasiPribadiRow(
-                                      "Tanggal HO", mkrtUnit.date_ho),
+                                      "Tanggal HO",
+                                      mkrtUnit.date_ho == null
+                                          ? ""
+                                          : mkrtUnit.date_ho),
                                   informasiPribadiRow(
-                                      "Tanggal MI", mkrtUnit.tanggal_dari)
+                                      "Tanggal MI",
+                                      mkrtUnit.tanggal_dari == null
+                                          ? ""
+                                          : mkrtUnit.tanggal_dari)
                                 ],
                               ),
                             ),
                           ),
-                          headerRow(),
+                          headerRow(widget.type),
                           ListView.builder(
                               padding: EdgeInsets.all(0),
                               shrinkWrap: true,
@@ -576,7 +589,12 @@ class _ShowDataQRState extends State<ShowDataQR> {
     );
   }
 
-  Widget headerRow() {
+  Widget headerRow(String type) {
+    if (type == "Water") {
+      type = "Air";
+    } else {
+      type = "Listrik";
+    }
     return Padding(
       padding: const EdgeInsets.all(4),
       child: Row(
@@ -584,6 +602,7 @@ class _ShowDataQRState extends State<ShowDataQR> {
         children: [
           Container(
             width: SizeConfig.screenWidth * 0.15,
+            height: 35,
             decoration: BoxDecoration(
               border: Border(
                 top: BorderSide(color: Colors.grey),
@@ -603,6 +622,7 @@ class _ShowDataQRState extends State<ShowDataQR> {
           ),
           Container(
             width: SizeConfig.screenWidth * 0.2,
+            height: 35,
             decoration: BoxDecoration(
               border: Border(
                 top: BorderSide(color: Colors.grey),
@@ -622,6 +642,7 @@ class _ShowDataQRState extends State<ShowDataQR> {
           ),
           Container(
             width: SizeConfig.screenWidth * 0.2,
+            height: 35,
             decoration: BoxDecoration(
               border: Border(
                 top: BorderSide(color: Colors.grey),
@@ -633,7 +654,8 @@ class _ShowDataQRState extends State<ShowDataQR> {
               padding: const EdgeInsets.all(4),
               child: Center(
                 child: Text(
-                  "Foto Meteran Air",
+                  "Foto Meteran\n" + type,
+                  textAlign: TextAlign.center,
                   style: TextStyle(fontSize: SizeConfig.fontSize2),
                 ),
               ),
@@ -641,6 +663,7 @@ class _ShowDataQRState extends State<ShowDataQR> {
           ),
           Container(
             width: SizeConfig.screenWidth * 0.2,
+            height: 35,
             decoration: BoxDecoration(
               border: Border(
                 top: BorderSide(color: Colors.grey),
@@ -652,7 +675,8 @@ class _ShowDataQRState extends State<ShowDataQR> {
               padding: const EdgeInsets.all(4),
               child: Center(
                 child: Text(
-                  "Angka Meteran Air",
+                  "Angka Meteran\n" + type,
+                  textAlign: TextAlign.center,
                   style: TextStyle(fontSize: SizeConfig.fontSize2),
                 ),
               ),
@@ -660,6 +684,7 @@ class _ShowDataQRState extends State<ShowDataQR> {
           ),
           Container(
             width: SizeConfig.screenWidth * 0.2,
+            height: 35,
             decoration: BoxDecoration(
               border: Border(
                 top: BorderSide(color: Colors.grey),
@@ -914,7 +939,7 @@ class _ShowDataQRState extends State<ShowDataQR> {
                     double lastMeteranDouble = double.parse(lastMeteran);
                     double textDouble = double.parse(text);
                     double pemakaianDouble = textDouble - lastMeteranDouble;
-                    ctrlPemakaian.text = pemakaianDouble.toStringAsPrecision(3);
+                    ctrlPemakaian.text = pemakaianDouble.toString();
                   }
                 },
                 decoration: new InputDecoration(

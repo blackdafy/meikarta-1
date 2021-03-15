@@ -1295,10 +1295,16 @@ class Tbl_mkrt_unitFilterBuilder extends SearchCriteria {
         } else {
           switch (param.dbType) {
             case DbType.bool:
-              param.value =
-                  param.value == null ? null : param.value == true ? 1 : 0;
-              param.value2 =
-                  param.value2 == null ? null : param.value2 == true ? 1 : 0;
+              param.value = param.value == null
+                  ? null
+                  : param.value == true
+                      ? 1
+                      : 0;
+              param.value2 = param.value2 == null
+                  ? null
+                  : param.value2 == true
+                      ? 1
+                      : 0;
               break;
             case DbType.date:
             case DbType.datetime:
@@ -2628,10 +2634,16 @@ class Tbl_electricFilterBuilder extends SearchCriteria {
         } else {
           switch (param.dbType) {
             case DbType.bool:
-              param.value =
-                  param.value == null ? null : param.value == true ? 1 : 0;
-              param.value2 =
-                  param.value2 == null ? null : param.value2 == true ? 1 : 0;
+              param.value = param.value == null
+                  ? null
+                  : param.value == true
+                      ? 1
+                      : 0;
+              param.value2 = param.value2 == null
+                  ? null
+                  : param.value2 == true
+                      ? 1
+                      : 0;
               break;
             case DbType.date:
             case DbType.datetime:
@@ -3918,10 +3930,16 @@ class Tbl_waterFilterBuilder extends SearchCriteria {
         } else {
           switch (param.dbType) {
             case DbType.bool:
-              param.value =
-                  param.value == null ? null : param.value == true ? 1 : 0;
-              param.value2 =
-                  param.value2 == null ? null : param.value2 == true ? 1 : 0;
+              param.value = param.value == null
+                  ? null
+                  : param.value == true
+                      ? 1
+                      : 0;
+              param.value2 = param.value2 == null
+                  ? null
+                  : param.value2 == true
+                      ? 1
+                      : 0;
               break;
             case DbType.date:
             case DbType.datetime:
@@ -5244,10 +5262,16 @@ class Tbl_electrics_tempFilterBuilder extends SearchCriteria {
         } else {
           switch (param.dbType) {
             case DbType.bool:
-              param.value =
-                  param.value == null ? null : param.value == true ? 1 : 0;
-              param.value2 =
-                  param.value2 == null ? null : param.value2 == true ? 1 : 0;
+              param.value = param.value == null
+                  ? null
+                  : param.value == true
+                      ? 1
+                      : 0;
+              param.value2 = param.value2 == null
+                  ? null
+                  : param.value2 == true
+                      ? 1
+                      : 0;
               break;
             case DbType.date:
             case DbType.datetime:
@@ -6563,10 +6587,16 @@ class Tbl_waters_tempFilterBuilder extends SearchCriteria {
         } else {
           switch (param.dbType) {
             case DbType.bool:
-              param.value =
-                  param.value == null ? null : param.value == true ? 1 : 0;
-              param.value2 =
-                  param.value2 == null ? null : param.value2 == true ? 1 : 0;
+              param.value = param.value == null
+                  ? null
+                  : param.value == true
+                      ? 1
+                      : 0;
+              param.value2 = param.value2 == null
+                  ? null
+                  : param.value2 == true
+                      ? 1
+                      : 0;
               break;
             case DbType.date:
             case DbType.datetime:

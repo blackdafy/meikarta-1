@@ -15,17 +15,19 @@ WidgetSnackbar({BuildContext context, String message, String warna}) {
     colors = ColorsTheme.primary1;
   }
   return Flushbar(
-    margin: EdgeInsets.all(8),
-    borderRadius: 8,
-    icon: Icon(
-      Icons.info_outline,
-      size: 28.0,
-      color: Colors.white,
-    ),
-    shouldIconPulse: false,
-    backgroundColor: colors,
-    title: "Info",
-    message: message,
-    duration: Duration(seconds: 5),
-  )..show(context);
+      margin: EdgeInsets.all(8),
+      borderRadius: 8,
+      icon: Icon(
+        Icons.info_outline,
+        size: 28.0,
+        color: Colors.white,
+      ),
+      shouldIconPulse: false,
+      backgroundColor: colors,
+      title: "Info",
+      message: message,
+      duration: Duration(seconds: 5),
+      flushbarPosition: FlushbarPosition.TOP,
+      dismissDirection: FlushbarDismissDirection.HORIZONTAL)
+    ..show(context);
 }

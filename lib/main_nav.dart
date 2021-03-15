@@ -1,11 +1,9 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:badges/badges.dart';
 import 'package:easymoveinapp/api/service.dart';
 import 'package:easymoveinapp/models/post_qrcode_list.dart';
-import 'package:easymoveinapp/models/sync/res_electrics.dart';
-import 'package:easymoveinapp/models/sync/res_units.dart';
-import 'package:easymoveinapp/models/sync/res_waters.dart';
 import 'package:easymoveinapp/pages/auth/login.dart';
 import 'package:easymoveinapp/pages/bottom_nav/fab_bottom_app_bar.dart';
 import 'package:easymoveinapp/pages/bottom_nav/fab_with_icons.dart';
@@ -21,7 +19,6 @@ import 'package:easymoveinapp/style/size.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 
 import 'pages/general_widgets/widget_progress.dart';
 
@@ -40,6 +37,9 @@ class _MainNavState extends State<MainNav> with TickerProviderStateMixin {
   List<Tbl_electric> listElectric = [];
   List<Tbl_water> listWater = [];
   List<Tbl_mkrt_unit> listMkrtUnit = [];
+  int countTempWater = 0;
+  int countTempElectric = 0;
+  int totalTemp = 0;
 
   void _selectedTab(int ind) {
     setState(() {
@@ -261,28 +261,40 @@ class _MainNavState extends State<MainNav> with TickerProviderStateMixin {
           nomorSeri: w.nomor_seri,
           pemakaian: w.pemakaian,
           insertBy: w.insert_by,
+          foto: w.foto,
           insertDate: w.insert_date));
     }
 
     dataPost.electrics = electrics;
     dataPost.waters = waters;
-    Navigator.pop(context);
-    print(dataPost.toJson().toString());
-    // getClient().synchronize(dataPost).then((res) async {
-
-    //   if (res.status) {
-    //     WidgetSnackbar(context: context, message: res.remarks, warna: "hijau");
-    //   } else {
-    //     WidgetSnackbar(context: context, message: res.remarks, warna: "merah");
-    //   }
-    // }).catchError((Object obj) {
-    //   print(obj.toString());
-    //   Navigator.pop(context);
-    //   WidgetSnackbar(
-    //       context: context,
-    //       message: "Failed connect to server!",
-    //       warna: "merah");
-    // });
+    getClient().synchronize(dataPost).then((res) async {
+      Navigator.pop(context);
+      if (res.status) {
+        await Tbl_electrics_temp().select().delete();
+        await Tbl_waters_temp().select().delete();
+        WidgetSnackbar(
+            context: context,
+            message: "Successfully Upload to Server",
+            warna: "hijau");
+        if (dataElectric.length > 0) {
+          syncElectrics();
+        }
+        if (dataWater.length > 0) {
+          syncWaters();
+        }
+        currentPage(index);
+      } else {
+        WidgetSnackbar(
+            context: context, message: "Failed to upload", warna: "merah");
+      }
+    }).catchError((Object obj) {
+      print(obj.toString());
+      Navigator.pop(context);
+      WidgetSnackbar(
+          context: context,
+          message: "Failed connect to server!",
+          warna: "merah");
+    });
   }
 
   syncUnits() {
@@ -300,6 +312,7 @@ class _MainNavState extends State<MainNav> with TickerProviderStateMixin {
       } else {
         WidgetSnackbar(context: context, message: res.remarks, warna: "merah");
       }
+      currentPage(index);
     }).catchError((Object obj) {
       print(obj.toString());
       Navigator.pop(context);
@@ -321,11 +334,11 @@ class _MainNavState extends State<MainNav> with TickerProviderStateMixin {
         listElectric = res.listElectric;
         await Tbl_electric().select().delete();
         final results = await Tbl_electric().upsertAll(listElectric);
-        getElectrics();
         WidgetSnackbar(context: context, message: res.remarks, warna: "hijau");
       } else {
         WidgetSnackbar(context: context, message: res.remarks, warna: "merah");
       }
+      currentPage(index);
     }).catchError((Object obj) {
       print(obj.toString());
       Navigator.pop(context);
@@ -347,13 +360,12 @@ class _MainNavState extends State<MainNav> with TickerProviderStateMixin {
         listWater = res.listWater;
         await Tbl_water().select().delete();
         final results = await Tbl_water().upsertAll(listWater);
-        print(results.toString());
-        getWaters();
 
         WidgetSnackbar(context: context, message: res.remarks, warna: "hijau");
       } else {
         WidgetSnackbar(context: context, message: res.remarks, warna: "merah");
       }
+      currentPage(index);
     }).catchError((Object obj) {
       print(obj.toString());
       Navigator.pop(context);
@@ -364,32 +376,20 @@ class _MainNavState extends State<MainNav> with TickerProviderStateMixin {
     });
   }
 
-  getElectrics() async {
-    final el = await Tbl_electric().select().toList();
-    for (int i = 0; i < el.length; i++) {
-      // print(el[i].toMap());
-    }
-  }
-
-  getWaters() async {
-    final wa = await Tbl_water().select().toList();
-    for (int i = 0; i < wa.length; i++) {
-      // print(wa[i].toMap());
-    }
-  }
-
   getLocalElectric() async {
     final el = await Tbl_electrics_temp().select().toList();
-    for (int i = 0; i < el.length; i++) {
-      print(el[i].toMap());
-    }
+    setState(() {
+      countTempElectric = el.length;
+      totalTemp = countTempWater + countTempElectric;
+    });
   }
 
   getLocalWater() async {
-    final el = await Tbl_waters_temp().select().toList();
-    for (int i = 0; i < el.length; i++) {
-      print(el[i].toMap());
-    }
+    final wa = await Tbl_waters_temp().select().toList();
+    setState(() {
+      countTempWater = wa.length;
+      totalTemp = countTempWater + countTempElectric;
+    });
   }
 
   @override
@@ -398,10 +398,9 @@ class _MainNavState extends State<MainNav> with TickerProviderStateMixin {
     _permissionRequest();
     timer = Timer.periodic(Duration(seconds: 10), (timer) {
       checkConnection();
+      getLocalElectric();
+      getLocalWater();
     });
-    getRange();
-    // getElectrics();
-    // getWaters();
     getLocalElectric();
     getLocalWater();
   }
@@ -453,7 +452,14 @@ class _MainNavState extends State<MainNav> with TickerProviderStateMixin {
               itemBuilder: (context) => [
                 PopupMenuItem(
                   height: SizeConfig.screenHeight * 0.05,
-                  child: Text("Upload"),
+                  child: Badge(
+                      showBadge: totalTemp == 0 ? false : true,
+                      badgeContent: Text(
+                        totalTemp.toString(),
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      position: BadgePosition.topEnd(top: -12, end: -20),
+                      child: Text("Upload")),
                   value: "Upload",
                 ),
                 PopupMenuItem(
@@ -494,9 +500,9 @@ class _MainNavState extends State<MainNav> with TickerProviderStateMixin {
         notchedShape: CircularNotchedRectangle(),
         onTabSelected: _selectedTab,
         items: [
-          // FABBottomAppBarItem(
-          //     iconData: Icons.electrical_services, text: 'Electic'),
-          // FABBottomAppBarItem(iconData: Icons.water_damage, text: 'Water'),
+          FABBottomAppBarItem(
+              iconData: Icons.electrical_services_rounded, text: 'Electic'),
+          FABBottomAppBarItem(iconData: Icons.water_damage, text: 'Water'),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -505,7 +511,10 @@ class _MainNavState extends State<MainNav> with TickerProviderStateMixin {
   }
 
   Widget _buildFab(BuildContext context) {
-    final icons = [CupertinoIcons.add, CupertinoIcons.add_circled];
+    final icons = [
+      Icons.electrical_services_rounded,
+      Icons.water_damage_rounded
+    ];
     return AnchoredOverlay(
       showOverlay: true,
       overlayBuilder: (context, offset) {
@@ -522,7 +531,7 @@ class _MainNavState extends State<MainNav> with TickerProviderStateMixin {
         child: FloatingActionButton(
           onPressed: () {},
           tooltip: 'SCAN1',
-          child: Icon(Icons.scanner),
+          child: Icon(Icons.qr_code_rounded),
         ),
       ),
     );

@@ -45,7 +45,6 @@ dependencies:
   toast: ^0.1.5
   url_launcher: ^5.7.2
   flutter_inappwebview: ^4.0.0+4
-  flutter_slider_drawer: ^1.0.3
   expandable: ^4.1.2
   package_info: ^0.4.3
   intl: ^0.15.8
@@ -53,6 +52,7 @@ dependencies:
   ai_barcode: ^1.1.4
   easy_permission_validator: ^1.0.5
   image_picker: any
+  badges: ^1.2.0
 
 dev_dependencies:
   retrofit_generator: any
