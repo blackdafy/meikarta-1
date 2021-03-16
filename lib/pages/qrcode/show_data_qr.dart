@@ -255,12 +255,16 @@ class _ShowDataQRState extends State<ShowDataQR> {
   }
 
   checkMandatory() {
+    String pemakaian = ctrlPemakaian.text;
+    double dPemakaian = double.parse(pemakaian);
     if (fileImage == null) {
       return "Silakan Upload Foto Meteran";
     } else if (ctrlMeteran.text.isEmpty) {
       return "Silakan isi Angka Meteran Air";
     } else if (ctrlPemakaian.text.isEmpty) {
       return "Silakan isi Pemakaian";
+    } else if (dPemakaian < 0) {
+      return "Pemakaian tidak boleh kurang dari 0";
     } else {
       return "";
     }
@@ -969,6 +973,7 @@ class _ShowDataQRState extends State<ShowDataQR> {
               padding: const EdgeInsets.all(4),
               child: Center(
                   child: TextFormField(
+                enabled: false,
                 controller: ctrlPemakaian,
                 keyboardType: TextInputType.number,
                 style: TextStyle(

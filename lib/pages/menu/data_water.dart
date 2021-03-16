@@ -17,7 +17,7 @@ class _DataWaterState extends State<DataWater> {
       loading = true;
     });
     final data = await DbModel().execDataTable(
-        'SELECT mu.* FROM tbl_mkrt_units AS mu INNER JOIN tbl_waters e ON e.unit_code = mu.unit_code');
+        'SELECT DISTINCT mu.* FROM tbl_mkrt_units AS mu INNER JOIN tbl_waters e ON e.unit_code = mu.unit_code');
     for (var e in data) {
       dataList.add(new Tbl_mkrt_unit(
           unit_code: e['unit_code'],

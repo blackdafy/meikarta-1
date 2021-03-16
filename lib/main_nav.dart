@@ -6,8 +6,6 @@ import 'package:easymoveinapp/api/service.dart';
 import 'package:easymoveinapp/models/post_qrcode_list.dart';
 import 'package:easymoveinapp/pages/auth/login.dart';
 import 'package:easymoveinapp/pages/bottom_nav/fab_bottom_app_bar.dart';
-import 'package:easymoveinapp/pages/bottom_nav/fab_with_icons.dart';
-import 'package:easymoveinapp/pages/bottom_nav/layout.dart';
 import 'package:easymoveinapp/pages/general_widgets/widget_snackbar.dart';
 import 'package:easymoveinapp/pages/qrcode/camera_scan.dart';
 import 'package:easymoveinapp/sqlite/db.dart';
@@ -69,19 +67,11 @@ class _MainNavState extends State<MainNav> with TickerProviderStateMixin {
       });
   }
 
-  void _selectedFab(int ind) {
+  void _selectedFab() {
     if (permissionCamera) {
-      if (ind == 0) {
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(
-                builder: (context) => WidgetCameraScan(type: "Electric")),
-            (Route<dynamic> route) => false);
-      } else if (ind == 1) {
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(
-                builder: (context) => WidgetCameraScan(type: "Water")),
-            (Route<dynamic> route) => false);
-      }
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => WidgetCameraScan()),
+          (Route<dynamic> route) => false);
     } else {
       _permissionRequest();
     }
@@ -515,24 +505,34 @@ class _MainNavState extends State<MainNav> with TickerProviderStateMixin {
       Icons.electrical_services_rounded,
       Icons.water_damage_rounded
     ];
-    return AnchoredOverlay(
-      showOverlay: true,
-      overlayBuilder: (context, offset) {
-        return CenterAbout(
-          position: Offset(offset.dx, offset.dy - icons.length * 35.0),
-          child: FabWithIcons(
-            icons: icons,
-            onIconTapped: _selectedFab,
-          ),
-        );
-      },
-      child: Visibility(
-        // visible: false,
-        child: FloatingActionButton(
-          onPressed: () {},
-          tooltip: 'SCAN1',
-          child: Icon(Icons.qr_code_rounded),
-        ),
+    // return AnchoredOverlay(
+    //   showOverlay: true,
+    //   overlayBuilder: (context, offset) {
+    //     return CenterAbout(
+    //       position: Offset(offset.dx, offset.dy - icons.length * 35.0),
+    //       child: FabWithIcons(
+    //         icons: icons,
+    //         onIconTapped: _selectedFab,
+    //       ),
+    //     );
+    //   },
+    //   child: Visibility(
+    //     visible: false,
+    //     child: FloatingActionButton(
+    //       onPressed: () {},
+    //       tooltip: 'SCAN1',
+    //       child: Icon(Icons.qr_code_rounded),
+    //     ),
+    //   ),
+    // );
+    return Visibility(
+      // visible: false,
+      child: FloatingActionButton(
+        onPressed: () {
+          _selectedFab();
+        },
+        tooltip: 'SCAN1',
+        child: Icon(Icons.qr_code_rounded),
       ),
     );
   }

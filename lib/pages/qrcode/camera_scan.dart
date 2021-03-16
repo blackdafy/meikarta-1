@@ -1,9 +1,6 @@
 import 'package:ai_barcode/ai_barcode.dart';
 import 'package:easy_permission_validator/easy_permission_validator.dart';
-import 'package:easymoveinapp/api/service.dart';
 import 'package:easymoveinapp/main_nav.dart';
-import 'package:easymoveinapp/models/post_search_by_qr.dart';
-import 'package:easymoveinapp/models/res_mkrt_unit.dart';
 import 'package:easymoveinapp/pages/general_widgets/widget_progress.dart';
 import 'package:easymoveinapp/pages/general_widgets/widget_snackbar.dart';
 import 'package:easymoveinapp/pages/qrcode/show_data_qr.dart';
@@ -12,8 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class WidgetCameraScan extends StatefulWidget {
-  final String type;
-  WidgetCameraScan({Key key, this.type}) : super(key: key);
+  WidgetCameraScan({Key key}) : super(key: key);
   @override
   _WidgetCameraScanState createState() => _WidgetCameraScanState();
 }
@@ -21,6 +17,7 @@ class WidgetCameraScan extends StatefulWidget {
 class _WidgetCameraScanState extends State<WidgetCameraScan> {
   bool permissionCamera = false;
   ScannerController _scannerController;
+  String type;
 
   _permissionRequest() async {
     final permissionValidator = EasyPermissionValidator(
@@ -64,24 +61,42 @@ class _WidgetCameraScanState extends State<WidgetCameraScan> {
         barrierDismissible: false,
         builder: (BuildContext context) => WidgetProgressSubmit());
     Tbl_mkrt_unit dataQR;
-    if (widget.type.toLowerCase() == "water") {
-      dataQR =
-          await Tbl_mkrt_unit().select().water_id.equals(unitCode).toSingle();
+    String last = unitCode.substring(unitCode.length - 1);
+
+    if (last.toLowerCase() == 'a') {
+      setState(() {
+        type = "Water";
+      });
+    } else if (last.toLowerCase() == 'e') {
+      setState(() {
+        setState(() {
+          type = "Electric";
+        });
+      });
     } else {
-      dataQR = await Tbl_mkrt_unit()
-          .select()
-          .electric_id
-          .equals(unitCode)
-          .toSingle();
-    }
-    Navigator.pop(context);
-    if (dataQR == null) {
       WidgetSnackbar(
-          context: context,
-          message: "Unit not found, please synchronize before scan!",
-          warna: "merah");
-    } else {
-      navigateTo(dataQR, widget.type);
+          context: context, message: "Invalid QR Code", warna: "merah");
+    }
+    if (type != null) {
+      if (type.toLowerCase() == "water") {
+        dataQR =
+            await Tbl_mkrt_unit().select().water_id.equals(unitCode).toSingle();
+      } else {
+        dataQR = await Tbl_mkrt_unit()
+            .select()
+            .electric_id
+            .equals(unitCode)
+            .toSingle();
+      }
+      Navigator.pop(context);
+      if (dataQR == null) {
+        WidgetSnackbar(
+            context: context,
+            message: "Unit not found, please synchronize before scan!",
+            warna: "merah");
+      } else {
+        navigateTo(dataQR, type);
+      }
     }
   }
 
@@ -137,8 +152,7 @@ class _WidgetCameraScanState extends State<WidgetCameraScan> {
                       color: Colors.white,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                            "PLEASE SCAN BARCODE " + widget.type.toUpperCase()),
+                        child: Text("PLEASE SCAN BARCODE"),
                       )),
                 ))
           ],
