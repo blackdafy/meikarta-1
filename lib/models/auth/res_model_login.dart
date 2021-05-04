@@ -64,6 +64,7 @@ class DataUser {
     this.insertDate,
     this.signPad,
     this.colorAgent,
+    this.picBlock,
   });
 
   String idUser;
@@ -91,6 +92,7 @@ class DataUser {
   DateTime insertDate;
   dynamic signPad;
   dynamic colorAgent;
+  dynamic picBlock;
 
   factory DataUser.fromJson(Map<String, dynamic> json) => DataUser(
         idUser: json["id_user"] == null ? null : json["id_user"],
@@ -121,6 +123,7 @@ class DataUser {
             : DateTime.parse(json["insert_date"]),
         signPad: json["sign_pad"],
         colorAgent: json["color_agent"],
+        picBlock: json["pic_block"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -149,5 +152,6 @@ class DataUser {
         "insert_date": insertDate == null ? null : insertDate.toIso8601String(),
         "sign_pad": signPad,
         "color_agent": colorAgent,
+        "pic_block": picBlock,
       };
 }

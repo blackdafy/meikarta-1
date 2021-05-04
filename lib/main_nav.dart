@@ -292,13 +292,14 @@ class _MainNavState extends State<MainNav> with TickerProviderStateMixin {
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) => WidgetProgressSubmit());
-    getClient().getUnits().then((res) async {
+    getClient().getUnits('51022').then((res) async {
       Navigator.pop(context);
       if (res.status) {
         listMkrtUnit = res.mkrtUnit;
         await Tbl_mkrt_unit().select().delete();
         final results = await Tbl_mkrt_unit().upsertAll(listMkrtUnit);
         WidgetSnackbar(context: context, message: res.remarks, warna: "hijau");
+        _selectedTab(index);
       } else {
         WidgetSnackbar(context: context, message: res.remarks, warna: "merah");
       }
@@ -325,6 +326,7 @@ class _MainNavState extends State<MainNav> with TickerProviderStateMixin {
         await Tbl_electric().select().delete();
         final results = await Tbl_electric().upsertAll(listElectric);
         WidgetSnackbar(context: context, message: res.remarks, warna: "hijau");
+        _selectedTab(index);
       } else {
         WidgetSnackbar(context: context, message: res.remarks, warna: "merah");
       }
@@ -352,6 +354,7 @@ class _MainNavState extends State<MainNav> with TickerProviderStateMixin {
         final results = await Tbl_water().upsertAll(listWater);
 
         WidgetSnackbar(context: context, message: res.remarks, warna: "hijau");
+        _selectedTab(index);
       } else {
         WidgetSnackbar(context: context, message: res.remarks, warna: "merah");
       }

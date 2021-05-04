@@ -1,7 +1,8 @@
-import 'package:easymoveinapp/main_nav.dart';
 import 'package:easymoveinapp/models/auth/post_model_login.dart';
 import 'package:easymoveinapp/pages/general_widgets/widget_progress.dart';
 import 'package:easymoveinapp/pages/general_widgets/widget_snackbar.dart';
+import 'package:easymoveinapp/pages/menu/home.dart';
+import 'package:easymoveinapp/sqlite/db.dart';
 import 'package:easymoveinapp/style/size.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -31,12 +32,14 @@ class _LoginPageState extends State<LoginPage> {
     getClient().postLogin(dataSubmit).then((res) async {
       Navigator.pop(context);
       if (res.status) {
+        getMasterProblem();
         pref.setString("PREF_IDUSER", res.dataUser.idUser);
         pref.setString("PREF_NICK", res.dataUser.nick);
         pref.setString("PREF_NICKNAME", res.dataUser.nickname);
         pref.setString("PREF_FULLNAME", res.dataUser.fullName);
         pref.setString("PREF_EMAIL", res.dataUser.email);
         pref.setString("PREF_PROFILEID", res.dataUser.profileId);
+        pref.setString("PREF_PICBLOCK", res.dataUser.picBlock);
         navigateToHome();
       } else {
         WidgetSnackbar(context: context, message: res.remarks, warna: "merah");
@@ -68,8 +71,19 @@ class _LoginPageState extends State<LoginPage> {
 
   navigateToHome() {
     Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => MainNav()),
+        MaterialPageRoute(builder: (context) => Home()),
         (Route<dynamic> route) => false);
+  }
+
+  getMasterProblem() {
+    getClient().getWaters().then((res) async {
+      Navigator.pop(context);
+      if (res.status) {
+        List<Tbl_master_problem> listProblem = [];
+        await Tbl_master_problem().select().delete();
+        final results = await Tbl_master_problem().upsertAll(listProblem);
+      }
+    });
   }
 
   @override

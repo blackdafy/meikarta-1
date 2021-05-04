@@ -398,6 +398,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.1.2+1"
+  flutter_staggered_grid_view:
+    dependency: "direct main"
+    description:
+      name: flutter_staggered_grid_view
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.4"
   flutter_svg:
     dependency: transitive
     description:
@@ -562,6 +569,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.4.13"
+  nuts_activity_indicator:
+    dependency: "direct main"
+    description:
+      name: nuts_activity_indicator
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.1"
   octo_image:
     dependency: transitive
     description:
@@ -751,6 +765,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.4.1+3"
+  rflutter_alert:
+    dependency: "direct main"
+    description:
+      name: rflutter_alert
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.0"
   rxdart:
     dependency: transitive
     description:

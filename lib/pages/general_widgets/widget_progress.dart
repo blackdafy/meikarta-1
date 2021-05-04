@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class WidgetProgressSubmit extends StatelessWidget {
+  final String text;
+  WidgetProgressSubmit({this.text});
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -41,7 +43,7 @@ class WidgetProgressSubmit extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(top: 4),
                     child: Text(
-                      "Sedang memproses data",
+                      text == null ? "Sedang memproses data" : text,
                       style: TextStyle(
                         color: ColorsTheme.text2,
                         fontSize: 14.0,

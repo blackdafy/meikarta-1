@@ -33,6 +33,10 @@ class TableTbl_mkrt_unit extends SqfEntityTableBase {
     // declare fields
     fields = [
       SqfEntityFieldBase('unit_code', DbType.text, isNotNull: false),
+      SqfEntityFieldBase('blocks', DbType.text, isNotNull: false),
+      SqfEntityFieldBase('tower', DbType.text, isNotNull: false),
+      SqfEntityFieldBase('floor', DbType.text, isNotNull: false),
+      SqfEntityFieldBase('tipe', DbType.text, isNotNull: false),
       SqfEntityFieldBase('customer_name', DbType.text, isNotNull: false),
       SqfEntityFieldBase('customer_address', DbType.text, isNotNull: false),
       SqfEntityFieldBase('email', DbType.text, isNotNull: false),
@@ -45,6 +49,11 @@ class TableTbl_mkrt_unit extends SqfEntityTableBase {
       SqfEntityFieldBase('eligible', DbType.text, isNotNull: false),
       SqfEntityFieldBase('tanggal_dari', DbType.text, isNotNull: false),
       SqfEntityFieldBase('tanggal_sampai', DbType.text, isNotNull: false),
+      SqfEntityFieldBase('ho', DbType.text, isNotNull: false),
+      SqfEntityFieldBase('water', DbType.text, isNotNull: false),
+      SqfEntityFieldBase('electric', DbType.text, isNotNull: false),
+      SqfEntityFieldBase('water_color', DbType.text, isNotNull: false),
+      SqfEntityFieldBase('electric_color', DbType.text, isNotNull: false),
       SqfEntityFieldBase('sync_date', DbType.text, isNotNull: false),
     ];
     super.init();
@@ -117,6 +126,64 @@ class TableTbl_water extends SqfEntityTableBase {
   }
 }
 
+// Tbl_electrics_temp_qc TABLE
+class TableTbl_electrics_temp_qc extends SqfEntityTableBase {
+  TableTbl_electrics_temp_qc() {
+    // declare properties of EntityTable
+    tableName = 'tbl_electrics_temp_qc';
+    primaryKeyName = 'ROWID';
+    primaryKeyType = PrimaryKeyType.integer_auto_incremental;
+    useSoftDeleting = false;
+    // when useSoftDeleting is true, creates a field named 'isDeleted' on the table, and set to '1' this field when item deleted (does not hard delete)
+
+    // declare fields
+    fields = [
+      SqfEntityFieldBase('id', DbType.integer, isNotNull: false),
+      SqfEntityFieldBase('unit_code', DbType.text, isNotNull: false),
+      SqfEntityFieldBase('type', DbType.text, isNotNull: false),
+      SqfEntityFieldBase('bulan', DbType.text, isNotNull: false),
+      SqfEntityFieldBase('tahun', DbType.text, isNotNull: false),
+      SqfEntityFieldBase('qc_check', DbType.text, isNotNull: false),
+      SqfEntityFieldBase('qc_date', DbType.text, isNotNull: false),
+      SqfEntityFieldBase('qc_id', DbType.text, isNotNull: false),
+    ];
+    super.init();
+  }
+  static SqfEntityTableBase _instance;
+  static SqfEntityTableBase get getInstance {
+    return _instance = _instance ?? TableTbl_electrics_temp_qc();
+  }
+}
+
+// Tbl_waters_temp_qc TABLE
+class TableTbl_waters_temp_qc extends SqfEntityTableBase {
+  TableTbl_waters_temp_qc() {
+    // declare properties of EntityTable
+    tableName = 'tbl_waters_temp_qc';
+    primaryKeyName = 'ROWID';
+    primaryKeyType = PrimaryKeyType.integer_auto_incremental;
+    useSoftDeleting = false;
+    // when useSoftDeleting is true, creates a field named 'isDeleted' on the table, and set to '1' this field when item deleted (does not hard delete)
+
+    // declare fields
+    fields = [
+      SqfEntityFieldBase('id', DbType.integer, isNotNull: false),
+      SqfEntityFieldBase('unit_code', DbType.text, isNotNull: false),
+      SqfEntityFieldBase('type', DbType.text, isNotNull: false),
+      SqfEntityFieldBase('bulan', DbType.text, isNotNull: false),
+      SqfEntityFieldBase('tahun', DbType.text, isNotNull: false),
+      SqfEntityFieldBase('qc_check', DbType.text, isNotNull: false),
+      SqfEntityFieldBase('qc_date', DbType.text, isNotNull: false),
+      SqfEntityFieldBase('qc_id', DbType.text, isNotNull: false),
+    ];
+    super.init();
+  }
+  static SqfEntityTableBase _instance;
+  static SqfEntityTableBase get getInstance {
+    return _instance = _instance ?? TableTbl_waters_temp_qc();
+  }
+}
+
 // Tbl_electrics_temp TABLE
 class TableTbl_electrics_temp extends SqfEntityTableBase {
   TableTbl_electrics_temp() {
@@ -139,6 +206,7 @@ class TableTbl_electrics_temp extends SqfEntityTableBase {
       SqfEntityFieldBase('foto', DbType.text, isNotNull: false),
       SqfEntityFieldBase('insert_date', DbType.text, isNotNull: false),
       SqfEntityFieldBase('insert_by', DbType.text, isNotNull: false),
+      SqfEntityFieldBase('problem', DbType.text, isNotNull: false),
     ];
     super.init();
   }
@@ -170,12 +238,144 @@ class TableTbl_waters_temp extends SqfEntityTableBase {
       SqfEntityFieldBase('foto', DbType.text, isNotNull: false),
       SqfEntityFieldBase('insert_date', DbType.text, isNotNull: false),
       SqfEntityFieldBase('insert_by', DbType.text, isNotNull: false),
+      SqfEntityFieldBase('problem', DbType.text, isNotNull: false),
     ];
     super.init();
   }
   static SqfEntityTableBase _instance;
   static SqfEntityTableBase get getInstance {
     return _instance = _instance ?? TableTbl_waters_temp();
+  }
+}
+
+// Tbl_master_problem TABLE
+class TableTbl_master_problem extends SqfEntityTableBase {
+  TableTbl_master_problem() {
+    // declare properties of EntityTable
+    tableName = 'tbl_master_problem';
+    primaryKeyName = 'ROWID';
+    primaryKeyType = PrimaryKeyType.integer_auto_incremental;
+    useSoftDeleting = false;
+    // when useSoftDeleting is true, creates a field named 'isDeleted' on the table, and set to '1' this field when item deleted (does not hard delete)
+
+    // declare fields
+    fields = [
+      SqfEntityFieldBase('id', DbType.integer, isNotNull: false),
+      SqfEntityFieldBase('idx', DbType.text, isNotNull: false),
+      SqfEntityFieldBase('problem', DbType.text, isNotNull: false),
+      SqfEntityFieldBase('type', DbType.text, isNotNull: false),
+      SqfEntityFieldBase('is_checked', DbType.bool,
+          defaultValue: false, isNotNull: false),
+    ];
+    super.init();
+  }
+  static SqfEntityTableBase _instance;
+  static SqfEntityTableBase get getInstance {
+    return _instance = _instance ?? TableTbl_master_problem();
+  }
+}
+
+// Tbl_waters_temp_problem TABLE
+class TableTbl_waters_temp_problem extends SqfEntityTableBase {
+  TableTbl_waters_temp_problem() {
+    // declare properties of EntityTable
+    tableName = 'tbl_waters_temp_problem';
+    primaryKeyName = 'ROWID';
+    primaryKeyType = PrimaryKeyType.integer_auto_incremental;
+    useSoftDeleting = false;
+    // when useSoftDeleting is true, creates a field named 'isDeleted' on the table, and set to '1' this field when item deleted (does not hard delete)
+
+    // declare fields
+    fields = [
+      SqfEntityFieldBase('id', DbType.integer, isNotNull: false),
+      SqfEntityFieldBase('unit_code', DbType.text, isNotNull: false),
+      SqfEntityFieldBase('bulan', DbType.text, isNotNull: false),
+      SqfEntityFieldBase('tahun', DbType.text, isNotNull: false),
+      SqfEntityFieldBase('idx_problem', DbType.text, isNotNull: false),
+    ];
+    super.init();
+  }
+  static SqfEntityTableBase _instance;
+  static SqfEntityTableBase get getInstance {
+    return _instance = _instance ?? TableTbl_waters_temp_problem();
+  }
+}
+
+// Tbl_electrics_temp_problem TABLE
+class TableTbl_electrics_temp_problem extends SqfEntityTableBase {
+  TableTbl_electrics_temp_problem() {
+    // declare properties of EntityTable
+    tableName = 'tbl_electrics_temp_problem';
+    primaryKeyName = 'ROWID';
+    primaryKeyType = PrimaryKeyType.integer_auto_incremental;
+    useSoftDeleting = false;
+    // when useSoftDeleting is true, creates a field named 'isDeleted' on the table, and set to '1' this field when item deleted (does not hard delete)
+
+    // declare fields
+    fields = [
+      SqfEntityFieldBase('id', DbType.integer, isNotNull: false),
+      SqfEntityFieldBase('unit_code', DbType.text, isNotNull: false),
+      SqfEntityFieldBase('bulan', DbType.text, isNotNull: false),
+      SqfEntityFieldBase('tahun', DbType.text, isNotNull: false),
+      SqfEntityFieldBase('idx_problem', DbType.text, isNotNull: false),
+    ];
+    super.init();
+  }
+  static SqfEntityTableBase _instance;
+  static SqfEntityTableBase get getInstance {
+    return _instance = _instance ?? TableTbl_electrics_temp_problem();
+  }
+}
+
+// Tbl_waters_temp_problem_qc TABLE
+class TableTbl_waters_temp_problem_qc extends SqfEntityTableBase {
+  TableTbl_waters_temp_problem_qc() {
+    // declare properties of EntityTable
+    tableName = 'tbl_waters_temp_problem_qc';
+    primaryKeyName = 'ROWID';
+    primaryKeyType = PrimaryKeyType.integer_auto_incremental;
+    useSoftDeleting = false;
+    // when useSoftDeleting is true, creates a field named 'isDeleted' on the table, and set to '1' this field when item deleted (does not hard delete)
+
+    // declare fields
+    fields = [
+      SqfEntityFieldBase('id', DbType.integer, isNotNull: false),
+      SqfEntityFieldBase('unit_code', DbType.text, isNotNull: false),
+      SqfEntityFieldBase('bulan', DbType.text, isNotNull: false),
+      SqfEntityFieldBase('tahun', DbType.text, isNotNull: false),
+      SqfEntityFieldBase('idx_problem', DbType.text, isNotNull: false),
+    ];
+    super.init();
+  }
+  static SqfEntityTableBase _instance;
+  static SqfEntityTableBase get getInstance {
+    return _instance = _instance ?? TableTbl_waters_temp_problem_qc();
+  }
+}
+
+// Tbl_electrics_temp_problem_qc TABLE
+class TableTbl_electrics_temp_problem_qc extends SqfEntityTableBase {
+  TableTbl_electrics_temp_problem_qc() {
+    // declare properties of EntityTable
+    tableName = 'tbl_electrics_temp_problem_qc';
+    primaryKeyName = 'ROWID';
+    primaryKeyType = PrimaryKeyType.integer_auto_incremental;
+    useSoftDeleting = false;
+    // when useSoftDeleting is true, creates a field named 'isDeleted' on the table, and set to '1' this field when item deleted (does not hard delete)
+
+    // declare fields
+    fields = [
+      SqfEntityFieldBase('id', DbType.integer, isNotNull: false),
+      SqfEntityFieldBase('unit_code', DbType.text, isNotNull: false),
+      SqfEntityFieldBase('bulan', DbType.text, isNotNull: false),
+      SqfEntityFieldBase('tahun', DbType.text, isNotNull: false),
+      SqfEntityFieldBase('idx_problem', DbType.text, isNotNull: false),
+    ];
+    super.init();
+  }
+  static SqfEntityTableBase _instance;
+  static SqfEntityTableBase get getInstance {
+    return _instance = _instance ?? TableTbl_electrics_temp_problem_qc();
   }
 }
 // END TABLES
@@ -210,8 +410,15 @@ class DbModel extends SqfEntityModelProvider {
       TableTbl_mkrt_unit.getInstance,
       TableTbl_electric.getInstance,
       TableTbl_water.getInstance,
+      TableTbl_electrics_temp_qc.getInstance,
+      TableTbl_waters_temp_qc.getInstance,
       TableTbl_electrics_temp.getInstance,
       TableTbl_waters_temp.getInstance,
+      TableTbl_master_problem.getInstance,
+      TableTbl_waters_temp_problem.getInstance,
+      TableTbl_electrics_temp_problem.getInstance,
+      TableTbl_waters_temp_problem_qc.getInstance,
+      TableTbl_electrics_temp_problem_qc.getInstance,
     ];
 
     sequences = [
@@ -235,6 +442,10 @@ class Tbl_mkrt_unit {
   Tbl_mkrt_unit(
       {this.ROWID,
       this.unit_code,
+      this.blocks,
+      this.tower,
+      this.floor,
+      this.tipe,
       this.customer_name,
       this.customer_address,
       this.email,
@@ -247,11 +458,20 @@ class Tbl_mkrt_unit {
       this.eligible,
       this.tanggal_dari,
       this.tanggal_sampai,
+      this.ho,
+      this.water,
+      this.electric,
+      this.water_color,
+      this.electric_color,
       this.sync_date}) {
     _setDefaultValues();
   }
   Tbl_mkrt_unit.withFields(
       this.unit_code,
+      this.blocks,
+      this.tower,
+      this.floor,
+      this.tipe,
       this.customer_name,
       this.customer_address,
       this.email,
@@ -264,12 +484,21 @@ class Tbl_mkrt_unit {
       this.eligible,
       this.tanggal_dari,
       this.tanggal_sampai,
+      this.ho,
+      this.water,
+      this.electric,
+      this.water_color,
+      this.electric_color,
       this.sync_date) {
     _setDefaultValues();
   }
   Tbl_mkrt_unit.withId(
       this.ROWID,
       this.unit_code,
+      this.blocks,
+      this.tower,
+      this.floor,
+      this.tipe,
       this.customer_name,
       this.customer_address,
       this.email,
@@ -282,6 +511,11 @@ class Tbl_mkrt_unit {
       this.eligible,
       this.tanggal_dari,
       this.tanggal_sampai,
+      this.ho,
+      this.water,
+      this.electric,
+      this.water_color,
+      this.electric_color,
       this.sync_date) {
     _setDefaultValues();
   }
@@ -293,6 +527,18 @@ class Tbl_mkrt_unit {
     ROWID = int.tryParse(o['ROWID'].toString());
     if (o['unit_code'] != null) {
       unit_code = o['unit_code'] as String;
+    }
+    if (o['blocks'] != null) {
+      blocks = o['blocks'] as String;
+    }
+    if (o['tower'] != null) {
+      tower = o['tower'] as String;
+    }
+    if (o['floor'] != null) {
+      floor = o['floor'] as String;
+    }
+    if (o['tipe'] != null) {
+      tipe = o['tipe'] as String;
     }
     if (o['customer_name'] != null) {
       customer_name = o['customer_name'] as String;
@@ -330,6 +576,21 @@ class Tbl_mkrt_unit {
     if (o['tanggal_sampai'] != null) {
       tanggal_sampai = o['tanggal_sampai'] as String;
     }
+    if (o['ho'] != null) {
+      ho = o['ho'] as String;
+    }
+    if (o['water'] != null) {
+      water = o['water'] as String;
+    }
+    if (o['electric'] != null) {
+      electric = o['electric'] as String;
+    }
+    if (o['water_color'] != null) {
+      water_color = o['water_color'] as String;
+    }
+    if (o['electric_color'] != null) {
+      electric_color = o['electric_color'] as String;
+    }
     if (o['sync_date'] != null) {
       sync_date = o['sync_date'] as String;
     }
@@ -337,6 +598,10 @@ class Tbl_mkrt_unit {
   // FIELDS (Tbl_mkrt_unit)
   int ROWID;
   String unit_code;
+  String blocks;
+  String tower;
+  String floor;
+  String tipe;
   String customer_name;
   String customer_address;
   String email;
@@ -349,6 +614,11 @@ class Tbl_mkrt_unit {
   String eligible;
   String tanggal_dari;
   String tanggal_sampai;
+  String ho;
+  String water;
+  String electric;
+  String water_color;
+  String electric_color;
   String sync_date;
 
   BoolResult saveResult;
@@ -372,6 +642,22 @@ class Tbl_mkrt_unit {
       map['unit_code'] = unit_code;
     }
 
+    if (blocks != null) {
+      map['blocks'] = blocks;
+    }
+
+    if (tower != null) {
+      map['tower'] = tower;
+    }
+
+    if (floor != null) {
+      map['floor'] = floor;
+    }
+
+    if (tipe != null) {
+      map['tipe'] = tipe;
+    }
+
     if (customer_name != null) {
       map['customer_name'] = customer_name;
     }
@@ -418,6 +704,26 @@ class Tbl_mkrt_unit {
 
     if (tanggal_sampai != null) {
       map['tanggal_sampai'] = tanggal_sampai;
+    }
+
+    if (ho != null) {
+      map['ho'] = ho;
+    }
+
+    if (water != null) {
+      map['water'] = water;
+    }
+
+    if (electric != null) {
+      map['electric'] = electric;
+    }
+
+    if (water_color != null) {
+      map['water_color'] = water_color;
+    }
+
+    if (electric_color != null) {
+      map['electric_color'] = electric_color;
     }
 
     if (sync_date != null) {
@@ -439,6 +745,22 @@ class Tbl_mkrt_unit {
       map['unit_code'] = unit_code;
     }
 
+    if (blocks != null) {
+      map['blocks'] = blocks;
+    }
+
+    if (tower != null) {
+      map['tower'] = tower;
+    }
+
+    if (floor != null) {
+      map['floor'] = floor;
+    }
+
+    if (tipe != null) {
+      map['tipe'] = tipe;
+    }
+
     if (customer_name != null) {
       map['customer_name'] = customer_name;
     }
@@ -485,6 +807,26 @@ class Tbl_mkrt_unit {
 
     if (tanggal_sampai != null) {
       map['tanggal_sampai'] = tanggal_sampai;
+    }
+
+    if (ho != null) {
+      map['ho'] = ho;
+    }
+
+    if (water != null) {
+      map['water'] = water;
+    }
+
+    if (electric != null) {
+      map['electric'] = electric;
+    }
+
+    if (water_color != null) {
+      map['water_color'] = water_color;
+    }
+
+    if (electric_color != null) {
+      map['electric_color'] = electric_color;
     }
 
     if (sync_date != null) {
@@ -507,6 +849,10 @@ class Tbl_mkrt_unit {
   List<dynamic> toArgs() {
     return [
       unit_code,
+      blocks,
+      tower,
+      floor,
+      tipe,
       customer_name,
       customer_address,
       email,
@@ -519,6 +865,11 @@ class Tbl_mkrt_unit {
       eligible,
       tanggal_dari,
       tanggal_sampai,
+      ho,
+      water,
+      electric,
+      water_color,
+      electric_color,
       sync_date
     ];
   }
@@ -527,6 +878,10 @@ class Tbl_mkrt_unit {
     return [
       ROWID,
       unit_code,
+      blocks,
+      tower,
+      floor,
+      tipe,
       customer_name,
       customer_address,
       email,
@@ -539,6 +894,11 @@ class Tbl_mkrt_unit {
       eligible,
       tanggal_dari,
       tanggal_sampai,
+      ho,
+      water,
+      electric,
+      water_color,
+      electric_color,
       sync_date
     ];
   }
@@ -653,7 +1013,7 @@ class Tbl_mkrt_unit {
   /// Returns a <List<BoolResult>>
   static Future<List<dynamic>> saveAll(
       List<Tbl_mkrt_unit> tbl_mkrt_units) async {
-    // final results = _mnTbl_mkrt_unit.saveAll('INSERT OR REPLACE INTO tbl_mkrt_units (ROWID,unit_code, customer_name, customer_address, email, electric_id, water_id, phone, pppu, date_pppu, date_ho, eligible, tanggal_dari, tanggal_sampai, sync_date)  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',tbl_mkrt_units);
+    // final results = _mnTbl_mkrt_unit.saveAll('INSERT OR REPLACE INTO tbl_mkrt_units (ROWID,unit_code, blocks, tower, floor, tipe, customer_name, customer_address, email, electric_id, water_id, phone, pppu, date_pppu, date_ho, eligible, tanggal_dari, tanggal_sampai, ho, water, electric, water_color, electric_color, sync_date)  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',tbl_mkrt_units);
     // return results; removed in sqfentity_gen 1.3.0+6
     await DbModel().batchStart();
     for (final obj in tbl_mkrt_units) {
@@ -676,10 +1036,14 @@ class Tbl_mkrt_unit {
   Future<int> upsert() async {
     try {
       if (await _mnTbl_mkrt_unit.rawInsert(
-              'INSERT OR REPLACE INTO tbl_mkrt_units (ROWID,unit_code, customer_name, customer_address, email, electric_id, water_id, phone, pppu, date_pppu, date_ho, eligible, tanggal_dari, tanggal_sampai, sync_date)  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+              'INSERT OR REPLACE INTO tbl_mkrt_units (ROWID,unit_code, blocks, tower, floor, tipe, customer_name, customer_address, email, electric_id, water_id, phone, pppu, date_pppu, date_ho, eligible, tanggal_dari, tanggal_sampai, ho, water, electric, water_color, electric_color, sync_date)  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
               [
                 ROWID,
                 unit_code,
+                blocks,
+                tower,
+                floor,
+                tipe,
                 customer_name,
                 customer_address,
                 email,
@@ -692,6 +1056,11 @@ class Tbl_mkrt_unit {
                 eligible,
                 tanggal_dari,
                 tanggal_sampai,
+                ho,
+                water,
+                electric,
+                water_color,
+                electric_color,
                 sync_date
               ]) ==
           1) {
@@ -719,7 +1088,7 @@ class Tbl_mkrt_unit {
   /// Returns a BoolCommitResult
   Future<BoolCommitResult> upsertAll(List<Tbl_mkrt_unit> tbl_mkrt_units) async {
     final results = await _mnTbl_mkrt_unit.rawInsertAll(
-        'INSERT OR REPLACE INTO tbl_mkrt_units (ROWID,unit_code, customer_name, customer_address, email, electric_id, water_id, phone, pppu, date_pppu, date_ho, eligible, tanggal_dari, tanggal_sampai, sync_date)  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+        'INSERT OR REPLACE INTO tbl_mkrt_units (ROWID,unit_code, blocks, tower, floor, tipe, customer_name, customer_address, email, electric_id, water_id, phone, pppu, date_pppu, date_ho, eligible, tanggal_dari, tanggal_sampai, ho, water, electric, water_color, electric_color, sync_date)  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
         tbl_mkrt_units);
     return results;
   }
@@ -1189,6 +1558,26 @@ class Tbl_mkrt_unitFilterBuilder extends SearchCriteria {
     return _unit_code = setField(_unit_code, 'unit_code', DbType.text);
   }
 
+  Tbl_mkrt_unitField _blocks;
+  Tbl_mkrt_unitField get blocks {
+    return _blocks = setField(_blocks, 'blocks', DbType.text);
+  }
+
+  Tbl_mkrt_unitField _tower;
+  Tbl_mkrt_unitField get tower {
+    return _tower = setField(_tower, 'tower', DbType.text);
+  }
+
+  Tbl_mkrt_unitField _floor;
+  Tbl_mkrt_unitField get floor {
+    return _floor = setField(_floor, 'floor', DbType.text);
+  }
+
+  Tbl_mkrt_unitField _tipe;
+  Tbl_mkrt_unitField get tipe {
+    return _tipe = setField(_tipe, 'tipe', DbType.text);
+  }
+
   Tbl_mkrt_unitField _customer_name;
   Tbl_mkrt_unitField get customer_name {
     return _customer_name =
@@ -1250,6 +1639,32 @@ class Tbl_mkrt_unitFilterBuilder extends SearchCriteria {
   Tbl_mkrt_unitField get tanggal_sampai {
     return _tanggal_sampai =
         setField(_tanggal_sampai, 'tanggal_sampai', DbType.text);
+  }
+
+  Tbl_mkrt_unitField _ho;
+  Tbl_mkrt_unitField get ho {
+    return _ho = setField(_ho, 'ho', DbType.text);
+  }
+
+  Tbl_mkrt_unitField _water;
+  Tbl_mkrt_unitField get water {
+    return _water = setField(_water, 'water', DbType.text);
+  }
+
+  Tbl_mkrt_unitField _electric;
+  Tbl_mkrt_unitField get electric {
+    return _electric = setField(_electric, 'electric', DbType.text);
+  }
+
+  Tbl_mkrt_unitField _water_color;
+  Tbl_mkrt_unitField get water_color {
+    return _water_color = setField(_water_color, 'water_color', DbType.text);
+  }
+
+  Tbl_mkrt_unitField _electric_color;
+  Tbl_mkrt_unitField get electric_color {
+    return _electric_color =
+        setField(_electric_color, 'electric_color', DbType.text);
   }
 
   Tbl_mkrt_unitField _sync_date;
@@ -1574,6 +1989,29 @@ class Tbl_mkrt_unitFields {
         SqlSyntax.setField(_fUnit_code, 'unit_code', DbType.text);
   }
 
+  static TableField _fBlocks;
+  static TableField get blocks {
+    return _fBlocks =
+        _fBlocks ?? SqlSyntax.setField(_fBlocks, 'blocks', DbType.text);
+  }
+
+  static TableField _fTower;
+  static TableField get tower {
+    return _fTower =
+        _fTower ?? SqlSyntax.setField(_fTower, 'tower', DbType.text);
+  }
+
+  static TableField _fFloor;
+  static TableField get floor {
+    return _fFloor =
+        _fFloor ?? SqlSyntax.setField(_fFloor, 'floor', DbType.text);
+  }
+
+  static TableField _fTipe;
+  static TableField get tipe {
+    return _fTipe = _fTipe ?? SqlSyntax.setField(_fTipe, 'tipe', DbType.text);
+  }
+
   static TableField _fCustomer_name;
   static TableField get customer_name {
     return _fCustomer_name = _fCustomer_name ??
@@ -1643,6 +2081,35 @@ class Tbl_mkrt_unitFields {
   static TableField get tanggal_sampai {
     return _fTanggal_sampai = _fTanggal_sampai ??
         SqlSyntax.setField(_fTanggal_sampai, 'tanggal_sampai', DbType.text);
+  }
+
+  static TableField _fHo;
+  static TableField get ho {
+    return _fHo = _fHo ?? SqlSyntax.setField(_fHo, 'ho', DbType.text);
+  }
+
+  static TableField _fWater;
+  static TableField get water {
+    return _fWater =
+        _fWater ?? SqlSyntax.setField(_fWater, 'water', DbType.text);
+  }
+
+  static TableField _fElectric;
+  static TableField get electric {
+    return _fElectric =
+        _fElectric ?? SqlSyntax.setField(_fElectric, 'electric', DbType.text);
+  }
+
+  static TableField _fWater_color;
+  static TableField get water_color {
+    return _fWater_color = _fWater_color ??
+        SqlSyntax.setField(_fWater_color, 'water_color', DbType.text);
+  }
+
+  static TableField _fElectric_color;
+  static TableField get electric_color {
+    return _fElectric_color = _fElectric_color ??
+        SqlSyntax.setField(_fElectric_color, 'electric_color', DbType.text);
   }
 
   static TableField _fSync_date;
@@ -4275,6 +4742,2498 @@ class Tbl_waterManager extends SqfEntityProvider {
 }
 
 //endregion Tbl_waterManager
+// region Tbl_electrics_temp_qc
+class Tbl_electrics_temp_qc {
+  Tbl_electrics_temp_qc(
+      {this.ROWID,
+      this.id,
+      this.unit_code,
+      this.type,
+      this.bulan,
+      this.tahun,
+      this.qc_check,
+      this.qc_date,
+      this.qc_id}) {
+    _setDefaultValues();
+  }
+  Tbl_electrics_temp_qc.withFields(this.id, this.unit_code, this.type,
+      this.bulan, this.tahun, this.qc_check, this.qc_date, this.qc_id) {
+    _setDefaultValues();
+  }
+  Tbl_electrics_temp_qc.withId(this.ROWID, this.id, this.unit_code, this.type,
+      this.bulan, this.tahun, this.qc_check, this.qc_date, this.qc_id) {
+    _setDefaultValues();
+  }
+  Tbl_electrics_temp_qc.fromMap(Map<String, dynamic> o,
+      {bool setDefaultValues = true}) {
+    if (setDefaultValues) {
+      _setDefaultValues();
+    }
+    ROWID = int.tryParse(o['ROWID'].toString());
+    if (o['id'] != null) {
+      id = int.tryParse(o['id'].toString());
+    }
+    if (o['unit_code'] != null) {
+      unit_code = o['unit_code'] as String;
+    }
+    if (o['type'] != null) {
+      type = o['type'] as String;
+    }
+    if (o['bulan'] != null) {
+      bulan = o['bulan'] as String;
+    }
+    if (o['tahun'] != null) {
+      tahun = o['tahun'] as String;
+    }
+    if (o['qc_check'] != null) {
+      qc_check = o['qc_check'] as String;
+    }
+    if (o['qc_date'] != null) {
+      qc_date = o['qc_date'] as String;
+    }
+    if (o['qc_id'] != null) {
+      qc_id = o['qc_id'] as String;
+    }
+  }
+  // FIELDS (Tbl_electrics_temp_qc)
+  int ROWID;
+  int id;
+  String unit_code;
+  String type;
+  String bulan;
+  String tahun;
+  String qc_check;
+  String qc_date;
+  String qc_id;
+
+  BoolResult saveResult;
+  // end FIELDS (Tbl_electrics_temp_qc)
+
+  static const bool _softDeleteActivated = false;
+  Tbl_electrics_temp_qcManager __mnTbl_electrics_temp_qc;
+
+  Tbl_electrics_temp_qcManager get _mnTbl_electrics_temp_qc {
+    return __mnTbl_electrics_temp_qc =
+        __mnTbl_electrics_temp_qc ?? Tbl_electrics_temp_qcManager();
+  }
+
+  // METHODS
+  Map<String, dynamic> toMap(
+      {bool forQuery = false, bool forJson = false, bool forView = false}) {
+    final map = <String, dynamic>{};
+    if (ROWID != null) {
+      map['ROWID'] = ROWID;
+    }
+    if (id != null) {
+      map['id'] = id;
+    }
+
+    if (unit_code != null) {
+      map['unit_code'] = unit_code;
+    }
+
+    if (type != null) {
+      map['type'] = type;
+    }
+
+    if (bulan != null) {
+      map['bulan'] = bulan;
+    }
+
+    if (tahun != null) {
+      map['tahun'] = tahun;
+    }
+
+    if (qc_check != null) {
+      map['qc_check'] = qc_check;
+    }
+
+    if (qc_date != null) {
+      map['qc_date'] = qc_date;
+    }
+
+    if (qc_id != null) {
+      map['qc_id'] = qc_id;
+    }
+
+    return map;
+  }
+
+  Future<Map<String, dynamic>> toMapWithChildren(
+      [bool forQuery = false,
+      bool forJson = false,
+      bool forView = false]) async {
+    final map = <String, dynamic>{};
+    if (ROWID != null) {
+      map['ROWID'] = ROWID;
+    }
+    if (id != null) {
+      map['id'] = id;
+    }
+
+    if (unit_code != null) {
+      map['unit_code'] = unit_code;
+    }
+
+    if (type != null) {
+      map['type'] = type;
+    }
+
+    if (bulan != null) {
+      map['bulan'] = bulan;
+    }
+
+    if (tahun != null) {
+      map['tahun'] = tahun;
+    }
+
+    if (qc_check != null) {
+      map['qc_check'] = qc_check;
+    }
+
+    if (qc_date != null) {
+      map['qc_date'] = qc_date;
+    }
+
+    if (qc_id != null) {
+      map['qc_id'] = qc_id;
+    }
+
+    return map;
+  }
+
+  /// This method returns Json String [Tbl_electrics_temp_qc]
+  String toJson() {
+    return json.encode(toMap(forJson: true));
+  }
+
+  /// This method returns Json String [Tbl_electrics_temp_qc]
+  Future<String> toJsonWithChilds() async {
+    return json.encode(await toMapWithChildren(false, true));
+  }
+
+  List<dynamic> toArgs() {
+    return [id, unit_code, type, bulan, tahun, qc_check, qc_date, qc_id];
+  }
+
+  List<dynamic> toArgsWithIds() {
+    return [ROWID, id, unit_code, type, bulan, tahun, qc_check, qc_date, qc_id];
+  }
+
+  static Future<List<Tbl_electrics_temp_qc>> fromWebUrl(String url,
+      {Map<String, String> headers}) async {
+    try {
+      final response = await http.get(url, headers: headers);
+      return await fromJson(response.body);
+    } catch (e) {
+      print(
+          'SQFENTITY ERROR Tbl_electrics_temp_qc.fromWebUrl: ErrorMessage: ${e.toString()}');
+      return null;
+    }
+  }
+
+  Future<http.Response> postUrl(String url, {Map<String, String> headers}) {
+    return http.post(url, headers: headers, body: toJson());
+  }
+
+  static Future<List<Tbl_electrics_temp_qc>> fromJson(String jsonBody) async {
+    final Iterable list = await json.decode(jsonBody) as Iterable;
+    var objList = <Tbl_electrics_temp_qc>[];
+    try {
+      objList = list
+          .map((tbl_electrics_temp_qc) => Tbl_electrics_temp_qc.fromMap(
+              tbl_electrics_temp_qc as Map<String, dynamic>))
+          .toList();
+    } catch (e) {
+      print(
+          'SQFENTITY ERROR Tbl_electrics_temp_qc.fromJson: ErrorMessage: ${e.toString()}');
+    }
+    return objList;
+  }
+
+  static Future<List<Tbl_electrics_temp_qc>> fromMapList(List<dynamic> data,
+      {bool preload = false,
+      List<String> preloadFields,
+      bool loadParents = false,
+      List<String> loadedFields,
+      bool setDefaultValues = true}) async {
+    final List<Tbl_electrics_temp_qc> objList = <Tbl_electrics_temp_qc>[];
+    loadedFields = loadedFields ?? [];
+    for (final map in data) {
+      final obj = Tbl_electrics_temp_qc.fromMap(map as Map<String, dynamic>,
+          setDefaultValues: setDefaultValues);
+
+      objList.add(obj);
+    }
+    return objList;
+  }
+
+  /// returns Tbl_electrics_temp_qc by ID if exist, otherwise returns null
+  ///
+  /// Primary Keys: int ROWID
+  ///
+  /// bool preload: if true, loads all related child objects (Set preload to true if you want to load all fields related to child or parent)
+  ///
+  /// ex: getById(preload:true) -> Loads all related objects
+  ///
+  /// List<String> preloadFields: specify the fields you want to preload (preload parameter's value should also be "true")
+  ///
+  /// ex: getById(preload:true, preloadFields:['plField1','plField2'... etc])  -> Loads only certain fields what you specified
+  ///
+  /// bool loadParents: if true, loads all parent objects until the object has no parent
+
+  ///
+  /// <returns>returns Tbl_electrics_temp_qc if exist, otherwise returns null
+  Future<Tbl_electrics_temp_qc> getById(int ROWID,
+      {bool preload = false,
+      List<String> preloadFields,
+      bool loadParents = false,
+      List<String> loadedFields}) async {
+    if (ROWID == null) {
+      return null;
+    }
+    Tbl_electrics_temp_qc obj;
+    final data = await _mnTbl_electrics_temp_qc.getById([ROWID]);
+    if (data.length != 0) {
+      obj = Tbl_electrics_temp_qc.fromMap(data[0] as Map<String, dynamic>);
+    } else {
+      obj = null;
+    }
+    return obj;
+  }
+
+  /// Saves the (Tbl_electrics_temp_qc) object. If the ROWID field is null, saves as a new record and returns new ROWID, if ROWID is not null then updates record
+
+  /// <returns>Returns ROWID
+  Future<int> save() async {
+    if (ROWID == null || ROWID == 0) {
+      ROWID = await _mnTbl_electrics_temp_qc.insert(this);
+    } else {
+      // ROWID= await _upsert(); // removed in sqfentity_gen 1.3.0+6
+      await _mnTbl_electrics_temp_qc.update(this);
+    }
+
+    return ROWID;
+  }
+
+  /// saveAs Tbl_electrics_temp_qc. Returns a new Primary Key value of Tbl_electrics_temp_qc
+
+  /// <returns>Returns a new Primary Key value of Tbl_electrics_temp_qc
+  Future<int> saveAs() async {
+    ROWID = null;
+
+    return save();
+  }
+
+  /// saveAll method saves the sent List<Tbl_electrics_temp_qc> as a bulk in one transaction
+  ///
+  /// Returns a <List<BoolResult>>
+  static Future<List<dynamic>> saveAll(
+      List<Tbl_electrics_temp_qc> tbl_electrics_temp_qcs) async {
+    // final results = _mnTbl_electrics_temp_qc.saveAll('INSERT OR REPLACE INTO tbl_electrics_temp_qc (ROWID,id, unit_code, type, bulan, tahun, qc_check, qc_date, qc_id)  VALUES (?,?,?,?,?,?,?,?,?)',tbl_electrics_temp_qcs);
+    // return results; removed in sqfentity_gen 1.3.0+6
+    await DbModel().batchStart();
+    for (final obj in tbl_electrics_temp_qcs) {
+      await obj.save();
+    }
+    //    return DbModel().batchCommit();
+    final result = await DbModel().batchCommit();
+    for (int i = 0; i < tbl_electrics_temp_qcs.length; i++) {
+      if (tbl_electrics_temp_qcs[i].ROWID == null) {
+        tbl_electrics_temp_qcs[i].ROWID = result[i] as int;
+      }
+    }
+
+    return result;
+  }
+
+  /// Updates if the record exists, otherwise adds a new row
+
+  /// <returns>Returns ROWID
+  Future<int> upsert() async {
+    try {
+      if (await _mnTbl_electrics_temp_qc.rawInsert(
+              'INSERT OR REPLACE INTO tbl_electrics_temp_qc (ROWID,id, unit_code, type, bulan, tahun, qc_check, qc_date, qc_id)  VALUES (?,?,?,?,?,?,?,?,?)',
+              [
+                ROWID,
+                id,
+                unit_code,
+                type,
+                bulan,
+                tahun,
+                qc_check,
+                qc_date,
+                qc_id
+              ]) ==
+          1) {
+        saveResult = BoolResult(
+            success: true,
+            successMessage:
+                'Tbl_electrics_temp_qc ROWID=$ROWID updated successfully');
+      } else {
+        saveResult = BoolResult(
+            success: false,
+            errorMessage: 'Tbl_electrics_temp_qc ROWID=$ROWID did not update');
+      }
+      return ROWID;
+    } catch (e) {
+      saveResult = BoolResult(
+          success: false,
+          errorMessage:
+              'Tbl_electrics_temp_qc Save failed. Error: ${e.toString()}');
+      return 0;
+    }
+  }
+
+  /// inserts or replaces the sent List<<Tbl_electrics_temp_qc>> as a bulk in one transaction.
+  ///
+  /// upsertAll() method is faster then saveAll() method. upsertAll() should be used when you are sure that the primary key is greater than zero
+  ///
+  /// Returns a BoolCommitResult
+  Future<BoolCommitResult> upsertAll(
+      List<Tbl_electrics_temp_qc> tbl_electrics_temp_qcs) async {
+    final results = await _mnTbl_electrics_temp_qc.rawInsertAll(
+        'INSERT OR REPLACE INTO tbl_electrics_temp_qc (ROWID,id, unit_code, type, bulan, tahun, qc_check, qc_date, qc_id)  VALUES (?,?,?,?,?,?,?,?,?)',
+        tbl_electrics_temp_qcs);
+    return results;
+  }
+
+  /// Deletes Tbl_electrics_temp_qc
+
+  /// <returns>BoolResult res.success=Deleted, not res.success=Can not deleted
+  Future<BoolResult> delete([bool hardDelete = false]) async {
+    print('SQFENTITIY: delete Tbl_electrics_temp_qc invoked (ROWID=$ROWID)');
+    if (!_softDeleteActivated || hardDelete) {
+      return _mnTbl_electrics_temp_qc
+          .delete(QueryParams(whereString: 'ROWID=?', whereArguments: [ROWID]));
+    } else {
+      return _mnTbl_electrics_temp_qc.updateBatch(
+          QueryParams(whereString: 'ROWID=?', whereArguments: [ROWID]),
+          {'isDeleted': 1});
+    }
+  }
+
+  Tbl_electrics_temp_qcFilterBuilder select(
+      {List<String> columnsToSelect, bool getIsDeleted}) {
+    return Tbl_electrics_temp_qcFilterBuilder(this)
+      .._getIsDeleted = getIsDeleted == true
+      ..qparams.selectColumns = columnsToSelect;
+  }
+
+  Tbl_electrics_temp_qcFilterBuilder distinct(
+      {List<String> columnsToSelect, bool getIsDeleted}) {
+    return Tbl_electrics_temp_qcFilterBuilder(this)
+      .._getIsDeleted = getIsDeleted == true
+      ..qparams.selectColumns = columnsToSelect
+      ..qparams.distinct = true;
+  }
+
+  void _setDefaultValues() {}
+  // END METHODS
+  // CUSTOM CODES
+  /*
+      you must define customCode property of your SqfEntityTable constant for ex:
+      const tablePerson = SqfEntityTable(
+      tableName: 'person',
+      primaryKeyName: 'id',
+      primaryKeyType: PrimaryKeyType.integer_auto_incremental,
+      fields: [
+        SqfEntityField('firstName', DbType.text),
+        SqfEntityField('lastName', DbType.text),
+      ],
+      customCode: '''
+       String fullName()
+       { 
+         return '$firstName $lastName';
+       }
+      ''');
+     */
+  // END CUSTOM CODES
+}
+// endregion tbl_electrics_temp_qc
+
+// region Tbl_electrics_temp_qcField
+class Tbl_electrics_temp_qcField extends SearchCriteria {
+  Tbl_electrics_temp_qcField(this.tbl_electrics_temp_qcFB) {
+    param = DbParameter();
+  }
+  DbParameter param;
+  String _waitingNot = '';
+  Tbl_electrics_temp_qcFilterBuilder tbl_electrics_temp_qcFB;
+
+  Tbl_electrics_temp_qcField get not {
+    _waitingNot = ' NOT ';
+    return this;
+  }
+
+  Tbl_electrics_temp_qcFilterBuilder equals(dynamic pValue) {
+    param.expression = '=';
+    tbl_electrics_temp_qcFB._addedBlocks = _waitingNot == ''
+        ? setCriteria(pValue, tbl_electrics_temp_qcFB.parameters, param,
+            SqlSyntax.EQuals, tbl_electrics_temp_qcFB._addedBlocks)
+        : setCriteria(pValue, tbl_electrics_temp_qcFB.parameters, param,
+            SqlSyntax.NotEQuals, tbl_electrics_temp_qcFB._addedBlocks);
+    _waitingNot = '';
+    tbl_electrics_temp_qcFB
+            ._addedBlocks.needEndBlock[tbl_electrics_temp_qcFB._blockIndex] =
+        tbl_electrics_temp_qcFB._addedBlocks.retVal;
+    return tbl_electrics_temp_qcFB;
+  }
+
+  Tbl_electrics_temp_qcFilterBuilder equalsOrNull(dynamic pValue) {
+    param.expression = '=';
+    tbl_electrics_temp_qcFB._addedBlocks = _waitingNot == ''
+        ? setCriteria(pValue, tbl_electrics_temp_qcFB.parameters, param,
+            SqlSyntax.EQualsOrNull, tbl_electrics_temp_qcFB._addedBlocks)
+        : setCriteria(pValue, tbl_electrics_temp_qcFB.parameters, param,
+            SqlSyntax.NotEQualsOrNull, tbl_electrics_temp_qcFB._addedBlocks);
+    _waitingNot = '';
+    tbl_electrics_temp_qcFB
+            ._addedBlocks.needEndBlock[tbl_electrics_temp_qcFB._blockIndex] =
+        tbl_electrics_temp_qcFB._addedBlocks.retVal;
+    return tbl_electrics_temp_qcFB;
+  }
+
+  Tbl_electrics_temp_qcFilterBuilder isNull() {
+    tbl_electrics_temp_qcFB._addedBlocks = setCriteria(
+        0,
+        tbl_electrics_temp_qcFB.parameters,
+        param,
+        SqlSyntax.IsNULL.replaceAll(SqlSyntax.notKeyword, _waitingNot),
+        tbl_electrics_temp_qcFB._addedBlocks);
+    _waitingNot = '';
+    tbl_electrics_temp_qcFB
+            ._addedBlocks.needEndBlock[tbl_electrics_temp_qcFB._blockIndex] =
+        tbl_electrics_temp_qcFB._addedBlocks.retVal;
+    return tbl_electrics_temp_qcFB;
+  }
+
+  Tbl_electrics_temp_qcFilterBuilder contains(dynamic pValue) {
+    if (pValue != null) {
+      tbl_electrics_temp_qcFB._addedBlocks = setCriteria(
+          '%${pValue.toString()}%',
+          tbl_electrics_temp_qcFB.parameters,
+          param,
+          SqlSyntax.Contains.replaceAll(SqlSyntax.notKeyword, _waitingNot),
+          tbl_electrics_temp_qcFB._addedBlocks);
+      _waitingNot = '';
+      tbl_electrics_temp_qcFB
+              ._addedBlocks.needEndBlock[tbl_electrics_temp_qcFB._blockIndex] =
+          tbl_electrics_temp_qcFB._addedBlocks.retVal;
+    }
+    return tbl_electrics_temp_qcFB;
+  }
+
+  Tbl_electrics_temp_qcFilterBuilder startsWith(dynamic pValue) {
+    if (pValue != null) {
+      tbl_electrics_temp_qcFB._addedBlocks = setCriteria(
+          '${pValue.toString()}%',
+          tbl_electrics_temp_qcFB.parameters,
+          param,
+          SqlSyntax.Contains.replaceAll(SqlSyntax.notKeyword, _waitingNot),
+          tbl_electrics_temp_qcFB._addedBlocks);
+      _waitingNot = '';
+      tbl_electrics_temp_qcFB
+              ._addedBlocks.needEndBlock[tbl_electrics_temp_qcFB._blockIndex] =
+          tbl_electrics_temp_qcFB._addedBlocks.retVal;
+      tbl_electrics_temp_qcFB
+              ._addedBlocks.needEndBlock[tbl_electrics_temp_qcFB._blockIndex] =
+          tbl_electrics_temp_qcFB._addedBlocks.retVal;
+    }
+    return tbl_electrics_temp_qcFB;
+  }
+
+  Tbl_electrics_temp_qcFilterBuilder endsWith(dynamic pValue) {
+    if (pValue != null) {
+      tbl_electrics_temp_qcFB._addedBlocks = setCriteria(
+          '%${pValue.toString()}',
+          tbl_electrics_temp_qcFB.parameters,
+          param,
+          SqlSyntax.Contains.replaceAll(SqlSyntax.notKeyword, _waitingNot),
+          tbl_electrics_temp_qcFB._addedBlocks);
+      _waitingNot = '';
+      tbl_electrics_temp_qcFB
+              ._addedBlocks.needEndBlock[tbl_electrics_temp_qcFB._blockIndex] =
+          tbl_electrics_temp_qcFB._addedBlocks.retVal;
+    }
+    return tbl_electrics_temp_qcFB;
+  }
+
+  Tbl_electrics_temp_qcFilterBuilder between(dynamic pFirst, dynamic pLast) {
+    if (pFirst != null && pLast != null) {
+      tbl_electrics_temp_qcFB._addedBlocks = setCriteria(
+          pFirst,
+          tbl_electrics_temp_qcFB.parameters,
+          param,
+          SqlSyntax.Between.replaceAll(SqlSyntax.notKeyword, _waitingNot),
+          tbl_electrics_temp_qcFB._addedBlocks,
+          pLast);
+    } else if (pFirst != null) {
+      if (_waitingNot != '') {
+        tbl_electrics_temp_qcFB._addedBlocks = setCriteria(
+            pFirst,
+            tbl_electrics_temp_qcFB.parameters,
+            param,
+            SqlSyntax.LessThan,
+            tbl_electrics_temp_qcFB._addedBlocks);
+      } else {
+        tbl_electrics_temp_qcFB._addedBlocks = setCriteria(
+            pFirst,
+            tbl_electrics_temp_qcFB.parameters,
+            param,
+            SqlSyntax.GreaterThanOrEquals,
+            tbl_electrics_temp_qcFB._addedBlocks);
+      }
+    } else if (pLast != null) {
+      if (_waitingNot != '') {
+        tbl_electrics_temp_qcFB._addedBlocks = setCriteria(
+            pLast,
+            tbl_electrics_temp_qcFB.parameters,
+            param,
+            SqlSyntax.GreaterThan,
+            tbl_electrics_temp_qcFB._addedBlocks);
+      } else {
+        tbl_electrics_temp_qcFB._addedBlocks = setCriteria(
+            pLast,
+            tbl_electrics_temp_qcFB.parameters,
+            param,
+            SqlSyntax.LessThanOrEquals,
+            tbl_electrics_temp_qcFB._addedBlocks);
+      }
+    }
+    _waitingNot = '';
+    tbl_electrics_temp_qcFB
+            ._addedBlocks.needEndBlock[tbl_electrics_temp_qcFB._blockIndex] =
+        tbl_electrics_temp_qcFB._addedBlocks.retVal;
+    return tbl_electrics_temp_qcFB;
+  }
+
+  Tbl_electrics_temp_qcFilterBuilder greaterThan(dynamic pValue) {
+    param.expression = '>';
+    tbl_electrics_temp_qcFB._addedBlocks = _waitingNot == ''
+        ? setCriteria(pValue, tbl_electrics_temp_qcFB.parameters, param,
+            SqlSyntax.GreaterThan, tbl_electrics_temp_qcFB._addedBlocks)
+        : setCriteria(pValue, tbl_electrics_temp_qcFB.parameters, param,
+            SqlSyntax.LessThanOrEquals, tbl_electrics_temp_qcFB._addedBlocks);
+    _waitingNot = '';
+    tbl_electrics_temp_qcFB
+            ._addedBlocks.needEndBlock[tbl_electrics_temp_qcFB._blockIndex] =
+        tbl_electrics_temp_qcFB._addedBlocks.retVal;
+    return tbl_electrics_temp_qcFB;
+  }
+
+  Tbl_electrics_temp_qcFilterBuilder lessThan(dynamic pValue) {
+    param.expression = '<';
+    tbl_electrics_temp_qcFB._addedBlocks = _waitingNot == ''
+        ? setCriteria(pValue, tbl_electrics_temp_qcFB.parameters, param,
+            SqlSyntax.LessThan, tbl_electrics_temp_qcFB._addedBlocks)
+        : setCriteria(
+            pValue,
+            tbl_electrics_temp_qcFB.parameters,
+            param,
+            SqlSyntax.GreaterThanOrEquals,
+            tbl_electrics_temp_qcFB._addedBlocks);
+    _waitingNot = '';
+    tbl_electrics_temp_qcFB
+            ._addedBlocks.needEndBlock[tbl_electrics_temp_qcFB._blockIndex] =
+        tbl_electrics_temp_qcFB._addedBlocks.retVal;
+    return tbl_electrics_temp_qcFB;
+  }
+
+  Tbl_electrics_temp_qcFilterBuilder greaterThanOrEquals(dynamic pValue) {
+    param.expression = '>=';
+    tbl_electrics_temp_qcFB._addedBlocks = _waitingNot == ''
+        ? setCriteria(pValue, tbl_electrics_temp_qcFB.parameters, param,
+            SqlSyntax.GreaterThanOrEquals, tbl_electrics_temp_qcFB._addedBlocks)
+        : setCriteria(pValue, tbl_electrics_temp_qcFB.parameters, param,
+            SqlSyntax.LessThan, tbl_electrics_temp_qcFB._addedBlocks);
+    _waitingNot = '';
+    tbl_electrics_temp_qcFB
+            ._addedBlocks.needEndBlock[tbl_electrics_temp_qcFB._blockIndex] =
+        tbl_electrics_temp_qcFB._addedBlocks.retVal;
+    return tbl_electrics_temp_qcFB;
+  }
+
+  Tbl_electrics_temp_qcFilterBuilder lessThanOrEquals(dynamic pValue) {
+    param.expression = '<=';
+    tbl_electrics_temp_qcFB._addedBlocks = _waitingNot == ''
+        ? setCriteria(pValue, tbl_electrics_temp_qcFB.parameters, param,
+            SqlSyntax.LessThanOrEquals, tbl_electrics_temp_qcFB._addedBlocks)
+        : setCriteria(pValue, tbl_electrics_temp_qcFB.parameters, param,
+            SqlSyntax.GreaterThan, tbl_electrics_temp_qcFB._addedBlocks);
+    _waitingNot = '';
+    tbl_electrics_temp_qcFB
+            ._addedBlocks.needEndBlock[tbl_electrics_temp_qcFB._blockIndex] =
+        tbl_electrics_temp_qcFB._addedBlocks.retVal;
+    return tbl_electrics_temp_qcFB;
+  }
+
+  Tbl_electrics_temp_qcFilterBuilder inValues(dynamic pValue) {
+    tbl_electrics_temp_qcFB._addedBlocks = setCriteria(
+        pValue,
+        tbl_electrics_temp_qcFB.parameters,
+        param,
+        SqlSyntax.IN.replaceAll(SqlSyntax.notKeyword, _waitingNot),
+        tbl_electrics_temp_qcFB._addedBlocks);
+    _waitingNot = '';
+    tbl_electrics_temp_qcFB
+            ._addedBlocks.needEndBlock[tbl_electrics_temp_qcFB._blockIndex] =
+        tbl_electrics_temp_qcFB._addedBlocks.retVal;
+    return tbl_electrics_temp_qcFB;
+  }
+}
+// endregion Tbl_electrics_temp_qcField
+
+// region Tbl_electrics_temp_qcFilterBuilder
+class Tbl_electrics_temp_qcFilterBuilder extends SearchCriteria {
+  Tbl_electrics_temp_qcFilterBuilder(Tbl_electrics_temp_qc obj) {
+    whereString = '';
+    qparams = QueryParams();
+    parameters = <DbParameter>[];
+    orderByList = <String>[];
+    groupByList = <String>[];
+    _addedBlocks = AddedBlocks(<bool>[], <bool>[]);
+    _addedBlocks.needEndBlock.add(false);
+    _addedBlocks.waitingStartBlock.add(false);
+    _pagesize = 0;
+    _page = 0;
+    _obj = obj;
+  }
+  AddedBlocks _addedBlocks;
+  int _blockIndex = 0;
+  List<DbParameter> parameters;
+  List<String> orderByList;
+  Tbl_electrics_temp_qc _obj;
+  QueryParams qparams;
+  int _pagesize;
+  int _page;
+
+  /// put the sql keyword 'AND'
+  Tbl_electrics_temp_qcFilterBuilder get and {
+    if (parameters.isNotEmpty) {
+      parameters[parameters.length - 1].wOperator = ' AND ';
+    }
+    return this;
+  }
+
+  /// put the sql keyword 'OR'
+  Tbl_electrics_temp_qcFilterBuilder get or {
+    if (parameters.isNotEmpty) {
+      parameters[parameters.length - 1].wOperator = ' OR ';
+    }
+    return this;
+  }
+
+  /// open parentheses
+  Tbl_electrics_temp_qcFilterBuilder get startBlock {
+    _addedBlocks.waitingStartBlock.add(true);
+    _addedBlocks.needEndBlock.add(false);
+    _blockIndex++;
+    if (_blockIndex > 1) {
+      _addedBlocks.needEndBlock[_blockIndex - 1] = true;
+    }
+    return this;
+  }
+
+  /// String whereCriteria, write raw query without 'where' keyword. Like this: 'field1 like 'test%' and field2 = 3'
+  Tbl_electrics_temp_qcFilterBuilder where(String whereCriteria,
+      {dynamic parameterValue}) {
+    if (whereCriteria != null && whereCriteria != '') {
+      final DbParameter param = DbParameter(
+          columnName: parameterValue == null ? null : '',
+          hasParameter: parameterValue != null);
+      _addedBlocks = setCriteria(parameterValue ?? 0, parameters, param,
+          '($whereCriteria)', _addedBlocks);
+      _addedBlocks.needEndBlock[_blockIndex] = _addedBlocks.retVal;
+    }
+    return this;
+  }
+
+  /// page = page number,
+  ///
+  /// pagesize = row(s) per page
+  Tbl_electrics_temp_qcFilterBuilder page(int page, int pagesize) {
+    if (page > 0) {
+      _page = page;
+    }
+    if (pagesize > 0) {
+      _pagesize = pagesize;
+    }
+    return this;
+  }
+
+  /// int count = LIMIT
+  Tbl_electrics_temp_qcFilterBuilder top(int count) {
+    if (count > 0) {
+      _pagesize = count;
+    }
+    return this;
+  }
+
+  /// close parentheses
+  Tbl_electrics_temp_qcFilterBuilder get endBlock {
+    if (_addedBlocks.needEndBlock[_blockIndex]) {
+      parameters[parameters.length - 1].whereString += ' ) ';
+    }
+    _addedBlocks.needEndBlock.removeAt(_blockIndex);
+    _addedBlocks.waitingStartBlock.removeAt(_blockIndex);
+    _blockIndex--;
+    return this;
+  }
+
+  /// argFields might be String or List<String>.
+  ///
+  /// Example 1: argFields='name, date'
+  ///
+  /// Example 2: argFields = ['name', 'date']
+  Tbl_electrics_temp_qcFilterBuilder orderBy(dynamic argFields) {
+    if (argFields != null) {
+      if (argFields is String) {
+        orderByList.add(argFields);
+      } else {
+        for (String s in argFields as List<String>) {
+          if (s != null && s.isNotEmpty) {
+            orderByList.add(' $s ');
+          }
+        }
+      }
+    }
+    return this;
+  }
+
+  /// argFields might be String or List<String>.
+  ///
+  /// Example 1: argFields='field1, field2'
+  ///
+  /// Example 2: argFields = ['field1', 'field2']
+  Tbl_electrics_temp_qcFilterBuilder orderByDesc(dynamic argFields) {
+    if (argFields != null) {
+      if (argFields is String) {
+        orderByList.add('$argFields desc ');
+      } else {
+        for (String s in argFields as List<String>) {
+          if (s != null && s.isNotEmpty) {
+            orderByList.add(' $s desc ');
+          }
+        }
+      }
+    }
+    return this;
+  }
+
+  /// argFields might be String or List<String>.
+  ///
+  /// Example 1: argFields='field1, field2'
+  ///
+  /// Example 2: argFields = ['field1', 'field2']
+  Tbl_electrics_temp_qcFilterBuilder groupBy(dynamic argFields) {
+    if (argFields != null) {
+      if (argFields is String) {
+        groupByList.add(' $argFields ');
+      } else {
+        for (String s in argFields as List<String>) {
+          if (s != null && s.isNotEmpty) {
+            groupByList.add(' $s ');
+          }
+        }
+      }
+    }
+    return this;
+  }
+
+  /// argFields might be String or List<String>.
+  ///
+  /// Example 1: argFields='name, date'
+  ///
+  /// Example 2: argFields = ['name', 'date']
+  Tbl_electrics_temp_qcFilterBuilder having(dynamic argFields) {
+    if (argFields != null) {
+      if (argFields is String) {
+        havingList.add(argFields);
+      } else {
+        for (String s in argFields as List<String>) {
+          if (s != null && s.isNotEmpty) {
+            havingList.add(' $s ');
+          }
+        }
+      }
+    }
+    return this;
+  }
+
+  Tbl_electrics_temp_qcField setField(
+      Tbl_electrics_temp_qcField field, String colName, DbType dbtype) {
+    return Tbl_electrics_temp_qcField(this)
+      ..param = DbParameter(
+          dbType: dbtype,
+          columnName: colName,
+          wStartBlock: _addedBlocks.waitingStartBlock[_blockIndex]);
+  }
+
+  Tbl_electrics_temp_qcField _ROWID;
+  Tbl_electrics_temp_qcField get ROWID {
+    return _ROWID = setField(_ROWID, 'ROWID', DbType.integer);
+  }
+
+  Tbl_electrics_temp_qcField _id;
+  Tbl_electrics_temp_qcField get id {
+    return _id = setField(_id, 'id', DbType.integer);
+  }
+
+  Tbl_electrics_temp_qcField _unit_code;
+  Tbl_electrics_temp_qcField get unit_code {
+    return _unit_code = setField(_unit_code, 'unit_code', DbType.text);
+  }
+
+  Tbl_electrics_temp_qcField _type;
+  Tbl_electrics_temp_qcField get type {
+    return _type = setField(_type, 'type', DbType.text);
+  }
+
+  Tbl_electrics_temp_qcField _bulan;
+  Tbl_electrics_temp_qcField get bulan {
+    return _bulan = setField(_bulan, 'bulan', DbType.text);
+  }
+
+  Tbl_electrics_temp_qcField _tahun;
+  Tbl_electrics_temp_qcField get tahun {
+    return _tahun = setField(_tahun, 'tahun', DbType.text);
+  }
+
+  Tbl_electrics_temp_qcField _qc_check;
+  Tbl_electrics_temp_qcField get qc_check {
+    return _qc_check = setField(_qc_check, 'qc_check', DbType.text);
+  }
+
+  Tbl_electrics_temp_qcField _qc_date;
+  Tbl_electrics_temp_qcField get qc_date {
+    return _qc_date = setField(_qc_date, 'qc_date', DbType.text);
+  }
+
+  Tbl_electrics_temp_qcField _qc_id;
+  Tbl_electrics_temp_qcField get qc_id {
+    return _qc_id = setField(_qc_id, 'qc_id', DbType.text);
+  }
+
+  bool _getIsDeleted;
+
+  void _buildParameters() {
+    if (_page > 0 && _pagesize > 0) {
+      qparams
+        ..limit = _pagesize
+        ..offset = (_page - 1) * _pagesize;
+    } else {
+      qparams
+        ..limit = _pagesize
+        ..offset = _page;
+    }
+    for (DbParameter param in parameters) {
+      if (param.columnName != null) {
+        if (param.value is List && !param.hasParameter) {
+          param.value = param.dbType == DbType.text
+              ? '\'${param.value.join('\',\'')}\''
+              : param.value.join(',');
+          whereString += param.whereString
+              .replaceAll('{field}', param.columnName)
+              .replaceAll('?', param.value.toString());
+          param.value = null;
+        } else {
+          if (param.value is Map<String, dynamic> &&
+              param.value['sql'] != null) {
+            param
+              ..whereString = param.whereString
+                  .replaceAll('?', param.value['sql'].toString())
+              ..dbType = DbType.integer
+              ..value = param.value['args'];
+          }
+          whereString +=
+              param.whereString.replaceAll('{field}', param.columnName);
+        }
+        if (!param.whereString.contains('?')) {
+        } else {
+          switch (param.dbType) {
+            case DbType.bool:
+              param.value = param.value == null
+                  ? null
+                  : param.value == true
+                      ? 1
+                      : 0;
+              param.value2 = param.value2 == null
+                  ? null
+                  : param.value2 == true
+                      ? 1
+                      : 0;
+              break;
+            case DbType.date:
+            case DbType.datetime:
+            case DbType.datetimeUtc:
+              param.value = param.value == null
+                  ? null
+                  : (param.value as DateTime).millisecondsSinceEpoch;
+              param.value2 = param.value2 == null
+                  ? null
+                  : (param.value2 as DateTime).millisecondsSinceEpoch;
+              break;
+            default:
+          }
+          if (param.value != null) {
+            if (param.value is List) {
+              for (var p in param.value) {
+                whereArguments.add(p);
+              }
+            } else {
+              whereArguments.add(param.value);
+            }
+          }
+          if (param.value2 != null) {
+            whereArguments.add(param.value2);
+          }
+        }
+      } else {
+        whereString += param.whereString;
+      }
+    }
+    if (Tbl_electrics_temp_qc._softDeleteActivated) {
+      if (whereString != '') {
+        whereString =
+            '${!_getIsDeleted ? 'ifnull(isDeleted,0)=0 AND' : ''} ($whereString)';
+      } else if (!_getIsDeleted) {
+        whereString = 'ifnull(isDeleted,0)=0';
+      }
+    }
+
+    if (whereString != '') {
+      qparams.whereString = whereString;
+    }
+    qparams
+      ..whereArguments = whereArguments
+      ..groupBy = groupByList.join(',')
+      ..orderBy = orderByList.join(',')
+      ..having = havingList.join(',');
+  }
+
+  /// Deletes List<Tbl_electrics_temp_qc> bulk by query
+  ///
+  /// <returns>BoolResult res.success=Deleted, not res.success=Can not deleted
+  Future<BoolResult> delete([bool hardDelete = false]) async {
+    _buildParameters();
+    var r = BoolResult();
+
+    if (Tbl_electrics_temp_qc._softDeleteActivated && !hardDelete) {
+      r = await _obj._mnTbl_electrics_temp_qc
+          .updateBatch(qparams, {'isDeleted': 1});
+    } else {
+      r = await _obj._mnTbl_electrics_temp_qc.delete(qparams);
+    }
+    return r;
+  }
+
+  /// using:
+  ///
+  /// update({'fieldName': Value})
+  ///
+  /// fieldName must be String. Value is dynamic, it can be any of the (int, bool, String.. )
+  Future<BoolResult> update(Map<String, dynamic> values) {
+    _buildParameters();
+    if (qparams.limit > 0 || qparams.offset > 0) {
+      qparams.whereString =
+          'ROWID IN (SELECT ROWID from tbl_electrics_temp_qc ${qparams.whereString.isNotEmpty ? 'WHERE ${qparams.whereString}' : ''}${qparams.limit > 0 ? ' LIMIT ${qparams.limit}' : ''}${qparams.offset > 0 ? ' OFFSET ${qparams.offset}' : ''})';
+    }
+    return _obj._mnTbl_electrics_temp_qc.updateBatch(qparams, values);
+  }
+
+  /// This method always returns Tbl_electrics_temp_qc Obj if exist, otherwise returns null
+  ///
+  /// bool preload: if true, loads all related child objects (Set preload to true if you want to load all fields related to child or parent)
+  ///
+  /// ex: toSingle(preload:true) -> Loads all related objects
+  ///
+  /// List<String> preloadFields: specify the fields you want to preload (preload parameter's value should also be "true")
+  ///
+  /// ex: toSingle(preload:true, preloadFields:['plField1','plField2'... etc])  -> Loads only certain fields what you specified
+  ///
+  /// bool loadParents: if true, loads all parent objects until the object has no parent
+
+  ///
+  /// <returns>List<Tbl_electrics_temp_qc>
+  Future<Tbl_electrics_temp_qc> toSingle(
+      {bool preload = false,
+      List<String> preloadFields,
+      bool loadParents = false,
+      List<String> loadedFields}) async {
+    _pagesize = 1;
+    _buildParameters();
+    final objFuture = _obj._mnTbl_electrics_temp_qc.toList(qparams);
+    final data = await objFuture;
+    Tbl_electrics_temp_qc obj;
+    if (data.isNotEmpty) {
+      obj = Tbl_electrics_temp_qc.fromMap(data[0] as Map<String, dynamic>);
+    } else {
+      obj = null;
+    }
+    return obj;
+  }
+
+  /// This method returns int. [Tbl_electrics_temp_qc]
+  ///
+  /// <returns>int
+  Future<int> toCount(
+      [VoidCallback Function(int c) tbl_electrics_temp_qcCount]) async {
+    _buildParameters();
+    qparams.selectColumns = ['COUNT(1) AS CNT'];
+    final tbl_electrics_temp_qcsFuture =
+        await _obj._mnTbl_electrics_temp_qc.toList(qparams);
+    final int count = tbl_electrics_temp_qcsFuture[0]['CNT'] as int;
+    if (tbl_electrics_temp_qcCount != null) {
+      tbl_electrics_temp_qcCount(count);
+    }
+    return count;
+  }
+
+  /// This method returns List<Tbl_electrics_temp_qc> [Tbl_electrics_temp_qc]
+  ///
+  /// bool preload: if true, loads all related child objects (Set preload to true if you want to load all fields related to child or parent)
+  ///
+  /// ex: toList(preload:true) -> Loads all related objects
+  ///
+  /// List<String> preloadFields: specify the fields you want to preload (preload parameter's value should also be "true")
+  ///
+  /// ex: toList(preload:true, preloadFields:['plField1','plField2'... etc])  -> Loads only certain fields what you specified
+  ///
+  /// bool loadParents: if true, loads all parent objects until the object has no parent
+
+  ///
+  /// <returns>List<Tbl_electrics_temp_qc>
+  Future<List<Tbl_electrics_temp_qc>> toList(
+      {bool preload = false,
+      List<String> preloadFields,
+      bool loadParents = false,
+      List<String> loadedFields}) async {
+    final data = await toMapList();
+    final List<Tbl_electrics_temp_qc> tbl_electrics_temp_qcsData =
+        await Tbl_electrics_temp_qc.fromMapList(data,
+            preload: preload,
+            preloadFields: preloadFields,
+            loadParents: loadParents,
+            loadedFields: loadedFields,
+            setDefaultValues: qparams.selectColumns == null);
+    return tbl_electrics_temp_qcsData;
+  }
+
+  /// This method returns Json String [Tbl_electrics_temp_qc]
+  Future<String> toJson() async {
+    final list = <dynamic>[];
+    final data = await toList();
+    for (var o in data) {
+      list.add(o.toMap(forJson: true));
+    }
+    return json.encode(list);
+  }
+
+  /// This method returns Json String. [Tbl_electrics_temp_qc]
+  Future<String> toJsonWithChilds() async {
+    final list = <dynamic>[];
+    final data = await toList();
+    for (var o in data) {
+      list.add(await o.toMapWithChildren(false, true));
+    }
+    return json.encode(list);
+  }
+
+  /// This method returns List<dynamic>. [Tbl_electrics_temp_qc]
+  ///
+  /// <returns>List<dynamic>
+  Future<List<dynamic>> toMapList() async {
+    _buildParameters();
+    return await _obj._mnTbl_electrics_temp_qc.toList(qparams);
+  }
+
+  /// This method returns Primary Key List SQL and Parameters retVal = Map<String,dynamic>. [Tbl_electrics_temp_qc]
+  ///
+  /// retVal['sql'] = SQL statement string, retVal['args'] = whereArguments List<dynamic>;
+  ///
+  /// <returns>List<String>
+  Map<String, dynamic> toListPrimaryKeySQL([bool buildParameters = true]) {
+    final Map<String, dynamic> _retVal = <String, dynamic>{};
+    if (buildParameters) {
+      _buildParameters();
+    }
+    _retVal['sql'] =
+        'SELECT `ROWID` FROM tbl_electrics_temp_qc WHERE ${qparams.whereString}';
+    _retVal['args'] = qparams.whereArguments;
+    return _retVal;
+  }
+
+  /// This method returns Primary Key List<int>.
+  /// <returns>List<int>
+  Future<List<int>> toListPrimaryKey([bool buildParameters = true]) async {
+    if (buildParameters) {
+      _buildParameters();
+    }
+    final List<int> ROWIDData = <int>[];
+    qparams.selectColumns = ['ROWID'];
+    final ROWIDFuture = await _obj._mnTbl_electrics_temp_qc.toList(qparams);
+
+    final int count = ROWIDFuture.length;
+    for (int i = 0; i < count; i++) {
+      ROWIDData.add(ROWIDFuture[i]['ROWID'] as int);
+    }
+    return ROWIDData;
+  }
+
+  /// Returns List<dynamic> for selected columns. Use this method for 'groupBy' with min,max,avg..  [Tbl_electrics_temp_qc]
+  ///
+  /// Sample usage: (see EXAMPLE 4.2 at https://github.com/hhtokpinar/sqfEntity#group-by)
+  Future<List<dynamic>> toListObject() async {
+    _buildParameters();
+
+    final objectFuture = _obj._mnTbl_electrics_temp_qc.toList(qparams);
+
+    final List<dynamic> objectsData = <dynamic>[];
+    final data = await objectFuture;
+    final int count = data.length;
+    for (int i = 0; i < count; i++) {
+      objectsData.add(data[i]);
+    }
+    return objectsData;
+  }
+
+  /// Returns List<String> for selected first column
+  ///
+  /// Sample usage: await Tbl_electrics_temp_qc.select(columnsToSelect: ['columnName']).toListString()
+  Future<List<String>> toListString(
+      [VoidCallback Function(List<String> o) listString]) async {
+    _buildParameters();
+
+    final objectFuture = _obj._mnTbl_electrics_temp_qc.toList(qparams);
+
+    final List<String> objectsData = <String>[];
+    final data = await objectFuture;
+    final int count = data.length;
+    for (int i = 0; i < count; i++) {
+      objectsData.add(data[i][qparams.selectColumns[0]].toString());
+    }
+    if (listString != null) {
+      listString(objectsData);
+    }
+    return objectsData;
+  }
+}
+// endregion Tbl_electrics_temp_qcFilterBuilder
+
+// region Tbl_electrics_temp_qcFields
+class Tbl_electrics_temp_qcFields {
+  static TableField _fROWID;
+  static TableField get ROWID {
+    return _fROWID =
+        _fROWID ?? SqlSyntax.setField(_fROWID, 'rowid', DbType.integer);
+  }
+
+  static TableField _fId;
+  static TableField get id {
+    return _fId = _fId ?? SqlSyntax.setField(_fId, 'id', DbType.integer);
+  }
+
+  static TableField _fUnit_code;
+  static TableField get unit_code {
+    return _fUnit_code = _fUnit_code ??
+        SqlSyntax.setField(_fUnit_code, 'unit_code', DbType.text);
+  }
+
+  static TableField _fType;
+  static TableField get type {
+    return _fType = _fType ?? SqlSyntax.setField(_fType, 'type', DbType.text);
+  }
+
+  static TableField _fBulan;
+  static TableField get bulan {
+    return _fBulan =
+        _fBulan ?? SqlSyntax.setField(_fBulan, 'bulan', DbType.text);
+  }
+
+  static TableField _fTahun;
+  static TableField get tahun {
+    return _fTahun =
+        _fTahun ?? SqlSyntax.setField(_fTahun, 'tahun', DbType.text);
+  }
+
+  static TableField _fQc_check;
+  static TableField get qc_check {
+    return _fQc_check =
+        _fQc_check ?? SqlSyntax.setField(_fQc_check, 'qc_check', DbType.text);
+  }
+
+  static TableField _fQc_date;
+  static TableField get qc_date {
+    return _fQc_date =
+        _fQc_date ?? SqlSyntax.setField(_fQc_date, 'qc_date', DbType.text);
+  }
+
+  static TableField _fQc_id;
+  static TableField get qc_id {
+    return _fQc_id =
+        _fQc_id ?? SqlSyntax.setField(_fQc_id, 'qc_id', DbType.text);
+  }
+}
+// endregion Tbl_electrics_temp_qcFields
+
+//region Tbl_electrics_temp_qcManager
+class Tbl_electrics_temp_qcManager extends SqfEntityProvider {
+  Tbl_electrics_temp_qcManager()
+      : super(DbModel(),
+            tableName: _tableName,
+            primaryKeyList: _primaryKeyList,
+            whereStr: _whereStr);
+  static final String _tableName = 'tbl_electrics_temp_qc';
+  static final List<String> _primaryKeyList = ['ROWID'];
+  static final String _whereStr = 'ROWID=?';
+}
+
+//endregion Tbl_electrics_temp_qcManager
+// region Tbl_waters_temp_qc
+class Tbl_waters_temp_qc {
+  Tbl_waters_temp_qc(
+      {this.ROWID,
+      this.id,
+      this.unit_code,
+      this.type,
+      this.bulan,
+      this.tahun,
+      this.qc_check,
+      this.qc_date,
+      this.qc_id}) {
+    _setDefaultValues();
+  }
+  Tbl_waters_temp_qc.withFields(this.id, this.unit_code, this.type, this.bulan,
+      this.tahun, this.qc_check, this.qc_date, this.qc_id) {
+    _setDefaultValues();
+  }
+  Tbl_waters_temp_qc.withId(this.ROWID, this.id, this.unit_code, this.type,
+      this.bulan, this.tahun, this.qc_check, this.qc_date, this.qc_id) {
+    _setDefaultValues();
+  }
+  Tbl_waters_temp_qc.fromMap(Map<String, dynamic> o,
+      {bool setDefaultValues = true}) {
+    if (setDefaultValues) {
+      _setDefaultValues();
+    }
+    ROWID = int.tryParse(o['ROWID'].toString());
+    if (o['id'] != null) {
+      id = int.tryParse(o['id'].toString());
+    }
+    if (o['unit_code'] != null) {
+      unit_code = o['unit_code'] as String;
+    }
+    if (o['type'] != null) {
+      type = o['type'] as String;
+    }
+    if (o['bulan'] != null) {
+      bulan = o['bulan'] as String;
+    }
+    if (o['tahun'] != null) {
+      tahun = o['tahun'] as String;
+    }
+    if (o['qc_check'] != null) {
+      qc_check = o['qc_check'] as String;
+    }
+    if (o['qc_date'] != null) {
+      qc_date = o['qc_date'] as String;
+    }
+    if (o['qc_id'] != null) {
+      qc_id = o['qc_id'] as String;
+    }
+  }
+  // FIELDS (Tbl_waters_temp_qc)
+  int ROWID;
+  int id;
+  String unit_code;
+  String type;
+  String bulan;
+  String tahun;
+  String qc_check;
+  String qc_date;
+  String qc_id;
+
+  BoolResult saveResult;
+  // end FIELDS (Tbl_waters_temp_qc)
+
+  static const bool _softDeleteActivated = false;
+  Tbl_waters_temp_qcManager __mnTbl_waters_temp_qc;
+
+  Tbl_waters_temp_qcManager get _mnTbl_waters_temp_qc {
+    return __mnTbl_waters_temp_qc =
+        __mnTbl_waters_temp_qc ?? Tbl_waters_temp_qcManager();
+  }
+
+  // METHODS
+  Map<String, dynamic> toMap(
+      {bool forQuery = false, bool forJson = false, bool forView = false}) {
+    final map = <String, dynamic>{};
+    if (ROWID != null) {
+      map['ROWID'] = ROWID;
+    }
+    if (id != null) {
+      map['id'] = id;
+    }
+
+    if (unit_code != null) {
+      map['unit_code'] = unit_code;
+    }
+
+    if (type != null) {
+      map['type'] = type;
+    }
+
+    if (bulan != null) {
+      map['bulan'] = bulan;
+    }
+
+    if (tahun != null) {
+      map['tahun'] = tahun;
+    }
+
+    if (qc_check != null) {
+      map['qc_check'] = qc_check;
+    }
+
+    if (qc_date != null) {
+      map['qc_date'] = qc_date;
+    }
+
+    if (qc_id != null) {
+      map['qc_id'] = qc_id;
+    }
+
+    return map;
+  }
+
+  Future<Map<String, dynamic>> toMapWithChildren(
+      [bool forQuery = false,
+      bool forJson = false,
+      bool forView = false]) async {
+    final map = <String, dynamic>{};
+    if (ROWID != null) {
+      map['ROWID'] = ROWID;
+    }
+    if (id != null) {
+      map['id'] = id;
+    }
+
+    if (unit_code != null) {
+      map['unit_code'] = unit_code;
+    }
+
+    if (type != null) {
+      map['type'] = type;
+    }
+
+    if (bulan != null) {
+      map['bulan'] = bulan;
+    }
+
+    if (tahun != null) {
+      map['tahun'] = tahun;
+    }
+
+    if (qc_check != null) {
+      map['qc_check'] = qc_check;
+    }
+
+    if (qc_date != null) {
+      map['qc_date'] = qc_date;
+    }
+
+    if (qc_id != null) {
+      map['qc_id'] = qc_id;
+    }
+
+    return map;
+  }
+
+  /// This method returns Json String [Tbl_waters_temp_qc]
+  String toJson() {
+    return json.encode(toMap(forJson: true));
+  }
+
+  /// This method returns Json String [Tbl_waters_temp_qc]
+  Future<String> toJsonWithChilds() async {
+    return json.encode(await toMapWithChildren(false, true));
+  }
+
+  List<dynamic> toArgs() {
+    return [id, unit_code, type, bulan, tahun, qc_check, qc_date, qc_id];
+  }
+
+  List<dynamic> toArgsWithIds() {
+    return [ROWID, id, unit_code, type, bulan, tahun, qc_check, qc_date, qc_id];
+  }
+
+  static Future<List<Tbl_waters_temp_qc>> fromWebUrl(String url,
+      {Map<String, String> headers}) async {
+    try {
+      final response = await http.get(url, headers: headers);
+      return await fromJson(response.body);
+    } catch (e) {
+      print(
+          'SQFENTITY ERROR Tbl_waters_temp_qc.fromWebUrl: ErrorMessage: ${e.toString()}');
+      return null;
+    }
+  }
+
+  Future<http.Response> postUrl(String url, {Map<String, String> headers}) {
+    return http.post(url, headers: headers, body: toJson());
+  }
+
+  static Future<List<Tbl_waters_temp_qc>> fromJson(String jsonBody) async {
+    final Iterable list = await json.decode(jsonBody) as Iterable;
+    var objList = <Tbl_waters_temp_qc>[];
+    try {
+      objList = list
+          .map((tbl_waters_temp_qc) => Tbl_waters_temp_qc.fromMap(
+              tbl_waters_temp_qc as Map<String, dynamic>))
+          .toList();
+    } catch (e) {
+      print(
+          'SQFENTITY ERROR Tbl_waters_temp_qc.fromJson: ErrorMessage: ${e.toString()}');
+    }
+    return objList;
+  }
+
+  static Future<List<Tbl_waters_temp_qc>> fromMapList(List<dynamic> data,
+      {bool preload = false,
+      List<String> preloadFields,
+      bool loadParents = false,
+      List<String> loadedFields,
+      bool setDefaultValues = true}) async {
+    final List<Tbl_waters_temp_qc> objList = <Tbl_waters_temp_qc>[];
+    loadedFields = loadedFields ?? [];
+    for (final map in data) {
+      final obj = Tbl_waters_temp_qc.fromMap(map as Map<String, dynamic>,
+          setDefaultValues: setDefaultValues);
+
+      objList.add(obj);
+    }
+    return objList;
+  }
+
+  /// returns Tbl_waters_temp_qc by ID if exist, otherwise returns null
+  ///
+  /// Primary Keys: int ROWID
+  ///
+  /// bool preload: if true, loads all related child objects (Set preload to true if you want to load all fields related to child or parent)
+  ///
+  /// ex: getById(preload:true) -> Loads all related objects
+  ///
+  /// List<String> preloadFields: specify the fields you want to preload (preload parameter's value should also be "true")
+  ///
+  /// ex: getById(preload:true, preloadFields:['plField1','plField2'... etc])  -> Loads only certain fields what you specified
+  ///
+  /// bool loadParents: if true, loads all parent objects until the object has no parent
+
+  ///
+  /// <returns>returns Tbl_waters_temp_qc if exist, otherwise returns null
+  Future<Tbl_waters_temp_qc> getById(int ROWID,
+      {bool preload = false,
+      List<String> preloadFields,
+      bool loadParents = false,
+      List<String> loadedFields}) async {
+    if (ROWID == null) {
+      return null;
+    }
+    Tbl_waters_temp_qc obj;
+    final data = await _mnTbl_waters_temp_qc.getById([ROWID]);
+    if (data.length != 0) {
+      obj = Tbl_waters_temp_qc.fromMap(data[0] as Map<String, dynamic>);
+    } else {
+      obj = null;
+    }
+    return obj;
+  }
+
+  /// Saves the (Tbl_waters_temp_qc) object. If the ROWID field is null, saves as a new record and returns new ROWID, if ROWID is not null then updates record
+
+  /// <returns>Returns ROWID
+  Future<int> save() async {
+    if (ROWID == null || ROWID == 0) {
+      ROWID = await _mnTbl_waters_temp_qc.insert(this);
+    } else {
+      // ROWID= await _upsert(); // removed in sqfentity_gen 1.3.0+6
+      await _mnTbl_waters_temp_qc.update(this);
+    }
+
+    return ROWID;
+  }
+
+  /// saveAs Tbl_waters_temp_qc. Returns a new Primary Key value of Tbl_waters_temp_qc
+
+  /// <returns>Returns a new Primary Key value of Tbl_waters_temp_qc
+  Future<int> saveAs() async {
+    ROWID = null;
+
+    return save();
+  }
+
+  /// saveAll method saves the sent List<Tbl_waters_temp_qc> as a bulk in one transaction
+  ///
+  /// Returns a <List<BoolResult>>
+  static Future<List<dynamic>> saveAll(
+      List<Tbl_waters_temp_qc> tbl_waters_temp_qcs) async {
+    // final results = _mnTbl_waters_temp_qc.saveAll('INSERT OR REPLACE INTO tbl_waters_temp_qc (ROWID,id, unit_code, type, bulan, tahun, qc_check, qc_date, qc_id)  VALUES (?,?,?,?,?,?,?,?,?)',tbl_waters_temp_qcs);
+    // return results; removed in sqfentity_gen 1.3.0+6
+    await DbModel().batchStart();
+    for (final obj in tbl_waters_temp_qcs) {
+      await obj.save();
+    }
+    //    return DbModel().batchCommit();
+    final result = await DbModel().batchCommit();
+    for (int i = 0; i < tbl_waters_temp_qcs.length; i++) {
+      if (tbl_waters_temp_qcs[i].ROWID == null) {
+        tbl_waters_temp_qcs[i].ROWID = result[i] as int;
+      }
+    }
+
+    return result;
+  }
+
+  /// Updates if the record exists, otherwise adds a new row
+
+  /// <returns>Returns ROWID
+  Future<int> upsert() async {
+    try {
+      if (await _mnTbl_waters_temp_qc.rawInsert(
+              'INSERT OR REPLACE INTO tbl_waters_temp_qc (ROWID,id, unit_code, type, bulan, tahun, qc_check, qc_date, qc_id)  VALUES (?,?,?,?,?,?,?,?,?)',
+              [
+                ROWID,
+                id,
+                unit_code,
+                type,
+                bulan,
+                tahun,
+                qc_check,
+                qc_date,
+                qc_id
+              ]) ==
+          1) {
+        saveResult = BoolResult(
+            success: true,
+            successMessage:
+                'Tbl_waters_temp_qc ROWID=$ROWID updated successfully');
+      } else {
+        saveResult = BoolResult(
+            success: false,
+            errorMessage: 'Tbl_waters_temp_qc ROWID=$ROWID did not update');
+      }
+      return ROWID;
+    } catch (e) {
+      saveResult = BoolResult(
+          success: false,
+          errorMessage:
+              'Tbl_waters_temp_qc Save failed. Error: ${e.toString()}');
+      return 0;
+    }
+  }
+
+  /// inserts or replaces the sent List<<Tbl_waters_temp_qc>> as a bulk in one transaction.
+  ///
+  /// upsertAll() method is faster then saveAll() method. upsertAll() should be used when you are sure that the primary key is greater than zero
+  ///
+  /// Returns a BoolCommitResult
+  Future<BoolCommitResult> upsertAll(
+      List<Tbl_waters_temp_qc> tbl_waters_temp_qcs) async {
+    final results = await _mnTbl_waters_temp_qc.rawInsertAll(
+        'INSERT OR REPLACE INTO tbl_waters_temp_qc (ROWID,id, unit_code, type, bulan, tahun, qc_check, qc_date, qc_id)  VALUES (?,?,?,?,?,?,?,?,?)',
+        tbl_waters_temp_qcs);
+    return results;
+  }
+
+  /// Deletes Tbl_waters_temp_qc
+
+  /// <returns>BoolResult res.success=Deleted, not res.success=Can not deleted
+  Future<BoolResult> delete([bool hardDelete = false]) async {
+    print('SQFENTITIY: delete Tbl_waters_temp_qc invoked (ROWID=$ROWID)');
+    if (!_softDeleteActivated || hardDelete) {
+      return _mnTbl_waters_temp_qc
+          .delete(QueryParams(whereString: 'ROWID=?', whereArguments: [ROWID]));
+    } else {
+      return _mnTbl_waters_temp_qc.updateBatch(
+          QueryParams(whereString: 'ROWID=?', whereArguments: [ROWID]),
+          {'isDeleted': 1});
+    }
+  }
+
+  Tbl_waters_temp_qcFilterBuilder select(
+      {List<String> columnsToSelect, bool getIsDeleted}) {
+    return Tbl_waters_temp_qcFilterBuilder(this)
+      .._getIsDeleted = getIsDeleted == true
+      ..qparams.selectColumns = columnsToSelect;
+  }
+
+  Tbl_waters_temp_qcFilterBuilder distinct(
+      {List<String> columnsToSelect, bool getIsDeleted}) {
+    return Tbl_waters_temp_qcFilterBuilder(this)
+      .._getIsDeleted = getIsDeleted == true
+      ..qparams.selectColumns = columnsToSelect
+      ..qparams.distinct = true;
+  }
+
+  void _setDefaultValues() {}
+  // END METHODS
+  // CUSTOM CODES
+  /*
+      you must define customCode property of your SqfEntityTable constant for ex:
+      const tablePerson = SqfEntityTable(
+      tableName: 'person',
+      primaryKeyName: 'id',
+      primaryKeyType: PrimaryKeyType.integer_auto_incremental,
+      fields: [
+        SqfEntityField('firstName', DbType.text),
+        SqfEntityField('lastName', DbType.text),
+      ],
+      customCode: '''
+       String fullName()
+       { 
+         return '$firstName $lastName';
+       }
+      ''');
+     */
+  // END CUSTOM CODES
+}
+// endregion tbl_waters_temp_qc
+
+// region Tbl_waters_temp_qcField
+class Tbl_waters_temp_qcField extends SearchCriteria {
+  Tbl_waters_temp_qcField(this.tbl_waters_temp_qcFB) {
+    param = DbParameter();
+  }
+  DbParameter param;
+  String _waitingNot = '';
+  Tbl_waters_temp_qcFilterBuilder tbl_waters_temp_qcFB;
+
+  Tbl_waters_temp_qcField get not {
+    _waitingNot = ' NOT ';
+    return this;
+  }
+
+  Tbl_waters_temp_qcFilterBuilder equals(dynamic pValue) {
+    param.expression = '=';
+    tbl_waters_temp_qcFB._addedBlocks = _waitingNot == ''
+        ? setCriteria(pValue, tbl_waters_temp_qcFB.parameters, param,
+            SqlSyntax.EQuals, tbl_waters_temp_qcFB._addedBlocks)
+        : setCriteria(pValue, tbl_waters_temp_qcFB.parameters, param,
+            SqlSyntax.NotEQuals, tbl_waters_temp_qcFB._addedBlocks);
+    _waitingNot = '';
+    tbl_waters_temp_qcFB
+            ._addedBlocks.needEndBlock[tbl_waters_temp_qcFB._blockIndex] =
+        tbl_waters_temp_qcFB._addedBlocks.retVal;
+    return tbl_waters_temp_qcFB;
+  }
+
+  Tbl_waters_temp_qcFilterBuilder equalsOrNull(dynamic pValue) {
+    param.expression = '=';
+    tbl_waters_temp_qcFB._addedBlocks = _waitingNot == ''
+        ? setCriteria(pValue, tbl_waters_temp_qcFB.parameters, param,
+            SqlSyntax.EQualsOrNull, tbl_waters_temp_qcFB._addedBlocks)
+        : setCriteria(pValue, tbl_waters_temp_qcFB.parameters, param,
+            SqlSyntax.NotEQualsOrNull, tbl_waters_temp_qcFB._addedBlocks);
+    _waitingNot = '';
+    tbl_waters_temp_qcFB
+            ._addedBlocks.needEndBlock[tbl_waters_temp_qcFB._blockIndex] =
+        tbl_waters_temp_qcFB._addedBlocks.retVal;
+    return tbl_waters_temp_qcFB;
+  }
+
+  Tbl_waters_temp_qcFilterBuilder isNull() {
+    tbl_waters_temp_qcFB._addedBlocks = setCriteria(
+        0,
+        tbl_waters_temp_qcFB.parameters,
+        param,
+        SqlSyntax.IsNULL.replaceAll(SqlSyntax.notKeyword, _waitingNot),
+        tbl_waters_temp_qcFB._addedBlocks);
+    _waitingNot = '';
+    tbl_waters_temp_qcFB
+            ._addedBlocks.needEndBlock[tbl_waters_temp_qcFB._blockIndex] =
+        tbl_waters_temp_qcFB._addedBlocks.retVal;
+    return tbl_waters_temp_qcFB;
+  }
+
+  Tbl_waters_temp_qcFilterBuilder contains(dynamic pValue) {
+    if (pValue != null) {
+      tbl_waters_temp_qcFB._addedBlocks = setCriteria(
+          '%${pValue.toString()}%',
+          tbl_waters_temp_qcFB.parameters,
+          param,
+          SqlSyntax.Contains.replaceAll(SqlSyntax.notKeyword, _waitingNot),
+          tbl_waters_temp_qcFB._addedBlocks);
+      _waitingNot = '';
+      tbl_waters_temp_qcFB
+              ._addedBlocks.needEndBlock[tbl_waters_temp_qcFB._blockIndex] =
+          tbl_waters_temp_qcFB._addedBlocks.retVal;
+    }
+    return tbl_waters_temp_qcFB;
+  }
+
+  Tbl_waters_temp_qcFilterBuilder startsWith(dynamic pValue) {
+    if (pValue != null) {
+      tbl_waters_temp_qcFB._addedBlocks = setCriteria(
+          '${pValue.toString()}%',
+          tbl_waters_temp_qcFB.parameters,
+          param,
+          SqlSyntax.Contains.replaceAll(SqlSyntax.notKeyword, _waitingNot),
+          tbl_waters_temp_qcFB._addedBlocks);
+      _waitingNot = '';
+      tbl_waters_temp_qcFB
+              ._addedBlocks.needEndBlock[tbl_waters_temp_qcFB._blockIndex] =
+          tbl_waters_temp_qcFB._addedBlocks.retVal;
+      tbl_waters_temp_qcFB
+              ._addedBlocks.needEndBlock[tbl_waters_temp_qcFB._blockIndex] =
+          tbl_waters_temp_qcFB._addedBlocks.retVal;
+    }
+    return tbl_waters_temp_qcFB;
+  }
+
+  Tbl_waters_temp_qcFilterBuilder endsWith(dynamic pValue) {
+    if (pValue != null) {
+      tbl_waters_temp_qcFB._addedBlocks = setCriteria(
+          '%${pValue.toString()}',
+          tbl_waters_temp_qcFB.parameters,
+          param,
+          SqlSyntax.Contains.replaceAll(SqlSyntax.notKeyword, _waitingNot),
+          tbl_waters_temp_qcFB._addedBlocks);
+      _waitingNot = '';
+      tbl_waters_temp_qcFB
+              ._addedBlocks.needEndBlock[tbl_waters_temp_qcFB._blockIndex] =
+          tbl_waters_temp_qcFB._addedBlocks.retVal;
+    }
+    return tbl_waters_temp_qcFB;
+  }
+
+  Tbl_waters_temp_qcFilterBuilder between(dynamic pFirst, dynamic pLast) {
+    if (pFirst != null && pLast != null) {
+      tbl_waters_temp_qcFB._addedBlocks = setCriteria(
+          pFirst,
+          tbl_waters_temp_qcFB.parameters,
+          param,
+          SqlSyntax.Between.replaceAll(SqlSyntax.notKeyword, _waitingNot),
+          tbl_waters_temp_qcFB._addedBlocks,
+          pLast);
+    } else if (pFirst != null) {
+      if (_waitingNot != '') {
+        tbl_waters_temp_qcFB._addedBlocks = setCriteria(
+            pFirst,
+            tbl_waters_temp_qcFB.parameters,
+            param,
+            SqlSyntax.LessThan,
+            tbl_waters_temp_qcFB._addedBlocks);
+      } else {
+        tbl_waters_temp_qcFB._addedBlocks = setCriteria(
+            pFirst,
+            tbl_waters_temp_qcFB.parameters,
+            param,
+            SqlSyntax.GreaterThanOrEquals,
+            tbl_waters_temp_qcFB._addedBlocks);
+      }
+    } else if (pLast != null) {
+      if (_waitingNot != '') {
+        tbl_waters_temp_qcFB._addedBlocks = setCriteria(
+            pLast,
+            tbl_waters_temp_qcFB.parameters,
+            param,
+            SqlSyntax.GreaterThan,
+            tbl_waters_temp_qcFB._addedBlocks);
+      } else {
+        tbl_waters_temp_qcFB._addedBlocks = setCriteria(
+            pLast,
+            tbl_waters_temp_qcFB.parameters,
+            param,
+            SqlSyntax.LessThanOrEquals,
+            tbl_waters_temp_qcFB._addedBlocks);
+      }
+    }
+    _waitingNot = '';
+    tbl_waters_temp_qcFB
+            ._addedBlocks.needEndBlock[tbl_waters_temp_qcFB._blockIndex] =
+        tbl_waters_temp_qcFB._addedBlocks.retVal;
+    return tbl_waters_temp_qcFB;
+  }
+
+  Tbl_waters_temp_qcFilterBuilder greaterThan(dynamic pValue) {
+    param.expression = '>';
+    tbl_waters_temp_qcFB._addedBlocks = _waitingNot == ''
+        ? setCriteria(pValue, tbl_waters_temp_qcFB.parameters, param,
+            SqlSyntax.GreaterThan, tbl_waters_temp_qcFB._addedBlocks)
+        : setCriteria(pValue, tbl_waters_temp_qcFB.parameters, param,
+            SqlSyntax.LessThanOrEquals, tbl_waters_temp_qcFB._addedBlocks);
+    _waitingNot = '';
+    tbl_waters_temp_qcFB
+            ._addedBlocks.needEndBlock[tbl_waters_temp_qcFB._blockIndex] =
+        tbl_waters_temp_qcFB._addedBlocks.retVal;
+    return tbl_waters_temp_qcFB;
+  }
+
+  Tbl_waters_temp_qcFilterBuilder lessThan(dynamic pValue) {
+    param.expression = '<';
+    tbl_waters_temp_qcFB._addedBlocks = _waitingNot == ''
+        ? setCriteria(pValue, tbl_waters_temp_qcFB.parameters, param,
+            SqlSyntax.LessThan, tbl_waters_temp_qcFB._addedBlocks)
+        : setCriteria(pValue, tbl_waters_temp_qcFB.parameters, param,
+            SqlSyntax.GreaterThanOrEquals, tbl_waters_temp_qcFB._addedBlocks);
+    _waitingNot = '';
+    tbl_waters_temp_qcFB
+            ._addedBlocks.needEndBlock[tbl_waters_temp_qcFB._blockIndex] =
+        tbl_waters_temp_qcFB._addedBlocks.retVal;
+    return tbl_waters_temp_qcFB;
+  }
+
+  Tbl_waters_temp_qcFilterBuilder greaterThanOrEquals(dynamic pValue) {
+    param.expression = '>=';
+    tbl_waters_temp_qcFB._addedBlocks = _waitingNot == ''
+        ? setCriteria(pValue, tbl_waters_temp_qcFB.parameters, param,
+            SqlSyntax.GreaterThanOrEquals, tbl_waters_temp_qcFB._addedBlocks)
+        : setCriteria(pValue, tbl_waters_temp_qcFB.parameters, param,
+            SqlSyntax.LessThan, tbl_waters_temp_qcFB._addedBlocks);
+    _waitingNot = '';
+    tbl_waters_temp_qcFB
+            ._addedBlocks.needEndBlock[tbl_waters_temp_qcFB._blockIndex] =
+        tbl_waters_temp_qcFB._addedBlocks.retVal;
+    return tbl_waters_temp_qcFB;
+  }
+
+  Tbl_waters_temp_qcFilterBuilder lessThanOrEquals(dynamic pValue) {
+    param.expression = '<=';
+    tbl_waters_temp_qcFB._addedBlocks = _waitingNot == ''
+        ? setCriteria(pValue, tbl_waters_temp_qcFB.parameters, param,
+            SqlSyntax.LessThanOrEquals, tbl_waters_temp_qcFB._addedBlocks)
+        : setCriteria(pValue, tbl_waters_temp_qcFB.parameters, param,
+            SqlSyntax.GreaterThan, tbl_waters_temp_qcFB._addedBlocks);
+    _waitingNot = '';
+    tbl_waters_temp_qcFB
+            ._addedBlocks.needEndBlock[tbl_waters_temp_qcFB._blockIndex] =
+        tbl_waters_temp_qcFB._addedBlocks.retVal;
+    return tbl_waters_temp_qcFB;
+  }
+
+  Tbl_waters_temp_qcFilterBuilder inValues(dynamic pValue) {
+    tbl_waters_temp_qcFB._addedBlocks = setCriteria(
+        pValue,
+        tbl_waters_temp_qcFB.parameters,
+        param,
+        SqlSyntax.IN.replaceAll(SqlSyntax.notKeyword, _waitingNot),
+        tbl_waters_temp_qcFB._addedBlocks);
+    _waitingNot = '';
+    tbl_waters_temp_qcFB
+            ._addedBlocks.needEndBlock[tbl_waters_temp_qcFB._blockIndex] =
+        tbl_waters_temp_qcFB._addedBlocks.retVal;
+    return tbl_waters_temp_qcFB;
+  }
+}
+// endregion Tbl_waters_temp_qcField
+
+// region Tbl_waters_temp_qcFilterBuilder
+class Tbl_waters_temp_qcFilterBuilder extends SearchCriteria {
+  Tbl_waters_temp_qcFilterBuilder(Tbl_waters_temp_qc obj) {
+    whereString = '';
+    qparams = QueryParams();
+    parameters = <DbParameter>[];
+    orderByList = <String>[];
+    groupByList = <String>[];
+    _addedBlocks = AddedBlocks(<bool>[], <bool>[]);
+    _addedBlocks.needEndBlock.add(false);
+    _addedBlocks.waitingStartBlock.add(false);
+    _pagesize = 0;
+    _page = 0;
+    _obj = obj;
+  }
+  AddedBlocks _addedBlocks;
+  int _blockIndex = 0;
+  List<DbParameter> parameters;
+  List<String> orderByList;
+  Tbl_waters_temp_qc _obj;
+  QueryParams qparams;
+  int _pagesize;
+  int _page;
+
+  /// put the sql keyword 'AND'
+  Tbl_waters_temp_qcFilterBuilder get and {
+    if (parameters.isNotEmpty) {
+      parameters[parameters.length - 1].wOperator = ' AND ';
+    }
+    return this;
+  }
+
+  /// put the sql keyword 'OR'
+  Tbl_waters_temp_qcFilterBuilder get or {
+    if (parameters.isNotEmpty) {
+      parameters[parameters.length - 1].wOperator = ' OR ';
+    }
+    return this;
+  }
+
+  /// open parentheses
+  Tbl_waters_temp_qcFilterBuilder get startBlock {
+    _addedBlocks.waitingStartBlock.add(true);
+    _addedBlocks.needEndBlock.add(false);
+    _blockIndex++;
+    if (_blockIndex > 1) {
+      _addedBlocks.needEndBlock[_blockIndex - 1] = true;
+    }
+    return this;
+  }
+
+  /// String whereCriteria, write raw query without 'where' keyword. Like this: 'field1 like 'test%' and field2 = 3'
+  Tbl_waters_temp_qcFilterBuilder where(String whereCriteria,
+      {dynamic parameterValue}) {
+    if (whereCriteria != null && whereCriteria != '') {
+      final DbParameter param = DbParameter(
+          columnName: parameterValue == null ? null : '',
+          hasParameter: parameterValue != null);
+      _addedBlocks = setCriteria(parameterValue ?? 0, parameters, param,
+          '($whereCriteria)', _addedBlocks);
+      _addedBlocks.needEndBlock[_blockIndex] = _addedBlocks.retVal;
+    }
+    return this;
+  }
+
+  /// page = page number,
+  ///
+  /// pagesize = row(s) per page
+  Tbl_waters_temp_qcFilterBuilder page(int page, int pagesize) {
+    if (page > 0) {
+      _page = page;
+    }
+    if (pagesize > 0) {
+      _pagesize = pagesize;
+    }
+    return this;
+  }
+
+  /// int count = LIMIT
+  Tbl_waters_temp_qcFilterBuilder top(int count) {
+    if (count > 0) {
+      _pagesize = count;
+    }
+    return this;
+  }
+
+  /// close parentheses
+  Tbl_waters_temp_qcFilterBuilder get endBlock {
+    if (_addedBlocks.needEndBlock[_blockIndex]) {
+      parameters[parameters.length - 1].whereString += ' ) ';
+    }
+    _addedBlocks.needEndBlock.removeAt(_blockIndex);
+    _addedBlocks.waitingStartBlock.removeAt(_blockIndex);
+    _blockIndex--;
+    return this;
+  }
+
+  /// argFields might be String or List<String>.
+  ///
+  /// Example 1: argFields='name, date'
+  ///
+  /// Example 2: argFields = ['name', 'date']
+  Tbl_waters_temp_qcFilterBuilder orderBy(dynamic argFields) {
+    if (argFields != null) {
+      if (argFields is String) {
+        orderByList.add(argFields);
+      } else {
+        for (String s in argFields as List<String>) {
+          if (s != null && s.isNotEmpty) {
+            orderByList.add(' $s ');
+          }
+        }
+      }
+    }
+    return this;
+  }
+
+  /// argFields might be String or List<String>.
+  ///
+  /// Example 1: argFields='field1, field2'
+  ///
+  /// Example 2: argFields = ['field1', 'field2']
+  Tbl_waters_temp_qcFilterBuilder orderByDesc(dynamic argFields) {
+    if (argFields != null) {
+      if (argFields is String) {
+        orderByList.add('$argFields desc ');
+      } else {
+        for (String s in argFields as List<String>) {
+          if (s != null && s.isNotEmpty) {
+            orderByList.add(' $s desc ');
+          }
+        }
+      }
+    }
+    return this;
+  }
+
+  /// argFields might be String or List<String>.
+  ///
+  /// Example 1: argFields='field1, field2'
+  ///
+  /// Example 2: argFields = ['field1', 'field2']
+  Tbl_waters_temp_qcFilterBuilder groupBy(dynamic argFields) {
+    if (argFields != null) {
+      if (argFields is String) {
+        groupByList.add(' $argFields ');
+      } else {
+        for (String s in argFields as List<String>) {
+          if (s != null && s.isNotEmpty) {
+            groupByList.add(' $s ');
+          }
+        }
+      }
+    }
+    return this;
+  }
+
+  /// argFields might be String or List<String>.
+  ///
+  /// Example 1: argFields='name, date'
+  ///
+  /// Example 2: argFields = ['name', 'date']
+  Tbl_waters_temp_qcFilterBuilder having(dynamic argFields) {
+    if (argFields != null) {
+      if (argFields is String) {
+        havingList.add(argFields);
+      } else {
+        for (String s in argFields as List<String>) {
+          if (s != null && s.isNotEmpty) {
+            havingList.add(' $s ');
+          }
+        }
+      }
+    }
+    return this;
+  }
+
+  Tbl_waters_temp_qcField setField(
+      Tbl_waters_temp_qcField field, String colName, DbType dbtype) {
+    return Tbl_waters_temp_qcField(this)
+      ..param = DbParameter(
+          dbType: dbtype,
+          columnName: colName,
+          wStartBlock: _addedBlocks.waitingStartBlock[_blockIndex]);
+  }
+
+  Tbl_waters_temp_qcField _ROWID;
+  Tbl_waters_temp_qcField get ROWID {
+    return _ROWID = setField(_ROWID, 'ROWID', DbType.integer);
+  }
+
+  Tbl_waters_temp_qcField _id;
+  Tbl_waters_temp_qcField get id {
+    return _id = setField(_id, 'id', DbType.integer);
+  }
+
+  Tbl_waters_temp_qcField _unit_code;
+  Tbl_waters_temp_qcField get unit_code {
+    return _unit_code = setField(_unit_code, 'unit_code', DbType.text);
+  }
+
+  Tbl_waters_temp_qcField _type;
+  Tbl_waters_temp_qcField get type {
+    return _type = setField(_type, 'type', DbType.text);
+  }
+
+  Tbl_waters_temp_qcField _bulan;
+  Tbl_waters_temp_qcField get bulan {
+    return _bulan = setField(_bulan, 'bulan', DbType.text);
+  }
+
+  Tbl_waters_temp_qcField _tahun;
+  Tbl_waters_temp_qcField get tahun {
+    return _tahun = setField(_tahun, 'tahun', DbType.text);
+  }
+
+  Tbl_waters_temp_qcField _qc_check;
+  Tbl_waters_temp_qcField get qc_check {
+    return _qc_check = setField(_qc_check, 'qc_check', DbType.text);
+  }
+
+  Tbl_waters_temp_qcField _qc_date;
+  Tbl_waters_temp_qcField get qc_date {
+    return _qc_date = setField(_qc_date, 'qc_date', DbType.text);
+  }
+
+  Tbl_waters_temp_qcField _qc_id;
+  Tbl_waters_temp_qcField get qc_id {
+    return _qc_id = setField(_qc_id, 'qc_id', DbType.text);
+  }
+
+  bool _getIsDeleted;
+
+  void _buildParameters() {
+    if (_page > 0 && _pagesize > 0) {
+      qparams
+        ..limit = _pagesize
+        ..offset = (_page - 1) * _pagesize;
+    } else {
+      qparams
+        ..limit = _pagesize
+        ..offset = _page;
+    }
+    for (DbParameter param in parameters) {
+      if (param.columnName != null) {
+        if (param.value is List && !param.hasParameter) {
+          param.value = param.dbType == DbType.text
+              ? '\'${param.value.join('\',\'')}\''
+              : param.value.join(',');
+          whereString += param.whereString
+              .replaceAll('{field}', param.columnName)
+              .replaceAll('?', param.value.toString());
+          param.value = null;
+        } else {
+          if (param.value is Map<String, dynamic> &&
+              param.value['sql'] != null) {
+            param
+              ..whereString = param.whereString
+                  .replaceAll('?', param.value['sql'].toString())
+              ..dbType = DbType.integer
+              ..value = param.value['args'];
+          }
+          whereString +=
+              param.whereString.replaceAll('{field}', param.columnName);
+        }
+        if (!param.whereString.contains('?')) {
+        } else {
+          switch (param.dbType) {
+            case DbType.bool:
+              param.value = param.value == null
+                  ? null
+                  : param.value == true
+                      ? 1
+                      : 0;
+              param.value2 = param.value2 == null
+                  ? null
+                  : param.value2 == true
+                      ? 1
+                      : 0;
+              break;
+            case DbType.date:
+            case DbType.datetime:
+            case DbType.datetimeUtc:
+              param.value = param.value == null
+                  ? null
+                  : (param.value as DateTime).millisecondsSinceEpoch;
+              param.value2 = param.value2 == null
+                  ? null
+                  : (param.value2 as DateTime).millisecondsSinceEpoch;
+              break;
+            default:
+          }
+          if (param.value != null) {
+            if (param.value is List) {
+              for (var p in param.value) {
+                whereArguments.add(p);
+              }
+            } else {
+              whereArguments.add(param.value);
+            }
+          }
+          if (param.value2 != null) {
+            whereArguments.add(param.value2);
+          }
+        }
+      } else {
+        whereString += param.whereString;
+      }
+    }
+    if (Tbl_waters_temp_qc._softDeleteActivated) {
+      if (whereString != '') {
+        whereString =
+            '${!_getIsDeleted ? 'ifnull(isDeleted,0)=0 AND' : ''} ($whereString)';
+      } else if (!_getIsDeleted) {
+        whereString = 'ifnull(isDeleted,0)=0';
+      }
+    }
+
+    if (whereString != '') {
+      qparams.whereString = whereString;
+    }
+    qparams
+      ..whereArguments = whereArguments
+      ..groupBy = groupByList.join(',')
+      ..orderBy = orderByList.join(',')
+      ..having = havingList.join(',');
+  }
+
+  /// Deletes List<Tbl_waters_temp_qc> bulk by query
+  ///
+  /// <returns>BoolResult res.success=Deleted, not res.success=Can not deleted
+  Future<BoolResult> delete([bool hardDelete = false]) async {
+    _buildParameters();
+    var r = BoolResult();
+
+    if (Tbl_waters_temp_qc._softDeleteActivated && !hardDelete) {
+      r = await _obj._mnTbl_waters_temp_qc
+          .updateBatch(qparams, {'isDeleted': 1});
+    } else {
+      r = await _obj._mnTbl_waters_temp_qc.delete(qparams);
+    }
+    return r;
+  }
+
+  /// using:
+  ///
+  /// update({'fieldName': Value})
+  ///
+  /// fieldName must be String. Value is dynamic, it can be any of the (int, bool, String.. )
+  Future<BoolResult> update(Map<String, dynamic> values) {
+    _buildParameters();
+    if (qparams.limit > 0 || qparams.offset > 0) {
+      qparams.whereString =
+          'ROWID IN (SELECT ROWID from tbl_waters_temp_qc ${qparams.whereString.isNotEmpty ? 'WHERE ${qparams.whereString}' : ''}${qparams.limit > 0 ? ' LIMIT ${qparams.limit}' : ''}${qparams.offset > 0 ? ' OFFSET ${qparams.offset}' : ''})';
+    }
+    return _obj._mnTbl_waters_temp_qc.updateBatch(qparams, values);
+  }
+
+  /// This method always returns Tbl_waters_temp_qc Obj if exist, otherwise returns null
+  ///
+  /// bool preload: if true, loads all related child objects (Set preload to true if you want to load all fields related to child or parent)
+  ///
+  /// ex: toSingle(preload:true) -> Loads all related objects
+  ///
+  /// List<String> preloadFields: specify the fields you want to preload (preload parameter's value should also be "true")
+  ///
+  /// ex: toSingle(preload:true, preloadFields:['plField1','plField2'... etc])  -> Loads only certain fields what you specified
+  ///
+  /// bool loadParents: if true, loads all parent objects until the object has no parent
+
+  ///
+  /// <returns>List<Tbl_waters_temp_qc>
+  Future<Tbl_waters_temp_qc> toSingle(
+      {bool preload = false,
+      List<String> preloadFields,
+      bool loadParents = false,
+      List<String> loadedFields}) async {
+    _pagesize = 1;
+    _buildParameters();
+    final objFuture = _obj._mnTbl_waters_temp_qc.toList(qparams);
+    final data = await objFuture;
+    Tbl_waters_temp_qc obj;
+    if (data.isNotEmpty) {
+      obj = Tbl_waters_temp_qc.fromMap(data[0] as Map<String, dynamic>);
+    } else {
+      obj = null;
+    }
+    return obj;
+  }
+
+  /// This method returns int. [Tbl_waters_temp_qc]
+  ///
+  /// <returns>int
+  Future<int> toCount(
+      [VoidCallback Function(int c) tbl_waters_temp_qcCount]) async {
+    _buildParameters();
+    qparams.selectColumns = ['COUNT(1) AS CNT'];
+    final tbl_waters_temp_qcsFuture =
+        await _obj._mnTbl_waters_temp_qc.toList(qparams);
+    final int count = tbl_waters_temp_qcsFuture[0]['CNT'] as int;
+    if (tbl_waters_temp_qcCount != null) {
+      tbl_waters_temp_qcCount(count);
+    }
+    return count;
+  }
+
+  /// This method returns List<Tbl_waters_temp_qc> [Tbl_waters_temp_qc]
+  ///
+  /// bool preload: if true, loads all related child objects (Set preload to true if you want to load all fields related to child or parent)
+  ///
+  /// ex: toList(preload:true) -> Loads all related objects
+  ///
+  /// List<String> preloadFields: specify the fields you want to preload (preload parameter's value should also be "true")
+  ///
+  /// ex: toList(preload:true, preloadFields:['plField1','plField2'... etc])  -> Loads only certain fields what you specified
+  ///
+  /// bool loadParents: if true, loads all parent objects until the object has no parent
+
+  ///
+  /// <returns>List<Tbl_waters_temp_qc>
+  Future<List<Tbl_waters_temp_qc>> toList(
+      {bool preload = false,
+      List<String> preloadFields,
+      bool loadParents = false,
+      List<String> loadedFields}) async {
+    final data = await toMapList();
+    final List<Tbl_waters_temp_qc> tbl_waters_temp_qcsData =
+        await Tbl_waters_temp_qc.fromMapList(data,
+            preload: preload,
+            preloadFields: preloadFields,
+            loadParents: loadParents,
+            loadedFields: loadedFields,
+            setDefaultValues: qparams.selectColumns == null);
+    return tbl_waters_temp_qcsData;
+  }
+
+  /// This method returns Json String [Tbl_waters_temp_qc]
+  Future<String> toJson() async {
+    final list = <dynamic>[];
+    final data = await toList();
+    for (var o in data) {
+      list.add(o.toMap(forJson: true));
+    }
+    return json.encode(list);
+  }
+
+  /// This method returns Json String. [Tbl_waters_temp_qc]
+  Future<String> toJsonWithChilds() async {
+    final list = <dynamic>[];
+    final data = await toList();
+    for (var o in data) {
+      list.add(await o.toMapWithChildren(false, true));
+    }
+    return json.encode(list);
+  }
+
+  /// This method returns List<dynamic>. [Tbl_waters_temp_qc]
+  ///
+  /// <returns>List<dynamic>
+  Future<List<dynamic>> toMapList() async {
+    _buildParameters();
+    return await _obj._mnTbl_waters_temp_qc.toList(qparams);
+  }
+
+  /// This method returns Primary Key List SQL and Parameters retVal = Map<String,dynamic>. [Tbl_waters_temp_qc]
+  ///
+  /// retVal['sql'] = SQL statement string, retVal['args'] = whereArguments List<dynamic>;
+  ///
+  /// <returns>List<String>
+  Map<String, dynamic> toListPrimaryKeySQL([bool buildParameters = true]) {
+    final Map<String, dynamic> _retVal = <String, dynamic>{};
+    if (buildParameters) {
+      _buildParameters();
+    }
+    _retVal['sql'] =
+        'SELECT `ROWID` FROM tbl_waters_temp_qc WHERE ${qparams.whereString}';
+    _retVal['args'] = qparams.whereArguments;
+    return _retVal;
+  }
+
+  /// This method returns Primary Key List<int>.
+  /// <returns>List<int>
+  Future<List<int>> toListPrimaryKey([bool buildParameters = true]) async {
+    if (buildParameters) {
+      _buildParameters();
+    }
+    final List<int> ROWIDData = <int>[];
+    qparams.selectColumns = ['ROWID'];
+    final ROWIDFuture = await _obj._mnTbl_waters_temp_qc.toList(qparams);
+
+    final int count = ROWIDFuture.length;
+    for (int i = 0; i < count; i++) {
+      ROWIDData.add(ROWIDFuture[i]['ROWID'] as int);
+    }
+    return ROWIDData;
+  }
+
+  /// Returns List<dynamic> for selected columns. Use this method for 'groupBy' with min,max,avg..  [Tbl_waters_temp_qc]
+  ///
+  /// Sample usage: (see EXAMPLE 4.2 at https://github.com/hhtokpinar/sqfEntity#group-by)
+  Future<List<dynamic>> toListObject() async {
+    _buildParameters();
+
+    final objectFuture = _obj._mnTbl_waters_temp_qc.toList(qparams);
+
+    final List<dynamic> objectsData = <dynamic>[];
+    final data = await objectFuture;
+    final int count = data.length;
+    for (int i = 0; i < count; i++) {
+      objectsData.add(data[i]);
+    }
+    return objectsData;
+  }
+
+  /// Returns List<String> for selected first column
+  ///
+  /// Sample usage: await Tbl_waters_temp_qc.select(columnsToSelect: ['columnName']).toListString()
+  Future<List<String>> toListString(
+      [VoidCallback Function(List<String> o) listString]) async {
+    _buildParameters();
+
+    final objectFuture = _obj._mnTbl_waters_temp_qc.toList(qparams);
+
+    final List<String> objectsData = <String>[];
+    final data = await objectFuture;
+    final int count = data.length;
+    for (int i = 0; i < count; i++) {
+      objectsData.add(data[i][qparams.selectColumns[0]].toString());
+    }
+    if (listString != null) {
+      listString(objectsData);
+    }
+    return objectsData;
+  }
+}
+// endregion Tbl_waters_temp_qcFilterBuilder
+
+// region Tbl_waters_temp_qcFields
+class Tbl_waters_temp_qcFields {
+  static TableField _fROWID;
+  static TableField get ROWID {
+    return _fROWID =
+        _fROWID ?? SqlSyntax.setField(_fROWID, 'rowid', DbType.integer);
+  }
+
+  static TableField _fId;
+  static TableField get id {
+    return _fId = _fId ?? SqlSyntax.setField(_fId, 'id', DbType.integer);
+  }
+
+  static TableField _fUnit_code;
+  static TableField get unit_code {
+    return _fUnit_code = _fUnit_code ??
+        SqlSyntax.setField(_fUnit_code, 'unit_code', DbType.text);
+  }
+
+  static TableField _fType;
+  static TableField get type {
+    return _fType = _fType ?? SqlSyntax.setField(_fType, 'type', DbType.text);
+  }
+
+  static TableField _fBulan;
+  static TableField get bulan {
+    return _fBulan =
+        _fBulan ?? SqlSyntax.setField(_fBulan, 'bulan', DbType.text);
+  }
+
+  static TableField _fTahun;
+  static TableField get tahun {
+    return _fTahun =
+        _fTahun ?? SqlSyntax.setField(_fTahun, 'tahun', DbType.text);
+  }
+
+  static TableField _fQc_check;
+  static TableField get qc_check {
+    return _fQc_check =
+        _fQc_check ?? SqlSyntax.setField(_fQc_check, 'qc_check', DbType.text);
+  }
+
+  static TableField _fQc_date;
+  static TableField get qc_date {
+    return _fQc_date =
+        _fQc_date ?? SqlSyntax.setField(_fQc_date, 'qc_date', DbType.text);
+  }
+
+  static TableField _fQc_id;
+  static TableField get qc_id {
+    return _fQc_id =
+        _fQc_id ?? SqlSyntax.setField(_fQc_id, 'qc_id', DbType.text);
+  }
+}
+// endregion Tbl_waters_temp_qcFields
+
+//region Tbl_waters_temp_qcManager
+class Tbl_waters_temp_qcManager extends SqfEntityProvider {
+  Tbl_waters_temp_qcManager()
+      : super(DbModel(),
+            tableName: _tableName,
+            primaryKeyList: _primaryKeyList,
+            whereStr: _whereStr);
+  static final String _tableName = 'tbl_waters_temp_qc';
+  static final List<String> _primaryKeyList = ['ROWID'];
+  static final String _whereStr = 'ROWID=?';
+}
+
+//endregion Tbl_waters_temp_qcManager
 // region Tbl_electrics_temp
 class Tbl_electrics_temp {
   Tbl_electrics_temp(
@@ -4288,7 +7247,8 @@ class Tbl_electrics_temp {
       this.pemakaian,
       this.foto,
       this.insert_date,
-      this.insert_by}) {
+      this.insert_by,
+      this.problem}) {
     _setDefaultValues();
   }
   Tbl_electrics_temp.withFields(
@@ -4301,7 +7261,8 @@ class Tbl_electrics_temp {
       this.pemakaian,
       this.foto,
       this.insert_date,
-      this.insert_by) {
+      this.insert_by,
+      this.problem) {
     _setDefaultValues();
   }
   Tbl_electrics_temp.withId(
@@ -4315,7 +7276,8 @@ class Tbl_electrics_temp {
       this.pemakaian,
       this.foto,
       this.insert_date,
-      this.insert_by) {
+      this.insert_by,
+      this.problem) {
     _setDefaultValues();
   }
   Tbl_electrics_temp.fromMap(Map<String, dynamic> o,
@@ -4354,6 +7316,9 @@ class Tbl_electrics_temp {
     if (o['insert_by'] != null) {
       insert_by = o['insert_by'] as String;
     }
+    if (o['problem'] != null) {
+      problem = o['problem'] as String;
+    }
   }
   // FIELDS (Tbl_electrics_temp)
   int ROWID;
@@ -4367,6 +7332,7 @@ class Tbl_electrics_temp {
   String foto;
   String insert_date;
   String insert_by;
+  String problem;
 
   BoolResult saveResult;
   // end FIELDS (Tbl_electrics_temp)
@@ -4426,6 +7392,10 @@ class Tbl_electrics_temp {
       map['insert_by'] = insert_by;
     }
 
+    if (problem != null) {
+      map['problem'] = problem;
+    }
+
     return map;
   }
 
@@ -4477,6 +7447,10 @@ class Tbl_electrics_temp {
       map['insert_by'] = insert_by;
     }
 
+    if (problem != null) {
+      map['problem'] = problem;
+    }
+
     return map;
   }
 
@@ -4501,7 +7475,8 @@ class Tbl_electrics_temp {
       pemakaian,
       foto,
       insert_date,
-      insert_by
+      insert_by,
+      problem
     ];
   }
 
@@ -4517,7 +7492,8 @@ class Tbl_electrics_temp {
       pemakaian,
       foto,
       insert_date,
-      insert_by
+      insert_by,
+      problem
     ];
   }
 
@@ -4631,7 +7607,7 @@ class Tbl_electrics_temp {
   /// Returns a <List<BoolResult>>
   static Future<List<dynamic>> saveAll(
       List<Tbl_electrics_temp> tbl_electrics_temps) async {
-    // final results = _mnTbl_electrics_temp.saveAll('INSERT OR REPLACE INTO tbl_electrics_temp (ROWID,id, unit_code, type, bulan, tahun, nomor_seri, pemakaian, foto, insert_date, insert_by)  VALUES (?,?,?,?,?,?,?,?,?,?,?)',tbl_electrics_temps);
+    // final results = _mnTbl_electrics_temp.saveAll('INSERT OR REPLACE INTO tbl_electrics_temp (ROWID,id, unit_code, type, bulan, tahun, nomor_seri, pemakaian, foto, insert_date, insert_by, problem)  VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',tbl_electrics_temps);
     // return results; removed in sqfentity_gen 1.3.0+6
     await DbModel().batchStart();
     for (final obj in tbl_electrics_temps) {
@@ -4654,7 +7630,7 @@ class Tbl_electrics_temp {
   Future<int> upsert() async {
     try {
       if (await _mnTbl_electrics_temp.rawInsert(
-              'INSERT OR REPLACE INTO tbl_electrics_temp (ROWID,id, unit_code, type, bulan, tahun, nomor_seri, pemakaian, foto, insert_date, insert_by)  VALUES (?,?,?,?,?,?,?,?,?,?,?)',
+              'INSERT OR REPLACE INTO tbl_electrics_temp (ROWID,id, unit_code, type, bulan, tahun, nomor_seri, pemakaian, foto, insert_date, insert_by, problem)  VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',
               [
                 ROWID,
                 id,
@@ -4666,7 +7642,8 @@ class Tbl_electrics_temp {
                 pemakaian,
                 foto,
                 insert_date,
-                insert_by
+                insert_by,
+                problem
               ]) ==
           1) {
         saveResult = BoolResult(
@@ -4696,7 +7673,7 @@ class Tbl_electrics_temp {
   Future<BoolCommitResult> upsertAll(
       List<Tbl_electrics_temp> tbl_electrics_temps) async {
     final results = await _mnTbl_electrics_temp.rawInsertAll(
-        'INSERT OR REPLACE INTO tbl_electrics_temp (ROWID,id, unit_code, type, bulan, tahun, nomor_seri, pemakaian, foto, insert_date, insert_by)  VALUES (?,?,?,?,?,?,?,?,?,?,?)',
+        'INSERT OR REPLACE INTO tbl_electrics_temp (ROWID,id, unit_code, type, bulan, tahun, nomor_seri, pemakaian, foto, insert_date, insert_by, problem)  VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',
         tbl_electrics_temps);
     return results;
   }
@@ -5224,6 +8201,11 @@ class Tbl_electrics_tempFilterBuilder extends SearchCriteria {
     return _insert_by = setField(_insert_by, 'insert_by', DbType.text);
   }
 
+  Tbl_electrics_tempField _problem;
+  Tbl_electrics_tempField get problem {
+    return _problem = setField(_problem, 'problem', DbType.text);
+  }
+
   bool _getIsDeleted;
 
   void _buildParameters() {
@@ -5594,6 +8576,12 @@ class Tbl_electrics_tempFields {
     return _fInsert_by = _fInsert_by ??
         SqlSyntax.setField(_fInsert_by, 'insert_by', DbType.text);
   }
+
+  static TableField _fProblem;
+  static TableField get problem {
+    return _fProblem =
+        _fProblem ?? SqlSyntax.setField(_fProblem, 'problem', DbType.text);
+  }
 }
 // endregion Tbl_electrics_tempFields
 
@@ -5623,7 +8611,8 @@ class Tbl_waters_temp {
       this.pemakaian,
       this.foto,
       this.insert_date,
-      this.insert_by}) {
+      this.insert_by,
+      this.problem}) {
     _setDefaultValues();
   }
   Tbl_waters_temp.withFields(
@@ -5636,7 +8625,8 @@ class Tbl_waters_temp {
       this.pemakaian,
       this.foto,
       this.insert_date,
-      this.insert_by) {
+      this.insert_by,
+      this.problem) {
     _setDefaultValues();
   }
   Tbl_waters_temp.withId(
@@ -5650,7 +8640,8 @@ class Tbl_waters_temp {
       this.pemakaian,
       this.foto,
       this.insert_date,
-      this.insert_by) {
+      this.insert_by,
+      this.problem) {
     _setDefaultValues();
   }
   Tbl_waters_temp.fromMap(Map<String, dynamic> o,
@@ -5689,6 +8680,9 @@ class Tbl_waters_temp {
     if (o['insert_by'] != null) {
       insert_by = o['insert_by'] as String;
     }
+    if (o['problem'] != null) {
+      problem = o['problem'] as String;
+    }
   }
   // FIELDS (Tbl_waters_temp)
   int ROWID;
@@ -5702,6 +8696,7 @@ class Tbl_waters_temp {
   String foto;
   String insert_date;
   String insert_by;
+  String problem;
 
   BoolResult saveResult;
   // end FIELDS (Tbl_waters_temp)
@@ -5761,6 +8756,10 @@ class Tbl_waters_temp {
       map['insert_by'] = insert_by;
     }
 
+    if (problem != null) {
+      map['problem'] = problem;
+    }
+
     return map;
   }
 
@@ -5812,6 +8811,10 @@ class Tbl_waters_temp {
       map['insert_by'] = insert_by;
     }
 
+    if (problem != null) {
+      map['problem'] = problem;
+    }
+
     return map;
   }
 
@@ -5836,7 +8839,8 @@ class Tbl_waters_temp {
       pemakaian,
       foto,
       insert_date,
-      insert_by
+      insert_by,
+      problem
     ];
   }
 
@@ -5852,7 +8856,8 @@ class Tbl_waters_temp {
       pemakaian,
       foto,
       insert_date,
-      insert_by
+      insert_by,
+      problem
     ];
   }
 
@@ -5966,7 +8971,7 @@ class Tbl_waters_temp {
   /// Returns a <List<BoolResult>>
   static Future<List<dynamic>> saveAll(
       List<Tbl_waters_temp> tbl_waters_temps) async {
-    // final results = _mnTbl_waters_temp.saveAll('INSERT OR REPLACE INTO tbl_waters_temp (ROWID,id, unit_code, type, bulan, tahun, nomor_seri, pemakaian, foto, insert_date, insert_by)  VALUES (?,?,?,?,?,?,?,?,?,?,?)',tbl_waters_temps);
+    // final results = _mnTbl_waters_temp.saveAll('INSERT OR REPLACE INTO tbl_waters_temp (ROWID,id, unit_code, type, bulan, tahun, nomor_seri, pemakaian, foto, insert_date, insert_by, problem)  VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',tbl_waters_temps);
     // return results; removed in sqfentity_gen 1.3.0+6
     await DbModel().batchStart();
     for (final obj in tbl_waters_temps) {
@@ -5989,7 +8994,7 @@ class Tbl_waters_temp {
   Future<int> upsert() async {
     try {
       if (await _mnTbl_waters_temp.rawInsert(
-              'INSERT OR REPLACE INTO tbl_waters_temp (ROWID,id, unit_code, type, bulan, tahun, nomor_seri, pemakaian, foto, insert_date, insert_by)  VALUES (?,?,?,?,?,?,?,?,?,?,?)',
+              'INSERT OR REPLACE INTO tbl_waters_temp (ROWID,id, unit_code, type, bulan, tahun, nomor_seri, pemakaian, foto, insert_date, insert_by, problem)  VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',
               [
                 ROWID,
                 id,
@@ -6001,7 +9006,8 @@ class Tbl_waters_temp {
                 pemakaian,
                 foto,
                 insert_date,
-                insert_by
+                insert_by,
+                problem
               ]) ==
           1) {
         saveResult = BoolResult(
@@ -6030,7 +9036,7 @@ class Tbl_waters_temp {
   Future<BoolCommitResult> upsertAll(
       List<Tbl_waters_temp> tbl_waters_temps) async {
     final results = await _mnTbl_waters_temp.rawInsertAll(
-        'INSERT OR REPLACE INTO tbl_waters_temp (ROWID,id, unit_code, type, bulan, tahun, nomor_seri, pemakaian, foto, insert_date, insert_by)  VALUES (?,?,?,?,?,?,?,?,?,?,?)',
+        'INSERT OR REPLACE INTO tbl_waters_temp (ROWID,id, unit_code, type, bulan, tahun, nomor_seri, pemakaian, foto, insert_date, insert_by, problem)  VALUES (?,?,?,?,?,?,?,?,?,?,?,?)',
         tbl_waters_temps);
     return results;
   }
@@ -6549,6 +9555,11 @@ class Tbl_waters_tempFilterBuilder extends SearchCriteria {
     return _insert_by = setField(_insert_by, 'insert_by', DbType.text);
   }
 
+  Tbl_waters_tempField _problem;
+  Tbl_waters_tempField get problem {
+    return _problem = setField(_problem, 'problem', DbType.text);
+  }
+
   bool _getIsDeleted;
 
   void _buildParameters() {
@@ -6918,6 +9929,12 @@ class Tbl_waters_tempFields {
     return _fInsert_by = _fInsert_by ??
         SqlSyntax.setField(_fInsert_by, 'insert_by', DbType.text);
   }
+
+  static TableField _fProblem;
+  static TableField get problem {
+    return _fProblem =
+        _fProblem ?? SqlSyntax.setField(_fProblem, 'problem', DbType.text);
+  }
 }
 // endregion Tbl_waters_tempFields
 
@@ -6934,6 +9951,5933 @@ class Tbl_waters_tempManager extends SqfEntityProvider {
 }
 
 //endregion Tbl_waters_tempManager
+// region Tbl_master_problem
+class Tbl_master_problem {
+  Tbl_master_problem(
+      {this.ROWID,
+      this.id,
+      this.idx,
+      this.problem,
+      this.type,
+      this.is_checked}) {
+    _setDefaultValues();
+  }
+  Tbl_master_problem.withFields(
+      this.id, this.idx, this.problem, this.type, this.is_checked) {
+    _setDefaultValues();
+  }
+  Tbl_master_problem.withId(
+      this.ROWID, this.id, this.idx, this.problem, this.type, this.is_checked) {
+    _setDefaultValues();
+  }
+  Tbl_master_problem.fromMap(Map<String, dynamic> o,
+      {bool setDefaultValues = true}) {
+    if (setDefaultValues) {
+      _setDefaultValues();
+    }
+    ROWID = int.tryParse(o['ROWID'].toString());
+    if (o['id'] != null) {
+      id = int.tryParse(o['id'].toString());
+    }
+    if (o['idx'] != null) {
+      idx = o['idx'] as String;
+    }
+    if (o['problem'] != null) {
+      problem = o['problem'] as String;
+    }
+    if (o['type'] != null) {
+      type = o['type'] as String;
+    }
+    if (o['is_checked'] != null) {
+      is_checked = o['is_checked'] == 1 || o['is_checked'] == true;
+    }
+  }
+  // FIELDS (Tbl_master_problem)
+  int ROWID;
+  int id;
+  String idx;
+  String problem;
+  String type;
+  bool is_checked;
+
+  BoolResult saveResult;
+  // end FIELDS (Tbl_master_problem)
+
+  static const bool _softDeleteActivated = false;
+  Tbl_master_problemManager __mnTbl_master_problem;
+
+  Tbl_master_problemManager get _mnTbl_master_problem {
+    return __mnTbl_master_problem =
+        __mnTbl_master_problem ?? Tbl_master_problemManager();
+  }
+
+  // METHODS
+  Map<String, dynamic> toMap(
+      {bool forQuery = false, bool forJson = false, bool forView = false}) {
+    final map = <String, dynamic>{};
+    if (ROWID != null) {
+      map['ROWID'] = ROWID;
+    }
+    if (id != null) {
+      map['id'] = id;
+    }
+
+    if (idx != null) {
+      map['idx'] = idx;
+    }
+
+    if (problem != null) {
+      map['problem'] = problem;
+    }
+
+    if (type != null) {
+      map['type'] = type;
+    }
+
+    if (is_checked != null) {
+      map['is_checked'] = forQuery ? (is_checked ? 1 : 0) : is_checked;
+    }
+
+    return map;
+  }
+
+  Future<Map<String, dynamic>> toMapWithChildren(
+      [bool forQuery = false,
+      bool forJson = false,
+      bool forView = false]) async {
+    final map = <String, dynamic>{};
+    if (ROWID != null) {
+      map['ROWID'] = ROWID;
+    }
+    if (id != null) {
+      map['id'] = id;
+    }
+
+    if (idx != null) {
+      map['idx'] = idx;
+    }
+
+    if (problem != null) {
+      map['problem'] = problem;
+    }
+
+    if (type != null) {
+      map['type'] = type;
+    }
+
+    if (is_checked != null) {
+      map['is_checked'] = forQuery ? (is_checked ? 1 : 0) : is_checked;
+    }
+
+    return map;
+  }
+
+  /// This method returns Json String [Tbl_master_problem]
+  String toJson() {
+    return json.encode(toMap(forJson: true));
+  }
+
+  /// This method returns Json String [Tbl_master_problem]
+  Future<String> toJsonWithChilds() async {
+    return json.encode(await toMapWithChildren(false, true));
+  }
+
+  List<dynamic> toArgs() {
+    return [id, idx, problem, type, is_checked];
+  }
+
+  List<dynamic> toArgsWithIds() {
+    return [ROWID, id, idx, problem, type, is_checked];
+  }
+
+  static Future<List<Tbl_master_problem>> fromWebUrl(String url,
+      {Map<String, String> headers}) async {
+    try {
+      final response = await http.get(url, headers: headers);
+      return await fromJson(response.body);
+    } catch (e) {
+      print(
+          'SQFENTITY ERROR Tbl_master_problem.fromWebUrl: ErrorMessage: ${e.toString()}');
+      return null;
+    }
+  }
+
+  Future<http.Response> postUrl(String url, {Map<String, String> headers}) {
+    return http.post(url, headers: headers, body: toJson());
+  }
+
+  static Future<List<Tbl_master_problem>> fromJson(String jsonBody) async {
+    final Iterable list = await json.decode(jsonBody) as Iterable;
+    var objList = <Tbl_master_problem>[];
+    try {
+      objList = list
+          .map((tbl_master_problem) => Tbl_master_problem.fromMap(
+              tbl_master_problem as Map<String, dynamic>))
+          .toList();
+    } catch (e) {
+      print(
+          'SQFENTITY ERROR Tbl_master_problem.fromJson: ErrorMessage: ${e.toString()}');
+    }
+    return objList;
+  }
+
+  static Future<List<Tbl_master_problem>> fromMapList(List<dynamic> data,
+      {bool preload = false,
+      List<String> preloadFields,
+      bool loadParents = false,
+      List<String> loadedFields,
+      bool setDefaultValues = true}) async {
+    final List<Tbl_master_problem> objList = <Tbl_master_problem>[];
+    loadedFields = loadedFields ?? [];
+    for (final map in data) {
+      final obj = Tbl_master_problem.fromMap(map as Map<String, dynamic>,
+          setDefaultValues: setDefaultValues);
+
+      objList.add(obj);
+    }
+    return objList;
+  }
+
+  /// returns Tbl_master_problem by ID if exist, otherwise returns null
+  ///
+  /// Primary Keys: int ROWID
+  ///
+  /// bool preload: if true, loads all related child objects (Set preload to true if you want to load all fields related to child or parent)
+  ///
+  /// ex: getById(preload:true) -> Loads all related objects
+  ///
+  /// List<String> preloadFields: specify the fields you want to preload (preload parameter's value should also be "true")
+  ///
+  /// ex: getById(preload:true, preloadFields:['plField1','plField2'... etc])  -> Loads only certain fields what you specified
+  ///
+  /// bool loadParents: if true, loads all parent objects until the object has no parent
+
+  ///
+  /// <returns>returns Tbl_master_problem if exist, otherwise returns null
+  Future<Tbl_master_problem> getById(int ROWID,
+      {bool preload = false,
+      List<String> preloadFields,
+      bool loadParents = false,
+      List<String> loadedFields}) async {
+    if (ROWID == null) {
+      return null;
+    }
+    Tbl_master_problem obj;
+    final data = await _mnTbl_master_problem.getById([ROWID]);
+    if (data.length != 0) {
+      obj = Tbl_master_problem.fromMap(data[0] as Map<String, dynamic>);
+    } else {
+      obj = null;
+    }
+    return obj;
+  }
+
+  /// Saves the (Tbl_master_problem) object. If the ROWID field is null, saves as a new record and returns new ROWID, if ROWID is not null then updates record
+
+  /// <returns>Returns ROWID
+  Future<int> save() async {
+    if (ROWID == null || ROWID == 0) {
+      ROWID = await _mnTbl_master_problem.insert(this);
+    } else {
+      // ROWID= await _upsert(); // removed in sqfentity_gen 1.3.0+6
+      await _mnTbl_master_problem.update(this);
+    }
+
+    return ROWID;
+  }
+
+  /// saveAs Tbl_master_problem. Returns a new Primary Key value of Tbl_master_problem
+
+  /// <returns>Returns a new Primary Key value of Tbl_master_problem
+  Future<int> saveAs() async {
+    ROWID = null;
+
+    return save();
+  }
+
+  /// saveAll method saves the sent List<Tbl_master_problem> as a bulk in one transaction
+  ///
+  /// Returns a <List<BoolResult>>
+  static Future<List<dynamic>> saveAll(
+      List<Tbl_master_problem> tbl_master_problems) async {
+    // final results = _mnTbl_master_problem.saveAll('INSERT OR REPLACE INTO tbl_master_problem (ROWID,id, idx, problem, type, is_checked)  VALUES (?,?,?,?,?,?)',tbl_master_problems);
+    // return results; removed in sqfentity_gen 1.3.0+6
+    await DbModel().batchStart();
+    for (final obj in tbl_master_problems) {
+      await obj.save();
+    }
+    //    return DbModel().batchCommit();
+    final result = await DbModel().batchCommit();
+    for (int i = 0; i < tbl_master_problems.length; i++) {
+      if (tbl_master_problems[i].ROWID == null) {
+        tbl_master_problems[i].ROWID = result[i] as int;
+      }
+    }
+
+    return result;
+  }
+
+  /// Updates if the record exists, otherwise adds a new row
+
+  /// <returns>Returns ROWID
+  Future<int> upsert() async {
+    try {
+      if (await _mnTbl_master_problem.rawInsert(
+              'INSERT OR REPLACE INTO tbl_master_problem (ROWID,id, idx, problem, type, is_checked)  VALUES (?,?,?,?,?,?)',
+              [ROWID, id, idx, problem, type, is_checked]) ==
+          1) {
+        saveResult = BoolResult(
+            success: true,
+            successMessage:
+                'Tbl_master_problem ROWID=$ROWID updated successfully');
+      } else {
+        saveResult = BoolResult(
+            success: false,
+            errorMessage: 'Tbl_master_problem ROWID=$ROWID did not update');
+      }
+      return ROWID;
+    } catch (e) {
+      saveResult = BoolResult(
+          success: false,
+          errorMessage:
+              'Tbl_master_problem Save failed. Error: ${e.toString()}');
+      return 0;
+    }
+  }
+
+  /// inserts or replaces the sent List<<Tbl_master_problem>> as a bulk in one transaction.
+  ///
+  /// upsertAll() method is faster then saveAll() method. upsertAll() should be used when you are sure that the primary key is greater than zero
+  ///
+  /// Returns a BoolCommitResult
+  Future<BoolCommitResult> upsertAll(
+      List<Tbl_master_problem> tbl_master_problems) async {
+    final results = await _mnTbl_master_problem.rawInsertAll(
+        'INSERT OR REPLACE INTO tbl_master_problem (ROWID,id, idx, problem, type, is_checked)  VALUES (?,?,?,?,?,?)',
+        tbl_master_problems);
+    return results;
+  }
+
+  /// Deletes Tbl_master_problem
+
+  /// <returns>BoolResult res.success=Deleted, not res.success=Can not deleted
+  Future<BoolResult> delete([bool hardDelete = false]) async {
+    print('SQFENTITIY: delete Tbl_master_problem invoked (ROWID=$ROWID)');
+    if (!_softDeleteActivated || hardDelete) {
+      return _mnTbl_master_problem
+          .delete(QueryParams(whereString: 'ROWID=?', whereArguments: [ROWID]));
+    } else {
+      return _mnTbl_master_problem.updateBatch(
+          QueryParams(whereString: 'ROWID=?', whereArguments: [ROWID]),
+          {'isDeleted': 1});
+    }
+  }
+
+  Tbl_master_problemFilterBuilder select(
+      {List<String> columnsToSelect, bool getIsDeleted}) {
+    return Tbl_master_problemFilterBuilder(this)
+      .._getIsDeleted = getIsDeleted == true
+      ..qparams.selectColumns = columnsToSelect;
+  }
+
+  Tbl_master_problemFilterBuilder distinct(
+      {List<String> columnsToSelect, bool getIsDeleted}) {
+    return Tbl_master_problemFilterBuilder(this)
+      .._getIsDeleted = getIsDeleted == true
+      ..qparams.selectColumns = columnsToSelect
+      ..qparams.distinct = true;
+  }
+
+  void _setDefaultValues() {
+    is_checked = is_checked ?? false;
+  }
+  // END METHODS
+  // CUSTOM CODES
+  /*
+      you must define customCode property of your SqfEntityTable constant for ex:
+      const tablePerson = SqfEntityTable(
+      tableName: 'person',
+      primaryKeyName: 'id',
+      primaryKeyType: PrimaryKeyType.integer_auto_incremental,
+      fields: [
+        SqfEntityField('firstName', DbType.text),
+        SqfEntityField('lastName', DbType.text),
+      ],
+      customCode: '''
+       String fullName()
+       { 
+         return '$firstName $lastName';
+       }
+      ''');
+     */
+  // END CUSTOM CODES
+}
+// endregion tbl_master_problem
+
+// region Tbl_master_problemField
+class Tbl_master_problemField extends SearchCriteria {
+  Tbl_master_problemField(this.tbl_master_problemFB) {
+    param = DbParameter();
+  }
+  DbParameter param;
+  String _waitingNot = '';
+  Tbl_master_problemFilterBuilder tbl_master_problemFB;
+
+  Tbl_master_problemField get not {
+    _waitingNot = ' NOT ';
+    return this;
+  }
+
+  Tbl_master_problemFilterBuilder equals(dynamic pValue) {
+    param.expression = '=';
+    tbl_master_problemFB._addedBlocks = _waitingNot == ''
+        ? setCriteria(pValue, tbl_master_problemFB.parameters, param,
+            SqlSyntax.EQuals, tbl_master_problemFB._addedBlocks)
+        : setCriteria(pValue, tbl_master_problemFB.parameters, param,
+            SqlSyntax.NotEQuals, tbl_master_problemFB._addedBlocks);
+    _waitingNot = '';
+    tbl_master_problemFB
+            ._addedBlocks.needEndBlock[tbl_master_problemFB._blockIndex] =
+        tbl_master_problemFB._addedBlocks.retVal;
+    return tbl_master_problemFB;
+  }
+
+  Tbl_master_problemFilterBuilder equalsOrNull(dynamic pValue) {
+    param.expression = '=';
+    tbl_master_problemFB._addedBlocks = _waitingNot == ''
+        ? setCriteria(pValue, tbl_master_problemFB.parameters, param,
+            SqlSyntax.EQualsOrNull, tbl_master_problemFB._addedBlocks)
+        : setCriteria(pValue, tbl_master_problemFB.parameters, param,
+            SqlSyntax.NotEQualsOrNull, tbl_master_problemFB._addedBlocks);
+    _waitingNot = '';
+    tbl_master_problemFB
+            ._addedBlocks.needEndBlock[tbl_master_problemFB._blockIndex] =
+        tbl_master_problemFB._addedBlocks.retVal;
+    return tbl_master_problemFB;
+  }
+
+  Tbl_master_problemFilterBuilder isNull() {
+    tbl_master_problemFB._addedBlocks = setCriteria(
+        0,
+        tbl_master_problemFB.parameters,
+        param,
+        SqlSyntax.IsNULL.replaceAll(SqlSyntax.notKeyword, _waitingNot),
+        tbl_master_problemFB._addedBlocks);
+    _waitingNot = '';
+    tbl_master_problemFB
+            ._addedBlocks.needEndBlock[tbl_master_problemFB._blockIndex] =
+        tbl_master_problemFB._addedBlocks.retVal;
+    return tbl_master_problemFB;
+  }
+
+  Tbl_master_problemFilterBuilder contains(dynamic pValue) {
+    if (pValue != null) {
+      tbl_master_problemFB._addedBlocks = setCriteria(
+          '%${pValue.toString()}%',
+          tbl_master_problemFB.parameters,
+          param,
+          SqlSyntax.Contains.replaceAll(SqlSyntax.notKeyword, _waitingNot),
+          tbl_master_problemFB._addedBlocks);
+      _waitingNot = '';
+      tbl_master_problemFB
+              ._addedBlocks.needEndBlock[tbl_master_problemFB._blockIndex] =
+          tbl_master_problemFB._addedBlocks.retVal;
+    }
+    return tbl_master_problemFB;
+  }
+
+  Tbl_master_problemFilterBuilder startsWith(dynamic pValue) {
+    if (pValue != null) {
+      tbl_master_problemFB._addedBlocks = setCriteria(
+          '${pValue.toString()}%',
+          tbl_master_problemFB.parameters,
+          param,
+          SqlSyntax.Contains.replaceAll(SqlSyntax.notKeyword, _waitingNot),
+          tbl_master_problemFB._addedBlocks);
+      _waitingNot = '';
+      tbl_master_problemFB
+              ._addedBlocks.needEndBlock[tbl_master_problemFB._blockIndex] =
+          tbl_master_problemFB._addedBlocks.retVal;
+      tbl_master_problemFB
+              ._addedBlocks.needEndBlock[tbl_master_problemFB._blockIndex] =
+          tbl_master_problemFB._addedBlocks.retVal;
+    }
+    return tbl_master_problemFB;
+  }
+
+  Tbl_master_problemFilterBuilder endsWith(dynamic pValue) {
+    if (pValue != null) {
+      tbl_master_problemFB._addedBlocks = setCriteria(
+          '%${pValue.toString()}',
+          tbl_master_problemFB.parameters,
+          param,
+          SqlSyntax.Contains.replaceAll(SqlSyntax.notKeyword, _waitingNot),
+          tbl_master_problemFB._addedBlocks);
+      _waitingNot = '';
+      tbl_master_problemFB
+              ._addedBlocks.needEndBlock[tbl_master_problemFB._blockIndex] =
+          tbl_master_problemFB._addedBlocks.retVal;
+    }
+    return tbl_master_problemFB;
+  }
+
+  Tbl_master_problemFilterBuilder between(dynamic pFirst, dynamic pLast) {
+    if (pFirst != null && pLast != null) {
+      tbl_master_problemFB._addedBlocks = setCriteria(
+          pFirst,
+          tbl_master_problemFB.parameters,
+          param,
+          SqlSyntax.Between.replaceAll(SqlSyntax.notKeyword, _waitingNot),
+          tbl_master_problemFB._addedBlocks,
+          pLast);
+    } else if (pFirst != null) {
+      if (_waitingNot != '') {
+        tbl_master_problemFB._addedBlocks = setCriteria(
+            pFirst,
+            tbl_master_problemFB.parameters,
+            param,
+            SqlSyntax.LessThan,
+            tbl_master_problemFB._addedBlocks);
+      } else {
+        tbl_master_problemFB._addedBlocks = setCriteria(
+            pFirst,
+            tbl_master_problemFB.parameters,
+            param,
+            SqlSyntax.GreaterThanOrEquals,
+            tbl_master_problemFB._addedBlocks);
+      }
+    } else if (pLast != null) {
+      if (_waitingNot != '') {
+        tbl_master_problemFB._addedBlocks = setCriteria(
+            pLast,
+            tbl_master_problemFB.parameters,
+            param,
+            SqlSyntax.GreaterThan,
+            tbl_master_problemFB._addedBlocks);
+      } else {
+        tbl_master_problemFB._addedBlocks = setCriteria(
+            pLast,
+            tbl_master_problemFB.parameters,
+            param,
+            SqlSyntax.LessThanOrEquals,
+            tbl_master_problemFB._addedBlocks);
+      }
+    }
+    _waitingNot = '';
+    tbl_master_problemFB
+            ._addedBlocks.needEndBlock[tbl_master_problemFB._blockIndex] =
+        tbl_master_problemFB._addedBlocks.retVal;
+    return tbl_master_problemFB;
+  }
+
+  Tbl_master_problemFilterBuilder greaterThan(dynamic pValue) {
+    param.expression = '>';
+    tbl_master_problemFB._addedBlocks = _waitingNot == ''
+        ? setCriteria(pValue, tbl_master_problemFB.parameters, param,
+            SqlSyntax.GreaterThan, tbl_master_problemFB._addedBlocks)
+        : setCriteria(pValue, tbl_master_problemFB.parameters, param,
+            SqlSyntax.LessThanOrEquals, tbl_master_problemFB._addedBlocks);
+    _waitingNot = '';
+    tbl_master_problemFB
+            ._addedBlocks.needEndBlock[tbl_master_problemFB._blockIndex] =
+        tbl_master_problemFB._addedBlocks.retVal;
+    return tbl_master_problemFB;
+  }
+
+  Tbl_master_problemFilterBuilder lessThan(dynamic pValue) {
+    param.expression = '<';
+    tbl_master_problemFB._addedBlocks = _waitingNot == ''
+        ? setCriteria(pValue, tbl_master_problemFB.parameters, param,
+            SqlSyntax.LessThan, tbl_master_problemFB._addedBlocks)
+        : setCriteria(pValue, tbl_master_problemFB.parameters, param,
+            SqlSyntax.GreaterThanOrEquals, tbl_master_problemFB._addedBlocks);
+    _waitingNot = '';
+    tbl_master_problemFB
+            ._addedBlocks.needEndBlock[tbl_master_problemFB._blockIndex] =
+        tbl_master_problemFB._addedBlocks.retVal;
+    return tbl_master_problemFB;
+  }
+
+  Tbl_master_problemFilterBuilder greaterThanOrEquals(dynamic pValue) {
+    param.expression = '>=';
+    tbl_master_problemFB._addedBlocks = _waitingNot == ''
+        ? setCriteria(pValue, tbl_master_problemFB.parameters, param,
+            SqlSyntax.GreaterThanOrEquals, tbl_master_problemFB._addedBlocks)
+        : setCriteria(pValue, tbl_master_problemFB.parameters, param,
+            SqlSyntax.LessThan, tbl_master_problemFB._addedBlocks);
+    _waitingNot = '';
+    tbl_master_problemFB
+            ._addedBlocks.needEndBlock[tbl_master_problemFB._blockIndex] =
+        tbl_master_problemFB._addedBlocks.retVal;
+    return tbl_master_problemFB;
+  }
+
+  Tbl_master_problemFilterBuilder lessThanOrEquals(dynamic pValue) {
+    param.expression = '<=';
+    tbl_master_problemFB._addedBlocks = _waitingNot == ''
+        ? setCriteria(pValue, tbl_master_problemFB.parameters, param,
+            SqlSyntax.LessThanOrEquals, tbl_master_problemFB._addedBlocks)
+        : setCriteria(pValue, tbl_master_problemFB.parameters, param,
+            SqlSyntax.GreaterThan, tbl_master_problemFB._addedBlocks);
+    _waitingNot = '';
+    tbl_master_problemFB
+            ._addedBlocks.needEndBlock[tbl_master_problemFB._blockIndex] =
+        tbl_master_problemFB._addedBlocks.retVal;
+    return tbl_master_problemFB;
+  }
+
+  Tbl_master_problemFilterBuilder inValues(dynamic pValue) {
+    tbl_master_problemFB._addedBlocks = setCriteria(
+        pValue,
+        tbl_master_problemFB.parameters,
+        param,
+        SqlSyntax.IN.replaceAll(SqlSyntax.notKeyword, _waitingNot),
+        tbl_master_problemFB._addedBlocks);
+    _waitingNot = '';
+    tbl_master_problemFB
+            ._addedBlocks.needEndBlock[tbl_master_problemFB._blockIndex] =
+        tbl_master_problemFB._addedBlocks.retVal;
+    return tbl_master_problemFB;
+  }
+}
+// endregion Tbl_master_problemField
+
+// region Tbl_master_problemFilterBuilder
+class Tbl_master_problemFilterBuilder extends SearchCriteria {
+  Tbl_master_problemFilterBuilder(Tbl_master_problem obj) {
+    whereString = '';
+    qparams = QueryParams();
+    parameters = <DbParameter>[];
+    orderByList = <String>[];
+    groupByList = <String>[];
+    _addedBlocks = AddedBlocks(<bool>[], <bool>[]);
+    _addedBlocks.needEndBlock.add(false);
+    _addedBlocks.waitingStartBlock.add(false);
+    _pagesize = 0;
+    _page = 0;
+    _obj = obj;
+  }
+  AddedBlocks _addedBlocks;
+  int _blockIndex = 0;
+  List<DbParameter> parameters;
+  List<String> orderByList;
+  Tbl_master_problem _obj;
+  QueryParams qparams;
+  int _pagesize;
+  int _page;
+
+  /// put the sql keyword 'AND'
+  Tbl_master_problemFilterBuilder get and {
+    if (parameters.isNotEmpty) {
+      parameters[parameters.length - 1].wOperator = ' AND ';
+    }
+    return this;
+  }
+
+  /// put the sql keyword 'OR'
+  Tbl_master_problemFilterBuilder get or {
+    if (parameters.isNotEmpty) {
+      parameters[parameters.length - 1].wOperator = ' OR ';
+    }
+    return this;
+  }
+
+  /// open parentheses
+  Tbl_master_problemFilterBuilder get startBlock {
+    _addedBlocks.waitingStartBlock.add(true);
+    _addedBlocks.needEndBlock.add(false);
+    _blockIndex++;
+    if (_blockIndex > 1) {
+      _addedBlocks.needEndBlock[_blockIndex - 1] = true;
+    }
+    return this;
+  }
+
+  /// String whereCriteria, write raw query without 'where' keyword. Like this: 'field1 like 'test%' and field2 = 3'
+  Tbl_master_problemFilterBuilder where(String whereCriteria,
+      {dynamic parameterValue}) {
+    if (whereCriteria != null && whereCriteria != '') {
+      final DbParameter param = DbParameter(
+          columnName: parameterValue == null ? null : '',
+          hasParameter: parameterValue != null);
+      _addedBlocks = setCriteria(parameterValue ?? 0, parameters, param,
+          '($whereCriteria)', _addedBlocks);
+      _addedBlocks.needEndBlock[_blockIndex] = _addedBlocks.retVal;
+    }
+    return this;
+  }
+
+  /// page = page number,
+  ///
+  /// pagesize = row(s) per page
+  Tbl_master_problemFilterBuilder page(int page, int pagesize) {
+    if (page > 0) {
+      _page = page;
+    }
+    if (pagesize > 0) {
+      _pagesize = pagesize;
+    }
+    return this;
+  }
+
+  /// int count = LIMIT
+  Tbl_master_problemFilterBuilder top(int count) {
+    if (count > 0) {
+      _pagesize = count;
+    }
+    return this;
+  }
+
+  /// close parentheses
+  Tbl_master_problemFilterBuilder get endBlock {
+    if (_addedBlocks.needEndBlock[_blockIndex]) {
+      parameters[parameters.length - 1].whereString += ' ) ';
+    }
+    _addedBlocks.needEndBlock.removeAt(_blockIndex);
+    _addedBlocks.waitingStartBlock.removeAt(_blockIndex);
+    _blockIndex--;
+    return this;
+  }
+
+  /// argFields might be String or List<String>.
+  ///
+  /// Example 1: argFields='name, date'
+  ///
+  /// Example 2: argFields = ['name', 'date']
+  Tbl_master_problemFilterBuilder orderBy(dynamic argFields) {
+    if (argFields != null) {
+      if (argFields is String) {
+        orderByList.add(argFields);
+      } else {
+        for (String s in argFields as List<String>) {
+          if (s != null && s.isNotEmpty) {
+            orderByList.add(' $s ');
+          }
+        }
+      }
+    }
+    return this;
+  }
+
+  /// argFields might be String or List<String>.
+  ///
+  /// Example 1: argFields='field1, field2'
+  ///
+  /// Example 2: argFields = ['field1', 'field2']
+  Tbl_master_problemFilterBuilder orderByDesc(dynamic argFields) {
+    if (argFields != null) {
+      if (argFields is String) {
+        orderByList.add('$argFields desc ');
+      } else {
+        for (String s in argFields as List<String>) {
+          if (s != null && s.isNotEmpty) {
+            orderByList.add(' $s desc ');
+          }
+        }
+      }
+    }
+    return this;
+  }
+
+  /// argFields might be String or List<String>.
+  ///
+  /// Example 1: argFields='field1, field2'
+  ///
+  /// Example 2: argFields = ['field1', 'field2']
+  Tbl_master_problemFilterBuilder groupBy(dynamic argFields) {
+    if (argFields != null) {
+      if (argFields is String) {
+        groupByList.add(' $argFields ');
+      } else {
+        for (String s in argFields as List<String>) {
+          if (s != null && s.isNotEmpty) {
+            groupByList.add(' $s ');
+          }
+        }
+      }
+    }
+    return this;
+  }
+
+  /// argFields might be String or List<String>.
+  ///
+  /// Example 1: argFields='name, date'
+  ///
+  /// Example 2: argFields = ['name', 'date']
+  Tbl_master_problemFilterBuilder having(dynamic argFields) {
+    if (argFields != null) {
+      if (argFields is String) {
+        havingList.add(argFields);
+      } else {
+        for (String s in argFields as List<String>) {
+          if (s != null && s.isNotEmpty) {
+            havingList.add(' $s ');
+          }
+        }
+      }
+    }
+    return this;
+  }
+
+  Tbl_master_problemField setField(
+      Tbl_master_problemField field, String colName, DbType dbtype) {
+    return Tbl_master_problemField(this)
+      ..param = DbParameter(
+          dbType: dbtype,
+          columnName: colName,
+          wStartBlock: _addedBlocks.waitingStartBlock[_blockIndex]);
+  }
+
+  Tbl_master_problemField _ROWID;
+  Tbl_master_problemField get ROWID {
+    return _ROWID = setField(_ROWID, 'ROWID', DbType.integer);
+  }
+
+  Tbl_master_problemField _id;
+  Tbl_master_problemField get id {
+    return _id = setField(_id, 'id', DbType.integer);
+  }
+
+  Tbl_master_problemField _idx;
+  Tbl_master_problemField get idx {
+    return _idx = setField(_idx, 'idx', DbType.text);
+  }
+
+  Tbl_master_problemField _problem;
+  Tbl_master_problemField get problem {
+    return _problem = setField(_problem, 'problem', DbType.text);
+  }
+
+  Tbl_master_problemField _type;
+  Tbl_master_problemField get type {
+    return _type = setField(_type, 'type', DbType.text);
+  }
+
+  Tbl_master_problemField _is_checked;
+  Tbl_master_problemField get is_checked {
+    return _is_checked = setField(_is_checked, 'is_checked', DbType.bool);
+  }
+
+  bool _getIsDeleted;
+
+  void _buildParameters() {
+    if (_page > 0 && _pagesize > 0) {
+      qparams
+        ..limit = _pagesize
+        ..offset = (_page - 1) * _pagesize;
+    } else {
+      qparams
+        ..limit = _pagesize
+        ..offset = _page;
+    }
+    for (DbParameter param in parameters) {
+      if (param.columnName != null) {
+        if (param.value is List && !param.hasParameter) {
+          param.value = param.dbType == DbType.text
+              ? '\'${param.value.join('\',\'')}\''
+              : param.value.join(',');
+          whereString += param.whereString
+              .replaceAll('{field}', param.columnName)
+              .replaceAll('?', param.value.toString());
+          param.value = null;
+        } else {
+          if (param.value is Map<String, dynamic> &&
+              param.value['sql'] != null) {
+            param
+              ..whereString = param.whereString
+                  .replaceAll('?', param.value['sql'].toString())
+              ..dbType = DbType.integer
+              ..value = param.value['args'];
+          }
+          whereString +=
+              param.whereString.replaceAll('{field}', param.columnName);
+        }
+        if (!param.whereString.contains('?')) {
+        } else {
+          switch (param.dbType) {
+            case DbType.bool:
+              param.value = param.value == null
+                  ? null
+                  : param.value == true
+                      ? 1
+                      : 0;
+              param.value2 = param.value2 == null
+                  ? null
+                  : param.value2 == true
+                      ? 1
+                      : 0;
+              break;
+            case DbType.date:
+            case DbType.datetime:
+            case DbType.datetimeUtc:
+              param.value = param.value == null
+                  ? null
+                  : (param.value as DateTime).millisecondsSinceEpoch;
+              param.value2 = param.value2 == null
+                  ? null
+                  : (param.value2 as DateTime).millisecondsSinceEpoch;
+              break;
+            default:
+          }
+          if (param.value != null) {
+            if (param.value is List) {
+              for (var p in param.value) {
+                whereArguments.add(p);
+              }
+            } else {
+              whereArguments.add(param.value);
+            }
+          }
+          if (param.value2 != null) {
+            whereArguments.add(param.value2);
+          }
+        }
+      } else {
+        whereString += param.whereString;
+      }
+    }
+    if (Tbl_master_problem._softDeleteActivated) {
+      if (whereString != '') {
+        whereString =
+            '${!_getIsDeleted ? 'ifnull(isDeleted,0)=0 AND' : ''} ($whereString)';
+      } else if (!_getIsDeleted) {
+        whereString = 'ifnull(isDeleted,0)=0';
+      }
+    }
+
+    if (whereString != '') {
+      qparams.whereString = whereString;
+    }
+    qparams
+      ..whereArguments = whereArguments
+      ..groupBy = groupByList.join(',')
+      ..orderBy = orderByList.join(',')
+      ..having = havingList.join(',');
+  }
+
+  /// Deletes List<Tbl_master_problem> bulk by query
+  ///
+  /// <returns>BoolResult res.success=Deleted, not res.success=Can not deleted
+  Future<BoolResult> delete([bool hardDelete = false]) async {
+    _buildParameters();
+    var r = BoolResult();
+
+    if (Tbl_master_problem._softDeleteActivated && !hardDelete) {
+      r = await _obj._mnTbl_master_problem
+          .updateBatch(qparams, {'isDeleted': 1});
+    } else {
+      r = await _obj._mnTbl_master_problem.delete(qparams);
+    }
+    return r;
+  }
+
+  /// using:
+  ///
+  /// update({'fieldName': Value})
+  ///
+  /// fieldName must be String. Value is dynamic, it can be any of the (int, bool, String.. )
+  Future<BoolResult> update(Map<String, dynamic> values) {
+    _buildParameters();
+    if (qparams.limit > 0 || qparams.offset > 0) {
+      qparams.whereString =
+          'ROWID IN (SELECT ROWID from tbl_master_problem ${qparams.whereString.isNotEmpty ? 'WHERE ${qparams.whereString}' : ''}${qparams.limit > 0 ? ' LIMIT ${qparams.limit}' : ''}${qparams.offset > 0 ? ' OFFSET ${qparams.offset}' : ''})';
+    }
+    return _obj._mnTbl_master_problem.updateBatch(qparams, values);
+  }
+
+  /// This method always returns Tbl_master_problem Obj if exist, otherwise returns null
+  ///
+  /// bool preload: if true, loads all related child objects (Set preload to true if you want to load all fields related to child or parent)
+  ///
+  /// ex: toSingle(preload:true) -> Loads all related objects
+  ///
+  /// List<String> preloadFields: specify the fields you want to preload (preload parameter's value should also be "true")
+  ///
+  /// ex: toSingle(preload:true, preloadFields:['plField1','plField2'... etc])  -> Loads only certain fields what you specified
+  ///
+  /// bool loadParents: if true, loads all parent objects until the object has no parent
+
+  ///
+  /// <returns>List<Tbl_master_problem>
+  Future<Tbl_master_problem> toSingle(
+      {bool preload = false,
+      List<String> preloadFields,
+      bool loadParents = false,
+      List<String> loadedFields}) async {
+    _pagesize = 1;
+    _buildParameters();
+    final objFuture = _obj._mnTbl_master_problem.toList(qparams);
+    final data = await objFuture;
+    Tbl_master_problem obj;
+    if (data.isNotEmpty) {
+      obj = Tbl_master_problem.fromMap(data[0] as Map<String, dynamic>);
+    } else {
+      obj = null;
+    }
+    return obj;
+  }
+
+  /// This method returns int. [Tbl_master_problem]
+  ///
+  /// <returns>int
+  Future<int> toCount(
+      [VoidCallback Function(int c) tbl_master_problemCount]) async {
+    _buildParameters();
+    qparams.selectColumns = ['COUNT(1) AS CNT'];
+    final tbl_master_problemsFuture =
+        await _obj._mnTbl_master_problem.toList(qparams);
+    final int count = tbl_master_problemsFuture[0]['CNT'] as int;
+    if (tbl_master_problemCount != null) {
+      tbl_master_problemCount(count);
+    }
+    return count;
+  }
+
+  /// This method returns List<Tbl_master_problem> [Tbl_master_problem]
+  ///
+  /// bool preload: if true, loads all related child objects (Set preload to true if you want to load all fields related to child or parent)
+  ///
+  /// ex: toList(preload:true) -> Loads all related objects
+  ///
+  /// List<String> preloadFields: specify the fields you want to preload (preload parameter's value should also be "true")
+  ///
+  /// ex: toList(preload:true, preloadFields:['plField1','plField2'... etc])  -> Loads only certain fields what you specified
+  ///
+  /// bool loadParents: if true, loads all parent objects until the object has no parent
+
+  ///
+  /// <returns>List<Tbl_master_problem>
+  Future<List<Tbl_master_problem>> toList(
+      {bool preload = false,
+      List<String> preloadFields,
+      bool loadParents = false,
+      List<String> loadedFields}) async {
+    final data = await toMapList();
+    final List<Tbl_master_problem> tbl_master_problemsData =
+        await Tbl_master_problem.fromMapList(data,
+            preload: preload,
+            preloadFields: preloadFields,
+            loadParents: loadParents,
+            loadedFields: loadedFields,
+            setDefaultValues: qparams.selectColumns == null);
+    return tbl_master_problemsData;
+  }
+
+  /// This method returns Json String [Tbl_master_problem]
+  Future<String> toJson() async {
+    final list = <dynamic>[];
+    final data = await toList();
+    for (var o in data) {
+      list.add(o.toMap(forJson: true));
+    }
+    return json.encode(list);
+  }
+
+  /// This method returns Json String. [Tbl_master_problem]
+  Future<String> toJsonWithChilds() async {
+    final list = <dynamic>[];
+    final data = await toList();
+    for (var o in data) {
+      list.add(await o.toMapWithChildren(false, true));
+    }
+    return json.encode(list);
+  }
+
+  /// This method returns List<dynamic>. [Tbl_master_problem]
+  ///
+  /// <returns>List<dynamic>
+  Future<List<dynamic>> toMapList() async {
+    _buildParameters();
+    return await _obj._mnTbl_master_problem.toList(qparams);
+  }
+
+  /// This method returns Primary Key List SQL and Parameters retVal = Map<String,dynamic>. [Tbl_master_problem]
+  ///
+  /// retVal['sql'] = SQL statement string, retVal['args'] = whereArguments List<dynamic>;
+  ///
+  /// <returns>List<String>
+  Map<String, dynamic> toListPrimaryKeySQL([bool buildParameters = true]) {
+    final Map<String, dynamic> _retVal = <String, dynamic>{};
+    if (buildParameters) {
+      _buildParameters();
+    }
+    _retVal['sql'] =
+        'SELECT `ROWID` FROM tbl_master_problem WHERE ${qparams.whereString}';
+    _retVal['args'] = qparams.whereArguments;
+    return _retVal;
+  }
+
+  /// This method returns Primary Key List<int>.
+  /// <returns>List<int>
+  Future<List<int>> toListPrimaryKey([bool buildParameters = true]) async {
+    if (buildParameters) {
+      _buildParameters();
+    }
+    final List<int> ROWIDData = <int>[];
+    qparams.selectColumns = ['ROWID'];
+    final ROWIDFuture = await _obj._mnTbl_master_problem.toList(qparams);
+
+    final int count = ROWIDFuture.length;
+    for (int i = 0; i < count; i++) {
+      ROWIDData.add(ROWIDFuture[i]['ROWID'] as int);
+    }
+    return ROWIDData;
+  }
+
+  /// Returns List<dynamic> for selected columns. Use this method for 'groupBy' with min,max,avg..  [Tbl_master_problem]
+  ///
+  /// Sample usage: (see EXAMPLE 4.2 at https://github.com/hhtokpinar/sqfEntity#group-by)
+  Future<List<dynamic>> toListObject() async {
+    _buildParameters();
+
+    final objectFuture = _obj._mnTbl_master_problem.toList(qparams);
+
+    final List<dynamic> objectsData = <dynamic>[];
+    final data = await objectFuture;
+    final int count = data.length;
+    for (int i = 0; i < count; i++) {
+      objectsData.add(data[i]);
+    }
+    return objectsData;
+  }
+
+  /// Returns List<String> for selected first column
+  ///
+  /// Sample usage: await Tbl_master_problem.select(columnsToSelect: ['columnName']).toListString()
+  Future<List<String>> toListString(
+      [VoidCallback Function(List<String> o) listString]) async {
+    _buildParameters();
+
+    final objectFuture = _obj._mnTbl_master_problem.toList(qparams);
+
+    final List<String> objectsData = <String>[];
+    final data = await objectFuture;
+    final int count = data.length;
+    for (int i = 0; i < count; i++) {
+      objectsData.add(data[i][qparams.selectColumns[0]].toString());
+    }
+    if (listString != null) {
+      listString(objectsData);
+    }
+    return objectsData;
+  }
+}
+// endregion Tbl_master_problemFilterBuilder
+
+// region Tbl_master_problemFields
+class Tbl_master_problemFields {
+  static TableField _fROWID;
+  static TableField get ROWID {
+    return _fROWID =
+        _fROWID ?? SqlSyntax.setField(_fROWID, 'rowid', DbType.integer);
+  }
+
+  static TableField _fId;
+  static TableField get id {
+    return _fId = _fId ?? SqlSyntax.setField(_fId, 'id', DbType.integer);
+  }
+
+  static TableField _fIdx;
+  static TableField get idx {
+    return _fIdx = _fIdx ?? SqlSyntax.setField(_fIdx, 'idx', DbType.text);
+  }
+
+  static TableField _fProblem;
+  static TableField get problem {
+    return _fProblem =
+        _fProblem ?? SqlSyntax.setField(_fProblem, 'problem', DbType.text);
+  }
+
+  static TableField _fType;
+  static TableField get type {
+    return _fType = _fType ?? SqlSyntax.setField(_fType, 'type', DbType.text);
+  }
+
+  static TableField _fIs_checked;
+  static TableField get is_checked {
+    return _fIs_checked = _fIs_checked ??
+        SqlSyntax.setField(_fIs_checked, 'is_checked', DbType.bool);
+  }
+}
+// endregion Tbl_master_problemFields
+
+//region Tbl_master_problemManager
+class Tbl_master_problemManager extends SqfEntityProvider {
+  Tbl_master_problemManager()
+      : super(DbModel(),
+            tableName: _tableName,
+            primaryKeyList: _primaryKeyList,
+            whereStr: _whereStr);
+  static final String _tableName = 'tbl_master_problem';
+  static final List<String> _primaryKeyList = ['ROWID'];
+  static final String _whereStr = 'ROWID=?';
+}
+
+//endregion Tbl_master_problemManager
+// region Tbl_waters_temp_problem
+class Tbl_waters_temp_problem {
+  Tbl_waters_temp_problem(
+      {this.ROWID,
+      this.id,
+      this.unit_code,
+      this.bulan,
+      this.tahun,
+      this.idx_problem}) {
+    _setDefaultValues();
+  }
+  Tbl_waters_temp_problem.withFields(
+      this.id, this.unit_code, this.bulan, this.tahun, this.idx_problem) {
+    _setDefaultValues();
+  }
+  Tbl_waters_temp_problem.withId(this.ROWID, this.id, this.unit_code,
+      this.bulan, this.tahun, this.idx_problem) {
+    _setDefaultValues();
+  }
+  Tbl_waters_temp_problem.fromMap(Map<String, dynamic> o,
+      {bool setDefaultValues = true}) {
+    if (setDefaultValues) {
+      _setDefaultValues();
+    }
+    ROWID = int.tryParse(o['ROWID'].toString());
+    if (o['id'] != null) {
+      id = int.tryParse(o['id'].toString());
+    }
+    if (o['unit_code'] != null) {
+      unit_code = o['unit_code'] as String;
+    }
+    if (o['bulan'] != null) {
+      bulan = o['bulan'] as String;
+    }
+    if (o['tahun'] != null) {
+      tahun = o['tahun'] as String;
+    }
+    if (o['idx_problem'] != null) {
+      idx_problem = o['idx_problem'] as String;
+    }
+  }
+  // FIELDS (Tbl_waters_temp_problem)
+  int ROWID;
+  int id;
+  String unit_code;
+  String bulan;
+  String tahun;
+  String idx_problem;
+
+  BoolResult saveResult;
+  // end FIELDS (Tbl_waters_temp_problem)
+
+  static const bool _softDeleteActivated = false;
+  Tbl_waters_temp_problemManager __mnTbl_waters_temp_problem;
+
+  Tbl_waters_temp_problemManager get _mnTbl_waters_temp_problem {
+    return __mnTbl_waters_temp_problem =
+        __mnTbl_waters_temp_problem ?? Tbl_waters_temp_problemManager();
+  }
+
+  // METHODS
+  Map<String, dynamic> toMap(
+      {bool forQuery = false, bool forJson = false, bool forView = false}) {
+    final map = <String, dynamic>{};
+    if (ROWID != null) {
+      map['ROWID'] = ROWID;
+    }
+    if (id != null) {
+      map['id'] = id;
+    }
+
+    if (unit_code != null) {
+      map['unit_code'] = unit_code;
+    }
+
+    if (bulan != null) {
+      map['bulan'] = bulan;
+    }
+
+    if (tahun != null) {
+      map['tahun'] = tahun;
+    }
+
+    if (idx_problem != null) {
+      map['idx_problem'] = idx_problem;
+    }
+
+    return map;
+  }
+
+  Future<Map<String, dynamic>> toMapWithChildren(
+      [bool forQuery = false,
+      bool forJson = false,
+      bool forView = false]) async {
+    final map = <String, dynamic>{};
+    if (ROWID != null) {
+      map['ROWID'] = ROWID;
+    }
+    if (id != null) {
+      map['id'] = id;
+    }
+
+    if (unit_code != null) {
+      map['unit_code'] = unit_code;
+    }
+
+    if (bulan != null) {
+      map['bulan'] = bulan;
+    }
+
+    if (tahun != null) {
+      map['tahun'] = tahun;
+    }
+
+    if (idx_problem != null) {
+      map['idx_problem'] = idx_problem;
+    }
+
+    return map;
+  }
+
+  /// This method returns Json String [Tbl_waters_temp_problem]
+  String toJson() {
+    return json.encode(toMap(forJson: true));
+  }
+
+  /// This method returns Json String [Tbl_waters_temp_problem]
+  Future<String> toJsonWithChilds() async {
+    return json.encode(await toMapWithChildren(false, true));
+  }
+
+  List<dynamic> toArgs() {
+    return [id, unit_code, bulan, tahun, idx_problem];
+  }
+
+  List<dynamic> toArgsWithIds() {
+    return [ROWID, id, unit_code, bulan, tahun, idx_problem];
+  }
+
+  static Future<List<Tbl_waters_temp_problem>> fromWebUrl(String url,
+      {Map<String, String> headers}) async {
+    try {
+      final response = await http.get(url, headers: headers);
+      return await fromJson(response.body);
+    } catch (e) {
+      print(
+          'SQFENTITY ERROR Tbl_waters_temp_problem.fromWebUrl: ErrorMessage: ${e.toString()}');
+      return null;
+    }
+  }
+
+  Future<http.Response> postUrl(String url, {Map<String, String> headers}) {
+    return http.post(url, headers: headers, body: toJson());
+  }
+
+  static Future<List<Tbl_waters_temp_problem>> fromJson(String jsonBody) async {
+    final Iterable list = await json.decode(jsonBody) as Iterable;
+    var objList = <Tbl_waters_temp_problem>[];
+    try {
+      objList = list
+          .map((tbl_waters_temp_problem) => Tbl_waters_temp_problem.fromMap(
+              tbl_waters_temp_problem as Map<String, dynamic>))
+          .toList();
+    } catch (e) {
+      print(
+          'SQFENTITY ERROR Tbl_waters_temp_problem.fromJson: ErrorMessage: ${e.toString()}');
+    }
+    return objList;
+  }
+
+  static Future<List<Tbl_waters_temp_problem>> fromMapList(List<dynamic> data,
+      {bool preload = false,
+      List<String> preloadFields,
+      bool loadParents = false,
+      List<String> loadedFields,
+      bool setDefaultValues = true}) async {
+    final List<Tbl_waters_temp_problem> objList = <Tbl_waters_temp_problem>[];
+    loadedFields = loadedFields ?? [];
+    for (final map in data) {
+      final obj = Tbl_waters_temp_problem.fromMap(map as Map<String, dynamic>,
+          setDefaultValues: setDefaultValues);
+
+      objList.add(obj);
+    }
+    return objList;
+  }
+
+  /// returns Tbl_waters_temp_problem by ID if exist, otherwise returns null
+  ///
+  /// Primary Keys: int ROWID
+  ///
+  /// bool preload: if true, loads all related child objects (Set preload to true if you want to load all fields related to child or parent)
+  ///
+  /// ex: getById(preload:true) -> Loads all related objects
+  ///
+  /// List<String> preloadFields: specify the fields you want to preload (preload parameter's value should also be "true")
+  ///
+  /// ex: getById(preload:true, preloadFields:['plField1','plField2'... etc])  -> Loads only certain fields what you specified
+  ///
+  /// bool loadParents: if true, loads all parent objects until the object has no parent
+
+  ///
+  /// <returns>returns Tbl_waters_temp_problem if exist, otherwise returns null
+  Future<Tbl_waters_temp_problem> getById(int ROWID,
+      {bool preload = false,
+      List<String> preloadFields,
+      bool loadParents = false,
+      List<String> loadedFields}) async {
+    if (ROWID == null) {
+      return null;
+    }
+    Tbl_waters_temp_problem obj;
+    final data = await _mnTbl_waters_temp_problem.getById([ROWID]);
+    if (data.length != 0) {
+      obj = Tbl_waters_temp_problem.fromMap(data[0] as Map<String, dynamic>);
+    } else {
+      obj = null;
+    }
+    return obj;
+  }
+
+  /// Saves the (Tbl_waters_temp_problem) object. If the ROWID field is null, saves as a new record and returns new ROWID, if ROWID is not null then updates record
+
+  /// <returns>Returns ROWID
+  Future<int> save() async {
+    if (ROWID == null || ROWID == 0) {
+      ROWID = await _mnTbl_waters_temp_problem.insert(this);
+    } else {
+      // ROWID= await _upsert(); // removed in sqfentity_gen 1.3.0+6
+      await _mnTbl_waters_temp_problem.update(this);
+    }
+
+    return ROWID;
+  }
+
+  /// saveAs Tbl_waters_temp_problem. Returns a new Primary Key value of Tbl_waters_temp_problem
+
+  /// <returns>Returns a new Primary Key value of Tbl_waters_temp_problem
+  Future<int> saveAs() async {
+    ROWID = null;
+
+    return save();
+  }
+
+  /// saveAll method saves the sent List<Tbl_waters_temp_problem> as a bulk in one transaction
+  ///
+  /// Returns a <List<BoolResult>>
+  static Future<List<dynamic>> saveAll(
+      List<Tbl_waters_temp_problem> tbl_waters_temp_problems) async {
+    // final results = _mnTbl_waters_temp_problem.saveAll('INSERT OR REPLACE INTO tbl_waters_temp_problem (ROWID,id, unit_code, bulan, tahun, idx_problem)  VALUES (?,?,?,?,?,?)',tbl_waters_temp_problems);
+    // return results; removed in sqfentity_gen 1.3.0+6
+    await DbModel().batchStart();
+    for (final obj in tbl_waters_temp_problems) {
+      await obj.save();
+    }
+    //    return DbModel().batchCommit();
+    final result = await DbModel().batchCommit();
+    for (int i = 0; i < tbl_waters_temp_problems.length; i++) {
+      if (tbl_waters_temp_problems[i].ROWID == null) {
+        tbl_waters_temp_problems[i].ROWID = result[i] as int;
+      }
+    }
+
+    return result;
+  }
+
+  /// Updates if the record exists, otherwise adds a new row
+
+  /// <returns>Returns ROWID
+  Future<int> upsert() async {
+    try {
+      if (await _mnTbl_waters_temp_problem.rawInsert(
+              'INSERT OR REPLACE INTO tbl_waters_temp_problem (ROWID,id, unit_code, bulan, tahun, idx_problem)  VALUES (?,?,?,?,?,?)',
+              [ROWID, id, unit_code, bulan, tahun, idx_problem]) ==
+          1) {
+        saveResult = BoolResult(
+            success: true,
+            successMessage:
+                'Tbl_waters_temp_problem ROWID=$ROWID updated successfully');
+      } else {
+        saveResult = BoolResult(
+            success: false,
+            errorMessage:
+                'Tbl_waters_temp_problem ROWID=$ROWID did not update');
+      }
+      return ROWID;
+    } catch (e) {
+      saveResult = BoolResult(
+          success: false,
+          errorMessage:
+              'Tbl_waters_temp_problem Save failed. Error: ${e.toString()}');
+      return 0;
+    }
+  }
+
+  /// inserts or replaces the sent List<<Tbl_waters_temp_problem>> as a bulk in one transaction.
+  ///
+  /// upsertAll() method is faster then saveAll() method. upsertAll() should be used when you are sure that the primary key is greater than zero
+  ///
+  /// Returns a BoolCommitResult
+  Future<BoolCommitResult> upsertAll(
+      List<Tbl_waters_temp_problem> tbl_waters_temp_problems) async {
+    final results = await _mnTbl_waters_temp_problem.rawInsertAll(
+        'INSERT OR REPLACE INTO tbl_waters_temp_problem (ROWID,id, unit_code, bulan, tahun, idx_problem)  VALUES (?,?,?,?,?,?)',
+        tbl_waters_temp_problems);
+    return results;
+  }
+
+  /// Deletes Tbl_waters_temp_problem
+
+  /// <returns>BoolResult res.success=Deleted, not res.success=Can not deleted
+  Future<BoolResult> delete([bool hardDelete = false]) async {
+    print('SQFENTITIY: delete Tbl_waters_temp_problem invoked (ROWID=$ROWID)');
+    if (!_softDeleteActivated || hardDelete) {
+      return _mnTbl_waters_temp_problem
+          .delete(QueryParams(whereString: 'ROWID=?', whereArguments: [ROWID]));
+    } else {
+      return _mnTbl_waters_temp_problem.updateBatch(
+          QueryParams(whereString: 'ROWID=?', whereArguments: [ROWID]),
+          {'isDeleted': 1});
+    }
+  }
+
+  Tbl_waters_temp_problemFilterBuilder select(
+      {List<String> columnsToSelect, bool getIsDeleted}) {
+    return Tbl_waters_temp_problemFilterBuilder(this)
+      .._getIsDeleted = getIsDeleted == true
+      ..qparams.selectColumns = columnsToSelect;
+  }
+
+  Tbl_waters_temp_problemFilterBuilder distinct(
+      {List<String> columnsToSelect, bool getIsDeleted}) {
+    return Tbl_waters_temp_problemFilterBuilder(this)
+      .._getIsDeleted = getIsDeleted == true
+      ..qparams.selectColumns = columnsToSelect
+      ..qparams.distinct = true;
+  }
+
+  void _setDefaultValues() {}
+  // END METHODS
+  // CUSTOM CODES
+  /*
+      you must define customCode property of your SqfEntityTable constant for ex:
+      const tablePerson = SqfEntityTable(
+      tableName: 'person',
+      primaryKeyName: 'id',
+      primaryKeyType: PrimaryKeyType.integer_auto_incremental,
+      fields: [
+        SqfEntityField('firstName', DbType.text),
+        SqfEntityField('lastName', DbType.text),
+      ],
+      customCode: '''
+       String fullName()
+       { 
+         return '$firstName $lastName';
+       }
+      ''');
+     */
+  // END CUSTOM CODES
+}
+// endregion tbl_waters_temp_problem
+
+// region Tbl_waters_temp_problemField
+class Tbl_waters_temp_problemField extends SearchCriteria {
+  Tbl_waters_temp_problemField(this.tbl_waters_temp_problemFB) {
+    param = DbParameter();
+  }
+  DbParameter param;
+  String _waitingNot = '';
+  Tbl_waters_temp_problemFilterBuilder tbl_waters_temp_problemFB;
+
+  Tbl_waters_temp_problemField get not {
+    _waitingNot = ' NOT ';
+    return this;
+  }
+
+  Tbl_waters_temp_problemFilterBuilder equals(dynamic pValue) {
+    param.expression = '=';
+    tbl_waters_temp_problemFB._addedBlocks = _waitingNot == ''
+        ? setCriteria(pValue, tbl_waters_temp_problemFB.parameters, param,
+            SqlSyntax.EQuals, tbl_waters_temp_problemFB._addedBlocks)
+        : setCriteria(pValue, tbl_waters_temp_problemFB.parameters, param,
+            SqlSyntax.NotEQuals, tbl_waters_temp_problemFB._addedBlocks);
+    _waitingNot = '';
+    tbl_waters_temp_problemFB
+            ._addedBlocks.needEndBlock[tbl_waters_temp_problemFB._blockIndex] =
+        tbl_waters_temp_problemFB._addedBlocks.retVal;
+    return tbl_waters_temp_problemFB;
+  }
+
+  Tbl_waters_temp_problemFilterBuilder equalsOrNull(dynamic pValue) {
+    param.expression = '=';
+    tbl_waters_temp_problemFB._addedBlocks = _waitingNot == ''
+        ? setCriteria(pValue, tbl_waters_temp_problemFB.parameters, param,
+            SqlSyntax.EQualsOrNull, tbl_waters_temp_problemFB._addedBlocks)
+        : setCriteria(pValue, tbl_waters_temp_problemFB.parameters, param,
+            SqlSyntax.NotEQualsOrNull, tbl_waters_temp_problemFB._addedBlocks);
+    _waitingNot = '';
+    tbl_waters_temp_problemFB
+            ._addedBlocks.needEndBlock[tbl_waters_temp_problemFB._blockIndex] =
+        tbl_waters_temp_problemFB._addedBlocks.retVal;
+    return tbl_waters_temp_problemFB;
+  }
+
+  Tbl_waters_temp_problemFilterBuilder isNull() {
+    tbl_waters_temp_problemFB._addedBlocks = setCriteria(
+        0,
+        tbl_waters_temp_problemFB.parameters,
+        param,
+        SqlSyntax.IsNULL.replaceAll(SqlSyntax.notKeyword, _waitingNot),
+        tbl_waters_temp_problemFB._addedBlocks);
+    _waitingNot = '';
+    tbl_waters_temp_problemFB
+            ._addedBlocks.needEndBlock[tbl_waters_temp_problemFB._blockIndex] =
+        tbl_waters_temp_problemFB._addedBlocks.retVal;
+    return tbl_waters_temp_problemFB;
+  }
+
+  Tbl_waters_temp_problemFilterBuilder contains(dynamic pValue) {
+    if (pValue != null) {
+      tbl_waters_temp_problemFB._addedBlocks = setCriteria(
+          '%${pValue.toString()}%',
+          tbl_waters_temp_problemFB.parameters,
+          param,
+          SqlSyntax.Contains.replaceAll(SqlSyntax.notKeyword, _waitingNot),
+          tbl_waters_temp_problemFB._addedBlocks);
+      _waitingNot = '';
+      tbl_waters_temp_problemFB._addedBlocks
+              .needEndBlock[tbl_waters_temp_problemFB._blockIndex] =
+          tbl_waters_temp_problemFB._addedBlocks.retVal;
+    }
+    return tbl_waters_temp_problemFB;
+  }
+
+  Tbl_waters_temp_problemFilterBuilder startsWith(dynamic pValue) {
+    if (pValue != null) {
+      tbl_waters_temp_problemFB._addedBlocks = setCriteria(
+          '${pValue.toString()}%',
+          tbl_waters_temp_problemFB.parameters,
+          param,
+          SqlSyntax.Contains.replaceAll(SqlSyntax.notKeyword, _waitingNot),
+          tbl_waters_temp_problemFB._addedBlocks);
+      _waitingNot = '';
+      tbl_waters_temp_problemFB._addedBlocks
+              .needEndBlock[tbl_waters_temp_problemFB._blockIndex] =
+          tbl_waters_temp_problemFB._addedBlocks.retVal;
+      tbl_waters_temp_problemFB._addedBlocks
+              .needEndBlock[tbl_waters_temp_problemFB._blockIndex] =
+          tbl_waters_temp_problemFB._addedBlocks.retVal;
+    }
+    return tbl_waters_temp_problemFB;
+  }
+
+  Tbl_waters_temp_problemFilterBuilder endsWith(dynamic pValue) {
+    if (pValue != null) {
+      tbl_waters_temp_problemFB._addedBlocks = setCriteria(
+          '%${pValue.toString()}',
+          tbl_waters_temp_problemFB.parameters,
+          param,
+          SqlSyntax.Contains.replaceAll(SqlSyntax.notKeyword, _waitingNot),
+          tbl_waters_temp_problemFB._addedBlocks);
+      _waitingNot = '';
+      tbl_waters_temp_problemFB._addedBlocks
+              .needEndBlock[tbl_waters_temp_problemFB._blockIndex] =
+          tbl_waters_temp_problemFB._addedBlocks.retVal;
+    }
+    return tbl_waters_temp_problemFB;
+  }
+
+  Tbl_waters_temp_problemFilterBuilder between(dynamic pFirst, dynamic pLast) {
+    if (pFirst != null && pLast != null) {
+      tbl_waters_temp_problemFB._addedBlocks = setCriteria(
+          pFirst,
+          tbl_waters_temp_problemFB.parameters,
+          param,
+          SqlSyntax.Between.replaceAll(SqlSyntax.notKeyword, _waitingNot),
+          tbl_waters_temp_problemFB._addedBlocks,
+          pLast);
+    } else if (pFirst != null) {
+      if (_waitingNot != '') {
+        tbl_waters_temp_problemFB._addedBlocks = setCriteria(
+            pFirst,
+            tbl_waters_temp_problemFB.parameters,
+            param,
+            SqlSyntax.LessThan,
+            tbl_waters_temp_problemFB._addedBlocks);
+      } else {
+        tbl_waters_temp_problemFB._addedBlocks = setCriteria(
+            pFirst,
+            tbl_waters_temp_problemFB.parameters,
+            param,
+            SqlSyntax.GreaterThanOrEquals,
+            tbl_waters_temp_problemFB._addedBlocks);
+      }
+    } else if (pLast != null) {
+      if (_waitingNot != '') {
+        tbl_waters_temp_problemFB._addedBlocks = setCriteria(
+            pLast,
+            tbl_waters_temp_problemFB.parameters,
+            param,
+            SqlSyntax.GreaterThan,
+            tbl_waters_temp_problemFB._addedBlocks);
+      } else {
+        tbl_waters_temp_problemFB._addedBlocks = setCriteria(
+            pLast,
+            tbl_waters_temp_problemFB.parameters,
+            param,
+            SqlSyntax.LessThanOrEquals,
+            tbl_waters_temp_problemFB._addedBlocks);
+      }
+    }
+    _waitingNot = '';
+    tbl_waters_temp_problemFB
+            ._addedBlocks.needEndBlock[tbl_waters_temp_problemFB._blockIndex] =
+        tbl_waters_temp_problemFB._addedBlocks.retVal;
+    return tbl_waters_temp_problemFB;
+  }
+
+  Tbl_waters_temp_problemFilterBuilder greaterThan(dynamic pValue) {
+    param.expression = '>';
+    tbl_waters_temp_problemFB._addedBlocks = _waitingNot == ''
+        ? setCriteria(pValue, tbl_waters_temp_problemFB.parameters, param,
+            SqlSyntax.GreaterThan, tbl_waters_temp_problemFB._addedBlocks)
+        : setCriteria(pValue, tbl_waters_temp_problemFB.parameters, param,
+            SqlSyntax.LessThanOrEquals, tbl_waters_temp_problemFB._addedBlocks);
+    _waitingNot = '';
+    tbl_waters_temp_problemFB
+            ._addedBlocks.needEndBlock[tbl_waters_temp_problemFB._blockIndex] =
+        tbl_waters_temp_problemFB._addedBlocks.retVal;
+    return tbl_waters_temp_problemFB;
+  }
+
+  Tbl_waters_temp_problemFilterBuilder lessThan(dynamic pValue) {
+    param.expression = '<';
+    tbl_waters_temp_problemFB._addedBlocks = _waitingNot == ''
+        ? setCriteria(pValue, tbl_waters_temp_problemFB.parameters, param,
+            SqlSyntax.LessThan, tbl_waters_temp_problemFB._addedBlocks)
+        : setCriteria(
+            pValue,
+            tbl_waters_temp_problemFB.parameters,
+            param,
+            SqlSyntax.GreaterThanOrEquals,
+            tbl_waters_temp_problemFB._addedBlocks);
+    _waitingNot = '';
+    tbl_waters_temp_problemFB
+            ._addedBlocks.needEndBlock[tbl_waters_temp_problemFB._blockIndex] =
+        tbl_waters_temp_problemFB._addedBlocks.retVal;
+    return tbl_waters_temp_problemFB;
+  }
+
+  Tbl_waters_temp_problemFilterBuilder greaterThanOrEquals(dynamic pValue) {
+    param.expression = '>=';
+    tbl_waters_temp_problemFB._addedBlocks = _waitingNot == ''
+        ? setCriteria(
+            pValue,
+            tbl_waters_temp_problemFB.parameters,
+            param,
+            SqlSyntax.GreaterThanOrEquals,
+            tbl_waters_temp_problemFB._addedBlocks)
+        : setCriteria(pValue, tbl_waters_temp_problemFB.parameters, param,
+            SqlSyntax.LessThan, tbl_waters_temp_problemFB._addedBlocks);
+    _waitingNot = '';
+    tbl_waters_temp_problemFB
+            ._addedBlocks.needEndBlock[tbl_waters_temp_problemFB._blockIndex] =
+        tbl_waters_temp_problemFB._addedBlocks.retVal;
+    return tbl_waters_temp_problemFB;
+  }
+
+  Tbl_waters_temp_problemFilterBuilder lessThanOrEquals(dynamic pValue) {
+    param.expression = '<=';
+    tbl_waters_temp_problemFB._addedBlocks = _waitingNot == ''
+        ? setCriteria(pValue, tbl_waters_temp_problemFB.parameters, param,
+            SqlSyntax.LessThanOrEquals, tbl_waters_temp_problemFB._addedBlocks)
+        : setCriteria(pValue, tbl_waters_temp_problemFB.parameters, param,
+            SqlSyntax.GreaterThan, tbl_waters_temp_problemFB._addedBlocks);
+    _waitingNot = '';
+    tbl_waters_temp_problemFB
+            ._addedBlocks.needEndBlock[tbl_waters_temp_problemFB._blockIndex] =
+        tbl_waters_temp_problemFB._addedBlocks.retVal;
+    return tbl_waters_temp_problemFB;
+  }
+
+  Tbl_waters_temp_problemFilterBuilder inValues(dynamic pValue) {
+    tbl_waters_temp_problemFB._addedBlocks = setCriteria(
+        pValue,
+        tbl_waters_temp_problemFB.parameters,
+        param,
+        SqlSyntax.IN.replaceAll(SqlSyntax.notKeyword, _waitingNot),
+        tbl_waters_temp_problemFB._addedBlocks);
+    _waitingNot = '';
+    tbl_waters_temp_problemFB
+            ._addedBlocks.needEndBlock[tbl_waters_temp_problemFB._blockIndex] =
+        tbl_waters_temp_problemFB._addedBlocks.retVal;
+    return tbl_waters_temp_problemFB;
+  }
+}
+// endregion Tbl_waters_temp_problemField
+
+// region Tbl_waters_temp_problemFilterBuilder
+class Tbl_waters_temp_problemFilterBuilder extends SearchCriteria {
+  Tbl_waters_temp_problemFilterBuilder(Tbl_waters_temp_problem obj) {
+    whereString = '';
+    qparams = QueryParams();
+    parameters = <DbParameter>[];
+    orderByList = <String>[];
+    groupByList = <String>[];
+    _addedBlocks = AddedBlocks(<bool>[], <bool>[]);
+    _addedBlocks.needEndBlock.add(false);
+    _addedBlocks.waitingStartBlock.add(false);
+    _pagesize = 0;
+    _page = 0;
+    _obj = obj;
+  }
+  AddedBlocks _addedBlocks;
+  int _blockIndex = 0;
+  List<DbParameter> parameters;
+  List<String> orderByList;
+  Tbl_waters_temp_problem _obj;
+  QueryParams qparams;
+  int _pagesize;
+  int _page;
+
+  /// put the sql keyword 'AND'
+  Tbl_waters_temp_problemFilterBuilder get and {
+    if (parameters.isNotEmpty) {
+      parameters[parameters.length - 1].wOperator = ' AND ';
+    }
+    return this;
+  }
+
+  /// put the sql keyword 'OR'
+  Tbl_waters_temp_problemFilterBuilder get or {
+    if (parameters.isNotEmpty) {
+      parameters[parameters.length - 1].wOperator = ' OR ';
+    }
+    return this;
+  }
+
+  /// open parentheses
+  Tbl_waters_temp_problemFilterBuilder get startBlock {
+    _addedBlocks.waitingStartBlock.add(true);
+    _addedBlocks.needEndBlock.add(false);
+    _blockIndex++;
+    if (_blockIndex > 1) {
+      _addedBlocks.needEndBlock[_blockIndex - 1] = true;
+    }
+    return this;
+  }
+
+  /// String whereCriteria, write raw query without 'where' keyword. Like this: 'field1 like 'test%' and field2 = 3'
+  Tbl_waters_temp_problemFilterBuilder where(String whereCriteria,
+      {dynamic parameterValue}) {
+    if (whereCriteria != null && whereCriteria != '') {
+      final DbParameter param = DbParameter(
+          columnName: parameterValue == null ? null : '',
+          hasParameter: parameterValue != null);
+      _addedBlocks = setCriteria(parameterValue ?? 0, parameters, param,
+          '($whereCriteria)', _addedBlocks);
+      _addedBlocks.needEndBlock[_blockIndex] = _addedBlocks.retVal;
+    }
+    return this;
+  }
+
+  /// page = page number,
+  ///
+  /// pagesize = row(s) per page
+  Tbl_waters_temp_problemFilterBuilder page(int page, int pagesize) {
+    if (page > 0) {
+      _page = page;
+    }
+    if (pagesize > 0) {
+      _pagesize = pagesize;
+    }
+    return this;
+  }
+
+  /// int count = LIMIT
+  Tbl_waters_temp_problemFilterBuilder top(int count) {
+    if (count > 0) {
+      _pagesize = count;
+    }
+    return this;
+  }
+
+  /// close parentheses
+  Tbl_waters_temp_problemFilterBuilder get endBlock {
+    if (_addedBlocks.needEndBlock[_blockIndex]) {
+      parameters[parameters.length - 1].whereString += ' ) ';
+    }
+    _addedBlocks.needEndBlock.removeAt(_blockIndex);
+    _addedBlocks.waitingStartBlock.removeAt(_blockIndex);
+    _blockIndex--;
+    return this;
+  }
+
+  /// argFields might be String or List<String>.
+  ///
+  /// Example 1: argFields='name, date'
+  ///
+  /// Example 2: argFields = ['name', 'date']
+  Tbl_waters_temp_problemFilterBuilder orderBy(dynamic argFields) {
+    if (argFields != null) {
+      if (argFields is String) {
+        orderByList.add(argFields);
+      } else {
+        for (String s in argFields as List<String>) {
+          if (s != null && s.isNotEmpty) {
+            orderByList.add(' $s ');
+          }
+        }
+      }
+    }
+    return this;
+  }
+
+  /// argFields might be String or List<String>.
+  ///
+  /// Example 1: argFields='field1, field2'
+  ///
+  /// Example 2: argFields = ['field1', 'field2']
+  Tbl_waters_temp_problemFilterBuilder orderByDesc(dynamic argFields) {
+    if (argFields != null) {
+      if (argFields is String) {
+        orderByList.add('$argFields desc ');
+      } else {
+        for (String s in argFields as List<String>) {
+          if (s != null && s.isNotEmpty) {
+            orderByList.add(' $s desc ');
+          }
+        }
+      }
+    }
+    return this;
+  }
+
+  /// argFields might be String or List<String>.
+  ///
+  /// Example 1: argFields='field1, field2'
+  ///
+  /// Example 2: argFields = ['field1', 'field2']
+  Tbl_waters_temp_problemFilterBuilder groupBy(dynamic argFields) {
+    if (argFields != null) {
+      if (argFields is String) {
+        groupByList.add(' $argFields ');
+      } else {
+        for (String s in argFields as List<String>) {
+          if (s != null && s.isNotEmpty) {
+            groupByList.add(' $s ');
+          }
+        }
+      }
+    }
+    return this;
+  }
+
+  /// argFields might be String or List<String>.
+  ///
+  /// Example 1: argFields='name, date'
+  ///
+  /// Example 2: argFields = ['name', 'date']
+  Tbl_waters_temp_problemFilterBuilder having(dynamic argFields) {
+    if (argFields != null) {
+      if (argFields is String) {
+        havingList.add(argFields);
+      } else {
+        for (String s in argFields as List<String>) {
+          if (s != null && s.isNotEmpty) {
+            havingList.add(' $s ');
+          }
+        }
+      }
+    }
+    return this;
+  }
+
+  Tbl_waters_temp_problemField setField(
+      Tbl_waters_temp_problemField field, String colName, DbType dbtype) {
+    return Tbl_waters_temp_problemField(this)
+      ..param = DbParameter(
+          dbType: dbtype,
+          columnName: colName,
+          wStartBlock: _addedBlocks.waitingStartBlock[_blockIndex]);
+  }
+
+  Tbl_waters_temp_problemField _ROWID;
+  Tbl_waters_temp_problemField get ROWID {
+    return _ROWID = setField(_ROWID, 'ROWID', DbType.integer);
+  }
+
+  Tbl_waters_temp_problemField _id;
+  Tbl_waters_temp_problemField get id {
+    return _id = setField(_id, 'id', DbType.integer);
+  }
+
+  Tbl_waters_temp_problemField _unit_code;
+  Tbl_waters_temp_problemField get unit_code {
+    return _unit_code = setField(_unit_code, 'unit_code', DbType.text);
+  }
+
+  Tbl_waters_temp_problemField _bulan;
+  Tbl_waters_temp_problemField get bulan {
+    return _bulan = setField(_bulan, 'bulan', DbType.text);
+  }
+
+  Tbl_waters_temp_problemField _tahun;
+  Tbl_waters_temp_problemField get tahun {
+    return _tahun = setField(_tahun, 'tahun', DbType.text);
+  }
+
+  Tbl_waters_temp_problemField _idx_problem;
+  Tbl_waters_temp_problemField get idx_problem {
+    return _idx_problem = setField(_idx_problem, 'idx_problem', DbType.text);
+  }
+
+  bool _getIsDeleted;
+
+  void _buildParameters() {
+    if (_page > 0 && _pagesize > 0) {
+      qparams
+        ..limit = _pagesize
+        ..offset = (_page - 1) * _pagesize;
+    } else {
+      qparams
+        ..limit = _pagesize
+        ..offset = _page;
+    }
+    for (DbParameter param in parameters) {
+      if (param.columnName != null) {
+        if (param.value is List && !param.hasParameter) {
+          param.value = param.dbType == DbType.text
+              ? '\'${param.value.join('\',\'')}\''
+              : param.value.join(',');
+          whereString += param.whereString
+              .replaceAll('{field}', param.columnName)
+              .replaceAll('?', param.value.toString());
+          param.value = null;
+        } else {
+          if (param.value is Map<String, dynamic> &&
+              param.value['sql'] != null) {
+            param
+              ..whereString = param.whereString
+                  .replaceAll('?', param.value['sql'].toString())
+              ..dbType = DbType.integer
+              ..value = param.value['args'];
+          }
+          whereString +=
+              param.whereString.replaceAll('{field}', param.columnName);
+        }
+        if (!param.whereString.contains('?')) {
+        } else {
+          switch (param.dbType) {
+            case DbType.bool:
+              param.value = param.value == null
+                  ? null
+                  : param.value == true
+                      ? 1
+                      : 0;
+              param.value2 = param.value2 == null
+                  ? null
+                  : param.value2 == true
+                      ? 1
+                      : 0;
+              break;
+            case DbType.date:
+            case DbType.datetime:
+            case DbType.datetimeUtc:
+              param.value = param.value == null
+                  ? null
+                  : (param.value as DateTime).millisecondsSinceEpoch;
+              param.value2 = param.value2 == null
+                  ? null
+                  : (param.value2 as DateTime).millisecondsSinceEpoch;
+              break;
+            default:
+          }
+          if (param.value != null) {
+            if (param.value is List) {
+              for (var p in param.value) {
+                whereArguments.add(p);
+              }
+            } else {
+              whereArguments.add(param.value);
+            }
+          }
+          if (param.value2 != null) {
+            whereArguments.add(param.value2);
+          }
+        }
+      } else {
+        whereString += param.whereString;
+      }
+    }
+    if (Tbl_waters_temp_problem._softDeleteActivated) {
+      if (whereString != '') {
+        whereString =
+            '${!_getIsDeleted ? 'ifnull(isDeleted,0)=0 AND' : ''} ($whereString)';
+      } else if (!_getIsDeleted) {
+        whereString = 'ifnull(isDeleted,0)=0';
+      }
+    }
+
+    if (whereString != '') {
+      qparams.whereString = whereString;
+    }
+    qparams
+      ..whereArguments = whereArguments
+      ..groupBy = groupByList.join(',')
+      ..orderBy = orderByList.join(',')
+      ..having = havingList.join(',');
+  }
+
+  /// Deletes List<Tbl_waters_temp_problem> bulk by query
+  ///
+  /// <returns>BoolResult res.success=Deleted, not res.success=Can not deleted
+  Future<BoolResult> delete([bool hardDelete = false]) async {
+    _buildParameters();
+    var r = BoolResult();
+
+    if (Tbl_waters_temp_problem._softDeleteActivated && !hardDelete) {
+      r = await _obj._mnTbl_waters_temp_problem
+          .updateBatch(qparams, {'isDeleted': 1});
+    } else {
+      r = await _obj._mnTbl_waters_temp_problem.delete(qparams);
+    }
+    return r;
+  }
+
+  /// using:
+  ///
+  /// update({'fieldName': Value})
+  ///
+  /// fieldName must be String. Value is dynamic, it can be any of the (int, bool, String.. )
+  Future<BoolResult> update(Map<String, dynamic> values) {
+    _buildParameters();
+    if (qparams.limit > 0 || qparams.offset > 0) {
+      qparams.whereString =
+          'ROWID IN (SELECT ROWID from tbl_waters_temp_problem ${qparams.whereString.isNotEmpty ? 'WHERE ${qparams.whereString}' : ''}${qparams.limit > 0 ? ' LIMIT ${qparams.limit}' : ''}${qparams.offset > 0 ? ' OFFSET ${qparams.offset}' : ''})';
+    }
+    return _obj._mnTbl_waters_temp_problem.updateBatch(qparams, values);
+  }
+
+  /// This method always returns Tbl_waters_temp_problem Obj if exist, otherwise returns null
+  ///
+  /// bool preload: if true, loads all related child objects (Set preload to true if you want to load all fields related to child or parent)
+  ///
+  /// ex: toSingle(preload:true) -> Loads all related objects
+  ///
+  /// List<String> preloadFields: specify the fields you want to preload (preload parameter's value should also be "true")
+  ///
+  /// ex: toSingle(preload:true, preloadFields:['plField1','plField2'... etc])  -> Loads only certain fields what you specified
+  ///
+  /// bool loadParents: if true, loads all parent objects until the object has no parent
+
+  ///
+  /// <returns>List<Tbl_waters_temp_problem>
+  Future<Tbl_waters_temp_problem> toSingle(
+      {bool preload = false,
+      List<String> preloadFields,
+      bool loadParents = false,
+      List<String> loadedFields}) async {
+    _pagesize = 1;
+    _buildParameters();
+    final objFuture = _obj._mnTbl_waters_temp_problem.toList(qparams);
+    final data = await objFuture;
+    Tbl_waters_temp_problem obj;
+    if (data.isNotEmpty) {
+      obj = Tbl_waters_temp_problem.fromMap(data[0] as Map<String, dynamic>);
+    } else {
+      obj = null;
+    }
+    return obj;
+  }
+
+  /// This method returns int. [Tbl_waters_temp_problem]
+  ///
+  /// <returns>int
+  Future<int> toCount(
+      [VoidCallback Function(int c) tbl_waters_temp_problemCount]) async {
+    _buildParameters();
+    qparams.selectColumns = ['COUNT(1) AS CNT'];
+    final tbl_waters_temp_problemsFuture =
+        await _obj._mnTbl_waters_temp_problem.toList(qparams);
+    final int count = tbl_waters_temp_problemsFuture[0]['CNT'] as int;
+    if (tbl_waters_temp_problemCount != null) {
+      tbl_waters_temp_problemCount(count);
+    }
+    return count;
+  }
+
+  /// This method returns List<Tbl_waters_temp_problem> [Tbl_waters_temp_problem]
+  ///
+  /// bool preload: if true, loads all related child objects (Set preload to true if you want to load all fields related to child or parent)
+  ///
+  /// ex: toList(preload:true) -> Loads all related objects
+  ///
+  /// List<String> preloadFields: specify the fields you want to preload (preload parameter's value should also be "true")
+  ///
+  /// ex: toList(preload:true, preloadFields:['plField1','plField2'... etc])  -> Loads only certain fields what you specified
+  ///
+  /// bool loadParents: if true, loads all parent objects until the object has no parent
+
+  ///
+  /// <returns>List<Tbl_waters_temp_problem>
+  Future<List<Tbl_waters_temp_problem>> toList(
+      {bool preload = false,
+      List<String> preloadFields,
+      bool loadParents = false,
+      List<String> loadedFields}) async {
+    final data = await toMapList();
+    final List<Tbl_waters_temp_problem> tbl_waters_temp_problemsData =
+        await Tbl_waters_temp_problem.fromMapList(data,
+            preload: preload,
+            preloadFields: preloadFields,
+            loadParents: loadParents,
+            loadedFields: loadedFields,
+            setDefaultValues: qparams.selectColumns == null);
+    return tbl_waters_temp_problemsData;
+  }
+
+  /// This method returns Json String [Tbl_waters_temp_problem]
+  Future<String> toJson() async {
+    final list = <dynamic>[];
+    final data = await toList();
+    for (var o in data) {
+      list.add(o.toMap(forJson: true));
+    }
+    return json.encode(list);
+  }
+
+  /// This method returns Json String. [Tbl_waters_temp_problem]
+  Future<String> toJsonWithChilds() async {
+    final list = <dynamic>[];
+    final data = await toList();
+    for (var o in data) {
+      list.add(await o.toMapWithChildren(false, true));
+    }
+    return json.encode(list);
+  }
+
+  /// This method returns List<dynamic>. [Tbl_waters_temp_problem]
+  ///
+  /// <returns>List<dynamic>
+  Future<List<dynamic>> toMapList() async {
+    _buildParameters();
+    return await _obj._mnTbl_waters_temp_problem.toList(qparams);
+  }
+
+  /// This method returns Primary Key List SQL and Parameters retVal = Map<String,dynamic>. [Tbl_waters_temp_problem]
+  ///
+  /// retVal['sql'] = SQL statement string, retVal['args'] = whereArguments List<dynamic>;
+  ///
+  /// <returns>List<String>
+  Map<String, dynamic> toListPrimaryKeySQL([bool buildParameters = true]) {
+    final Map<String, dynamic> _retVal = <String, dynamic>{};
+    if (buildParameters) {
+      _buildParameters();
+    }
+    _retVal['sql'] =
+        'SELECT `ROWID` FROM tbl_waters_temp_problem WHERE ${qparams.whereString}';
+    _retVal['args'] = qparams.whereArguments;
+    return _retVal;
+  }
+
+  /// This method returns Primary Key List<int>.
+  /// <returns>List<int>
+  Future<List<int>> toListPrimaryKey([bool buildParameters = true]) async {
+    if (buildParameters) {
+      _buildParameters();
+    }
+    final List<int> ROWIDData = <int>[];
+    qparams.selectColumns = ['ROWID'];
+    final ROWIDFuture = await _obj._mnTbl_waters_temp_problem.toList(qparams);
+
+    final int count = ROWIDFuture.length;
+    for (int i = 0; i < count; i++) {
+      ROWIDData.add(ROWIDFuture[i]['ROWID'] as int);
+    }
+    return ROWIDData;
+  }
+
+  /// Returns List<dynamic> for selected columns. Use this method for 'groupBy' with min,max,avg..  [Tbl_waters_temp_problem]
+  ///
+  /// Sample usage: (see EXAMPLE 4.2 at https://github.com/hhtokpinar/sqfEntity#group-by)
+  Future<List<dynamic>> toListObject() async {
+    _buildParameters();
+
+    final objectFuture = _obj._mnTbl_waters_temp_problem.toList(qparams);
+
+    final List<dynamic> objectsData = <dynamic>[];
+    final data = await objectFuture;
+    final int count = data.length;
+    for (int i = 0; i < count; i++) {
+      objectsData.add(data[i]);
+    }
+    return objectsData;
+  }
+
+  /// Returns List<String> for selected first column
+  ///
+  /// Sample usage: await Tbl_waters_temp_problem.select(columnsToSelect: ['columnName']).toListString()
+  Future<List<String>> toListString(
+      [VoidCallback Function(List<String> o) listString]) async {
+    _buildParameters();
+
+    final objectFuture = _obj._mnTbl_waters_temp_problem.toList(qparams);
+
+    final List<String> objectsData = <String>[];
+    final data = await objectFuture;
+    final int count = data.length;
+    for (int i = 0; i < count; i++) {
+      objectsData.add(data[i][qparams.selectColumns[0]].toString());
+    }
+    if (listString != null) {
+      listString(objectsData);
+    }
+    return objectsData;
+  }
+}
+// endregion Tbl_waters_temp_problemFilterBuilder
+
+// region Tbl_waters_temp_problemFields
+class Tbl_waters_temp_problemFields {
+  static TableField _fROWID;
+  static TableField get ROWID {
+    return _fROWID =
+        _fROWID ?? SqlSyntax.setField(_fROWID, 'rowid', DbType.integer);
+  }
+
+  static TableField _fId;
+  static TableField get id {
+    return _fId = _fId ?? SqlSyntax.setField(_fId, 'id', DbType.integer);
+  }
+
+  static TableField _fUnit_code;
+  static TableField get unit_code {
+    return _fUnit_code = _fUnit_code ??
+        SqlSyntax.setField(_fUnit_code, 'unit_code', DbType.text);
+  }
+
+  static TableField _fBulan;
+  static TableField get bulan {
+    return _fBulan =
+        _fBulan ?? SqlSyntax.setField(_fBulan, 'bulan', DbType.text);
+  }
+
+  static TableField _fTahun;
+  static TableField get tahun {
+    return _fTahun =
+        _fTahun ?? SqlSyntax.setField(_fTahun, 'tahun', DbType.text);
+  }
+
+  static TableField _fIdx_problem;
+  static TableField get idx_problem {
+    return _fIdx_problem = _fIdx_problem ??
+        SqlSyntax.setField(_fIdx_problem, 'idx_problem', DbType.text);
+  }
+}
+// endregion Tbl_waters_temp_problemFields
+
+//region Tbl_waters_temp_problemManager
+class Tbl_waters_temp_problemManager extends SqfEntityProvider {
+  Tbl_waters_temp_problemManager()
+      : super(DbModel(),
+            tableName: _tableName,
+            primaryKeyList: _primaryKeyList,
+            whereStr: _whereStr);
+  static final String _tableName = 'tbl_waters_temp_problem';
+  static final List<String> _primaryKeyList = ['ROWID'];
+  static final String _whereStr = 'ROWID=?';
+}
+
+//endregion Tbl_waters_temp_problemManager
+// region Tbl_electrics_temp_problem
+class Tbl_electrics_temp_problem {
+  Tbl_electrics_temp_problem(
+      {this.ROWID,
+      this.id,
+      this.unit_code,
+      this.bulan,
+      this.tahun,
+      this.idx_problem}) {
+    _setDefaultValues();
+  }
+  Tbl_electrics_temp_problem.withFields(
+      this.id, this.unit_code, this.bulan, this.tahun, this.idx_problem) {
+    _setDefaultValues();
+  }
+  Tbl_electrics_temp_problem.withId(this.ROWID, this.id, this.unit_code,
+      this.bulan, this.tahun, this.idx_problem) {
+    _setDefaultValues();
+  }
+  Tbl_electrics_temp_problem.fromMap(Map<String, dynamic> o,
+      {bool setDefaultValues = true}) {
+    if (setDefaultValues) {
+      _setDefaultValues();
+    }
+    ROWID = int.tryParse(o['ROWID'].toString());
+    if (o['id'] != null) {
+      id = int.tryParse(o['id'].toString());
+    }
+    if (o['unit_code'] != null) {
+      unit_code = o['unit_code'] as String;
+    }
+    if (o['bulan'] != null) {
+      bulan = o['bulan'] as String;
+    }
+    if (o['tahun'] != null) {
+      tahun = o['tahun'] as String;
+    }
+    if (o['idx_problem'] != null) {
+      idx_problem = o['idx_problem'] as String;
+    }
+  }
+  // FIELDS (Tbl_electrics_temp_problem)
+  int ROWID;
+  int id;
+  String unit_code;
+  String bulan;
+  String tahun;
+  String idx_problem;
+
+  BoolResult saveResult;
+  // end FIELDS (Tbl_electrics_temp_problem)
+
+  static const bool _softDeleteActivated = false;
+  Tbl_electrics_temp_problemManager __mnTbl_electrics_temp_problem;
+
+  Tbl_electrics_temp_problemManager get _mnTbl_electrics_temp_problem {
+    return __mnTbl_electrics_temp_problem =
+        __mnTbl_electrics_temp_problem ?? Tbl_electrics_temp_problemManager();
+  }
+
+  // METHODS
+  Map<String, dynamic> toMap(
+      {bool forQuery = false, bool forJson = false, bool forView = false}) {
+    final map = <String, dynamic>{};
+    if (ROWID != null) {
+      map['ROWID'] = ROWID;
+    }
+    if (id != null) {
+      map['id'] = id;
+    }
+
+    if (unit_code != null) {
+      map['unit_code'] = unit_code;
+    }
+
+    if (bulan != null) {
+      map['bulan'] = bulan;
+    }
+
+    if (tahun != null) {
+      map['tahun'] = tahun;
+    }
+
+    if (idx_problem != null) {
+      map['idx_problem'] = idx_problem;
+    }
+
+    return map;
+  }
+
+  Future<Map<String, dynamic>> toMapWithChildren(
+      [bool forQuery = false,
+      bool forJson = false,
+      bool forView = false]) async {
+    final map = <String, dynamic>{};
+    if (ROWID != null) {
+      map['ROWID'] = ROWID;
+    }
+    if (id != null) {
+      map['id'] = id;
+    }
+
+    if (unit_code != null) {
+      map['unit_code'] = unit_code;
+    }
+
+    if (bulan != null) {
+      map['bulan'] = bulan;
+    }
+
+    if (tahun != null) {
+      map['tahun'] = tahun;
+    }
+
+    if (idx_problem != null) {
+      map['idx_problem'] = idx_problem;
+    }
+
+    return map;
+  }
+
+  /// This method returns Json String [Tbl_electrics_temp_problem]
+  String toJson() {
+    return json.encode(toMap(forJson: true));
+  }
+
+  /// This method returns Json String [Tbl_electrics_temp_problem]
+  Future<String> toJsonWithChilds() async {
+    return json.encode(await toMapWithChildren(false, true));
+  }
+
+  List<dynamic> toArgs() {
+    return [id, unit_code, bulan, tahun, idx_problem];
+  }
+
+  List<dynamic> toArgsWithIds() {
+    return [ROWID, id, unit_code, bulan, tahun, idx_problem];
+  }
+
+  static Future<List<Tbl_electrics_temp_problem>> fromWebUrl(String url,
+      {Map<String, String> headers}) async {
+    try {
+      final response = await http.get(url, headers: headers);
+      return await fromJson(response.body);
+    } catch (e) {
+      print(
+          'SQFENTITY ERROR Tbl_electrics_temp_problem.fromWebUrl: ErrorMessage: ${e.toString()}');
+      return null;
+    }
+  }
+
+  Future<http.Response> postUrl(String url, {Map<String, String> headers}) {
+    return http.post(url, headers: headers, body: toJson());
+  }
+
+  static Future<List<Tbl_electrics_temp_problem>> fromJson(
+      String jsonBody) async {
+    final Iterable list = await json.decode(jsonBody) as Iterable;
+    var objList = <Tbl_electrics_temp_problem>[];
+    try {
+      objList = list
+          .map((tbl_electrics_temp_problem) =>
+              Tbl_electrics_temp_problem.fromMap(
+                  tbl_electrics_temp_problem as Map<String, dynamic>))
+          .toList();
+    } catch (e) {
+      print(
+          'SQFENTITY ERROR Tbl_electrics_temp_problem.fromJson: ErrorMessage: ${e.toString()}');
+    }
+    return objList;
+  }
+
+  static Future<List<Tbl_electrics_temp_problem>> fromMapList(
+      List<dynamic> data,
+      {bool preload = false,
+      List<String> preloadFields,
+      bool loadParents = false,
+      List<String> loadedFields,
+      bool setDefaultValues = true}) async {
+    final List<Tbl_electrics_temp_problem> objList =
+        <Tbl_electrics_temp_problem>[];
+    loadedFields = loadedFields ?? [];
+    for (final map in data) {
+      final obj = Tbl_electrics_temp_problem.fromMap(
+          map as Map<String, dynamic>,
+          setDefaultValues: setDefaultValues);
+
+      objList.add(obj);
+    }
+    return objList;
+  }
+
+  /// returns Tbl_electrics_temp_problem by ID if exist, otherwise returns null
+  ///
+  /// Primary Keys: int ROWID
+  ///
+  /// bool preload: if true, loads all related child objects (Set preload to true if you want to load all fields related to child or parent)
+  ///
+  /// ex: getById(preload:true) -> Loads all related objects
+  ///
+  /// List<String> preloadFields: specify the fields you want to preload (preload parameter's value should also be "true")
+  ///
+  /// ex: getById(preload:true, preloadFields:['plField1','plField2'... etc])  -> Loads only certain fields what you specified
+  ///
+  /// bool loadParents: if true, loads all parent objects until the object has no parent
+
+  ///
+  /// <returns>returns Tbl_electrics_temp_problem if exist, otherwise returns null
+  Future<Tbl_electrics_temp_problem> getById(int ROWID,
+      {bool preload = false,
+      List<String> preloadFields,
+      bool loadParents = false,
+      List<String> loadedFields}) async {
+    if (ROWID == null) {
+      return null;
+    }
+    Tbl_electrics_temp_problem obj;
+    final data = await _mnTbl_electrics_temp_problem.getById([ROWID]);
+    if (data.length != 0) {
+      obj = Tbl_electrics_temp_problem.fromMap(data[0] as Map<String, dynamic>);
+    } else {
+      obj = null;
+    }
+    return obj;
+  }
+
+  /// Saves the (Tbl_electrics_temp_problem) object. If the ROWID field is null, saves as a new record and returns new ROWID, if ROWID is not null then updates record
+
+  /// <returns>Returns ROWID
+  Future<int> save() async {
+    if (ROWID == null || ROWID == 0) {
+      ROWID = await _mnTbl_electrics_temp_problem.insert(this);
+    } else {
+      // ROWID= await _upsert(); // removed in sqfentity_gen 1.3.0+6
+      await _mnTbl_electrics_temp_problem.update(this);
+    }
+
+    return ROWID;
+  }
+
+  /// saveAs Tbl_electrics_temp_problem. Returns a new Primary Key value of Tbl_electrics_temp_problem
+
+  /// <returns>Returns a new Primary Key value of Tbl_electrics_temp_problem
+  Future<int> saveAs() async {
+    ROWID = null;
+
+    return save();
+  }
+
+  /// saveAll method saves the sent List<Tbl_electrics_temp_problem> as a bulk in one transaction
+  ///
+  /// Returns a <List<BoolResult>>
+  static Future<List<dynamic>> saveAll(
+      List<Tbl_electrics_temp_problem> tbl_electrics_temp_problems) async {
+    // final results = _mnTbl_electrics_temp_problem.saveAll('INSERT OR REPLACE INTO tbl_electrics_temp_problem (ROWID,id, unit_code, bulan, tahun, idx_problem)  VALUES (?,?,?,?,?,?)',tbl_electrics_temp_problems);
+    // return results; removed in sqfentity_gen 1.3.0+6
+    await DbModel().batchStart();
+    for (final obj in tbl_electrics_temp_problems) {
+      await obj.save();
+    }
+    //    return DbModel().batchCommit();
+    final result = await DbModel().batchCommit();
+    for (int i = 0; i < tbl_electrics_temp_problems.length; i++) {
+      if (tbl_electrics_temp_problems[i].ROWID == null) {
+        tbl_electrics_temp_problems[i].ROWID = result[i] as int;
+      }
+    }
+
+    return result;
+  }
+
+  /// Updates if the record exists, otherwise adds a new row
+
+  /// <returns>Returns ROWID
+  Future<int> upsert() async {
+    try {
+      if (await _mnTbl_electrics_temp_problem.rawInsert(
+              'INSERT OR REPLACE INTO tbl_electrics_temp_problem (ROWID,id, unit_code, bulan, tahun, idx_problem)  VALUES (?,?,?,?,?,?)',
+              [ROWID, id, unit_code, bulan, tahun, idx_problem]) ==
+          1) {
+        saveResult = BoolResult(
+            success: true,
+            successMessage:
+                'Tbl_electrics_temp_problem ROWID=$ROWID updated successfully');
+      } else {
+        saveResult = BoolResult(
+            success: false,
+            errorMessage:
+                'Tbl_electrics_temp_problem ROWID=$ROWID did not update');
+      }
+      return ROWID;
+    } catch (e) {
+      saveResult = BoolResult(
+          success: false,
+          errorMessage:
+              'Tbl_electrics_temp_problem Save failed. Error: ${e.toString()}');
+      return 0;
+    }
+  }
+
+  /// inserts or replaces the sent List<<Tbl_electrics_temp_problem>> as a bulk in one transaction.
+  ///
+  /// upsertAll() method is faster then saveAll() method. upsertAll() should be used when you are sure that the primary key is greater than zero
+  ///
+  /// Returns a BoolCommitResult
+  Future<BoolCommitResult> upsertAll(
+      List<Tbl_electrics_temp_problem> tbl_electrics_temp_problems) async {
+    final results = await _mnTbl_electrics_temp_problem.rawInsertAll(
+        'INSERT OR REPLACE INTO tbl_electrics_temp_problem (ROWID,id, unit_code, bulan, tahun, idx_problem)  VALUES (?,?,?,?,?,?)',
+        tbl_electrics_temp_problems);
+    return results;
+  }
+
+  /// Deletes Tbl_electrics_temp_problem
+
+  /// <returns>BoolResult res.success=Deleted, not res.success=Can not deleted
+  Future<BoolResult> delete([bool hardDelete = false]) async {
+    print(
+        'SQFENTITIY: delete Tbl_electrics_temp_problem invoked (ROWID=$ROWID)');
+    if (!_softDeleteActivated || hardDelete) {
+      return _mnTbl_electrics_temp_problem
+          .delete(QueryParams(whereString: 'ROWID=?', whereArguments: [ROWID]));
+    } else {
+      return _mnTbl_electrics_temp_problem.updateBatch(
+          QueryParams(whereString: 'ROWID=?', whereArguments: [ROWID]),
+          {'isDeleted': 1});
+    }
+  }
+
+  Tbl_electrics_temp_problemFilterBuilder select(
+      {List<String> columnsToSelect, bool getIsDeleted}) {
+    return Tbl_electrics_temp_problemFilterBuilder(this)
+      .._getIsDeleted = getIsDeleted == true
+      ..qparams.selectColumns = columnsToSelect;
+  }
+
+  Tbl_electrics_temp_problemFilterBuilder distinct(
+      {List<String> columnsToSelect, bool getIsDeleted}) {
+    return Tbl_electrics_temp_problemFilterBuilder(this)
+      .._getIsDeleted = getIsDeleted == true
+      ..qparams.selectColumns = columnsToSelect
+      ..qparams.distinct = true;
+  }
+
+  void _setDefaultValues() {}
+  // END METHODS
+  // CUSTOM CODES
+  /*
+      you must define customCode property of your SqfEntityTable constant for ex:
+      const tablePerson = SqfEntityTable(
+      tableName: 'person',
+      primaryKeyName: 'id',
+      primaryKeyType: PrimaryKeyType.integer_auto_incremental,
+      fields: [
+        SqfEntityField('firstName', DbType.text),
+        SqfEntityField('lastName', DbType.text),
+      ],
+      customCode: '''
+       String fullName()
+       { 
+         return '$firstName $lastName';
+       }
+      ''');
+     */
+  // END CUSTOM CODES
+}
+// endregion tbl_electrics_temp_problem
+
+// region Tbl_electrics_temp_problemField
+class Tbl_electrics_temp_problemField extends SearchCriteria {
+  Tbl_electrics_temp_problemField(this.tbl_electrics_temp_problemFB) {
+    param = DbParameter();
+  }
+  DbParameter param;
+  String _waitingNot = '';
+  Tbl_electrics_temp_problemFilterBuilder tbl_electrics_temp_problemFB;
+
+  Tbl_electrics_temp_problemField get not {
+    _waitingNot = ' NOT ';
+    return this;
+  }
+
+  Tbl_electrics_temp_problemFilterBuilder equals(dynamic pValue) {
+    param.expression = '=';
+    tbl_electrics_temp_problemFB._addedBlocks = _waitingNot == ''
+        ? setCriteria(pValue, tbl_electrics_temp_problemFB.parameters, param,
+            SqlSyntax.EQuals, tbl_electrics_temp_problemFB._addedBlocks)
+        : setCriteria(pValue, tbl_electrics_temp_problemFB.parameters, param,
+            SqlSyntax.NotEQuals, tbl_electrics_temp_problemFB._addedBlocks);
+    _waitingNot = '';
+    tbl_electrics_temp_problemFB._addedBlocks
+            .needEndBlock[tbl_electrics_temp_problemFB._blockIndex] =
+        tbl_electrics_temp_problemFB._addedBlocks.retVal;
+    return tbl_electrics_temp_problemFB;
+  }
+
+  Tbl_electrics_temp_problemFilterBuilder equalsOrNull(dynamic pValue) {
+    param.expression = '=';
+    tbl_electrics_temp_problemFB._addedBlocks = _waitingNot == ''
+        ? setCriteria(pValue, tbl_electrics_temp_problemFB.parameters, param,
+            SqlSyntax.EQualsOrNull, tbl_electrics_temp_problemFB._addedBlocks)
+        : setCriteria(
+            pValue,
+            tbl_electrics_temp_problemFB.parameters,
+            param,
+            SqlSyntax.NotEQualsOrNull,
+            tbl_electrics_temp_problemFB._addedBlocks);
+    _waitingNot = '';
+    tbl_electrics_temp_problemFB._addedBlocks
+            .needEndBlock[tbl_electrics_temp_problemFB._blockIndex] =
+        tbl_electrics_temp_problemFB._addedBlocks.retVal;
+    return tbl_electrics_temp_problemFB;
+  }
+
+  Tbl_electrics_temp_problemFilterBuilder isNull() {
+    tbl_electrics_temp_problemFB._addedBlocks = setCriteria(
+        0,
+        tbl_electrics_temp_problemFB.parameters,
+        param,
+        SqlSyntax.IsNULL.replaceAll(SqlSyntax.notKeyword, _waitingNot),
+        tbl_electrics_temp_problemFB._addedBlocks);
+    _waitingNot = '';
+    tbl_electrics_temp_problemFB._addedBlocks
+            .needEndBlock[tbl_electrics_temp_problemFB._blockIndex] =
+        tbl_electrics_temp_problemFB._addedBlocks.retVal;
+    return tbl_electrics_temp_problemFB;
+  }
+
+  Tbl_electrics_temp_problemFilterBuilder contains(dynamic pValue) {
+    if (pValue != null) {
+      tbl_electrics_temp_problemFB._addedBlocks = setCriteria(
+          '%${pValue.toString()}%',
+          tbl_electrics_temp_problemFB.parameters,
+          param,
+          SqlSyntax.Contains.replaceAll(SqlSyntax.notKeyword, _waitingNot),
+          tbl_electrics_temp_problemFB._addedBlocks);
+      _waitingNot = '';
+      tbl_electrics_temp_problemFB._addedBlocks
+              .needEndBlock[tbl_electrics_temp_problemFB._blockIndex] =
+          tbl_electrics_temp_problemFB._addedBlocks.retVal;
+    }
+    return tbl_electrics_temp_problemFB;
+  }
+
+  Tbl_electrics_temp_problemFilterBuilder startsWith(dynamic pValue) {
+    if (pValue != null) {
+      tbl_electrics_temp_problemFB._addedBlocks = setCriteria(
+          '${pValue.toString()}%',
+          tbl_electrics_temp_problemFB.parameters,
+          param,
+          SqlSyntax.Contains.replaceAll(SqlSyntax.notKeyword, _waitingNot),
+          tbl_electrics_temp_problemFB._addedBlocks);
+      _waitingNot = '';
+      tbl_electrics_temp_problemFB._addedBlocks
+              .needEndBlock[tbl_electrics_temp_problemFB._blockIndex] =
+          tbl_electrics_temp_problemFB._addedBlocks.retVal;
+      tbl_electrics_temp_problemFB._addedBlocks
+              .needEndBlock[tbl_electrics_temp_problemFB._blockIndex] =
+          tbl_electrics_temp_problemFB._addedBlocks.retVal;
+    }
+    return tbl_electrics_temp_problemFB;
+  }
+
+  Tbl_electrics_temp_problemFilterBuilder endsWith(dynamic pValue) {
+    if (pValue != null) {
+      tbl_electrics_temp_problemFB._addedBlocks = setCriteria(
+          '%${pValue.toString()}',
+          tbl_electrics_temp_problemFB.parameters,
+          param,
+          SqlSyntax.Contains.replaceAll(SqlSyntax.notKeyword, _waitingNot),
+          tbl_electrics_temp_problemFB._addedBlocks);
+      _waitingNot = '';
+      tbl_electrics_temp_problemFB._addedBlocks
+              .needEndBlock[tbl_electrics_temp_problemFB._blockIndex] =
+          tbl_electrics_temp_problemFB._addedBlocks.retVal;
+    }
+    return tbl_electrics_temp_problemFB;
+  }
+
+  Tbl_electrics_temp_problemFilterBuilder between(
+      dynamic pFirst, dynamic pLast) {
+    if (pFirst != null && pLast != null) {
+      tbl_electrics_temp_problemFB._addedBlocks = setCriteria(
+          pFirst,
+          tbl_electrics_temp_problemFB.parameters,
+          param,
+          SqlSyntax.Between.replaceAll(SqlSyntax.notKeyword, _waitingNot),
+          tbl_electrics_temp_problemFB._addedBlocks,
+          pLast);
+    } else if (pFirst != null) {
+      if (_waitingNot != '') {
+        tbl_electrics_temp_problemFB._addedBlocks = setCriteria(
+            pFirst,
+            tbl_electrics_temp_problemFB.parameters,
+            param,
+            SqlSyntax.LessThan,
+            tbl_electrics_temp_problemFB._addedBlocks);
+      } else {
+        tbl_electrics_temp_problemFB._addedBlocks = setCriteria(
+            pFirst,
+            tbl_electrics_temp_problemFB.parameters,
+            param,
+            SqlSyntax.GreaterThanOrEquals,
+            tbl_electrics_temp_problemFB._addedBlocks);
+      }
+    } else if (pLast != null) {
+      if (_waitingNot != '') {
+        tbl_electrics_temp_problemFB._addedBlocks = setCriteria(
+            pLast,
+            tbl_electrics_temp_problemFB.parameters,
+            param,
+            SqlSyntax.GreaterThan,
+            tbl_electrics_temp_problemFB._addedBlocks);
+      } else {
+        tbl_electrics_temp_problemFB._addedBlocks = setCriteria(
+            pLast,
+            tbl_electrics_temp_problemFB.parameters,
+            param,
+            SqlSyntax.LessThanOrEquals,
+            tbl_electrics_temp_problemFB._addedBlocks);
+      }
+    }
+    _waitingNot = '';
+    tbl_electrics_temp_problemFB._addedBlocks
+            .needEndBlock[tbl_electrics_temp_problemFB._blockIndex] =
+        tbl_electrics_temp_problemFB._addedBlocks.retVal;
+    return tbl_electrics_temp_problemFB;
+  }
+
+  Tbl_electrics_temp_problemFilterBuilder greaterThan(dynamic pValue) {
+    param.expression = '>';
+    tbl_electrics_temp_problemFB._addedBlocks = _waitingNot == ''
+        ? setCriteria(pValue, tbl_electrics_temp_problemFB.parameters, param,
+            SqlSyntax.GreaterThan, tbl_electrics_temp_problemFB._addedBlocks)
+        : setCriteria(
+            pValue,
+            tbl_electrics_temp_problemFB.parameters,
+            param,
+            SqlSyntax.LessThanOrEquals,
+            tbl_electrics_temp_problemFB._addedBlocks);
+    _waitingNot = '';
+    tbl_electrics_temp_problemFB._addedBlocks
+            .needEndBlock[tbl_electrics_temp_problemFB._blockIndex] =
+        tbl_electrics_temp_problemFB._addedBlocks.retVal;
+    return tbl_electrics_temp_problemFB;
+  }
+
+  Tbl_electrics_temp_problemFilterBuilder lessThan(dynamic pValue) {
+    param.expression = '<';
+    tbl_electrics_temp_problemFB._addedBlocks = _waitingNot == ''
+        ? setCriteria(pValue, tbl_electrics_temp_problemFB.parameters, param,
+            SqlSyntax.LessThan, tbl_electrics_temp_problemFB._addedBlocks)
+        : setCriteria(
+            pValue,
+            tbl_electrics_temp_problemFB.parameters,
+            param,
+            SqlSyntax.GreaterThanOrEquals,
+            tbl_electrics_temp_problemFB._addedBlocks);
+    _waitingNot = '';
+    tbl_electrics_temp_problemFB._addedBlocks
+            .needEndBlock[tbl_electrics_temp_problemFB._blockIndex] =
+        tbl_electrics_temp_problemFB._addedBlocks.retVal;
+    return tbl_electrics_temp_problemFB;
+  }
+
+  Tbl_electrics_temp_problemFilterBuilder greaterThanOrEquals(dynamic pValue) {
+    param.expression = '>=';
+    tbl_electrics_temp_problemFB._addedBlocks = _waitingNot == ''
+        ? setCriteria(
+            pValue,
+            tbl_electrics_temp_problemFB.parameters,
+            param,
+            SqlSyntax.GreaterThanOrEquals,
+            tbl_electrics_temp_problemFB._addedBlocks)
+        : setCriteria(pValue, tbl_electrics_temp_problemFB.parameters, param,
+            SqlSyntax.LessThan, tbl_electrics_temp_problemFB._addedBlocks);
+    _waitingNot = '';
+    tbl_electrics_temp_problemFB._addedBlocks
+            .needEndBlock[tbl_electrics_temp_problemFB._blockIndex] =
+        tbl_electrics_temp_problemFB._addedBlocks.retVal;
+    return tbl_electrics_temp_problemFB;
+  }
+
+  Tbl_electrics_temp_problemFilterBuilder lessThanOrEquals(dynamic pValue) {
+    param.expression = '<=';
+    tbl_electrics_temp_problemFB._addedBlocks = _waitingNot == ''
+        ? setCriteria(
+            pValue,
+            tbl_electrics_temp_problemFB.parameters,
+            param,
+            SqlSyntax.LessThanOrEquals,
+            tbl_electrics_temp_problemFB._addedBlocks)
+        : setCriteria(pValue, tbl_electrics_temp_problemFB.parameters, param,
+            SqlSyntax.GreaterThan, tbl_electrics_temp_problemFB._addedBlocks);
+    _waitingNot = '';
+    tbl_electrics_temp_problemFB._addedBlocks
+            .needEndBlock[tbl_electrics_temp_problemFB._blockIndex] =
+        tbl_electrics_temp_problemFB._addedBlocks.retVal;
+    return tbl_electrics_temp_problemFB;
+  }
+
+  Tbl_electrics_temp_problemFilterBuilder inValues(dynamic pValue) {
+    tbl_electrics_temp_problemFB._addedBlocks = setCriteria(
+        pValue,
+        tbl_electrics_temp_problemFB.parameters,
+        param,
+        SqlSyntax.IN.replaceAll(SqlSyntax.notKeyword, _waitingNot),
+        tbl_electrics_temp_problemFB._addedBlocks);
+    _waitingNot = '';
+    tbl_electrics_temp_problemFB._addedBlocks
+            .needEndBlock[tbl_electrics_temp_problemFB._blockIndex] =
+        tbl_electrics_temp_problemFB._addedBlocks.retVal;
+    return tbl_electrics_temp_problemFB;
+  }
+}
+// endregion Tbl_electrics_temp_problemField
+
+// region Tbl_electrics_temp_problemFilterBuilder
+class Tbl_electrics_temp_problemFilterBuilder extends SearchCriteria {
+  Tbl_electrics_temp_problemFilterBuilder(Tbl_electrics_temp_problem obj) {
+    whereString = '';
+    qparams = QueryParams();
+    parameters = <DbParameter>[];
+    orderByList = <String>[];
+    groupByList = <String>[];
+    _addedBlocks = AddedBlocks(<bool>[], <bool>[]);
+    _addedBlocks.needEndBlock.add(false);
+    _addedBlocks.waitingStartBlock.add(false);
+    _pagesize = 0;
+    _page = 0;
+    _obj = obj;
+  }
+  AddedBlocks _addedBlocks;
+  int _blockIndex = 0;
+  List<DbParameter> parameters;
+  List<String> orderByList;
+  Tbl_electrics_temp_problem _obj;
+  QueryParams qparams;
+  int _pagesize;
+  int _page;
+
+  /// put the sql keyword 'AND'
+  Tbl_electrics_temp_problemFilterBuilder get and {
+    if (parameters.isNotEmpty) {
+      parameters[parameters.length - 1].wOperator = ' AND ';
+    }
+    return this;
+  }
+
+  /// put the sql keyword 'OR'
+  Tbl_electrics_temp_problemFilterBuilder get or {
+    if (parameters.isNotEmpty) {
+      parameters[parameters.length - 1].wOperator = ' OR ';
+    }
+    return this;
+  }
+
+  /// open parentheses
+  Tbl_electrics_temp_problemFilterBuilder get startBlock {
+    _addedBlocks.waitingStartBlock.add(true);
+    _addedBlocks.needEndBlock.add(false);
+    _blockIndex++;
+    if (_blockIndex > 1) {
+      _addedBlocks.needEndBlock[_blockIndex - 1] = true;
+    }
+    return this;
+  }
+
+  /// String whereCriteria, write raw query without 'where' keyword. Like this: 'field1 like 'test%' and field2 = 3'
+  Tbl_electrics_temp_problemFilterBuilder where(String whereCriteria,
+      {dynamic parameterValue}) {
+    if (whereCriteria != null && whereCriteria != '') {
+      final DbParameter param = DbParameter(
+          columnName: parameterValue == null ? null : '',
+          hasParameter: parameterValue != null);
+      _addedBlocks = setCriteria(parameterValue ?? 0, parameters, param,
+          '($whereCriteria)', _addedBlocks);
+      _addedBlocks.needEndBlock[_blockIndex] = _addedBlocks.retVal;
+    }
+    return this;
+  }
+
+  /// page = page number,
+  ///
+  /// pagesize = row(s) per page
+  Tbl_electrics_temp_problemFilterBuilder page(int page, int pagesize) {
+    if (page > 0) {
+      _page = page;
+    }
+    if (pagesize > 0) {
+      _pagesize = pagesize;
+    }
+    return this;
+  }
+
+  /// int count = LIMIT
+  Tbl_electrics_temp_problemFilterBuilder top(int count) {
+    if (count > 0) {
+      _pagesize = count;
+    }
+    return this;
+  }
+
+  /// close parentheses
+  Tbl_electrics_temp_problemFilterBuilder get endBlock {
+    if (_addedBlocks.needEndBlock[_blockIndex]) {
+      parameters[parameters.length - 1].whereString += ' ) ';
+    }
+    _addedBlocks.needEndBlock.removeAt(_blockIndex);
+    _addedBlocks.waitingStartBlock.removeAt(_blockIndex);
+    _blockIndex--;
+    return this;
+  }
+
+  /// argFields might be String or List<String>.
+  ///
+  /// Example 1: argFields='name, date'
+  ///
+  /// Example 2: argFields = ['name', 'date']
+  Tbl_electrics_temp_problemFilterBuilder orderBy(dynamic argFields) {
+    if (argFields != null) {
+      if (argFields is String) {
+        orderByList.add(argFields);
+      } else {
+        for (String s in argFields as List<String>) {
+          if (s != null && s.isNotEmpty) {
+            orderByList.add(' $s ');
+          }
+        }
+      }
+    }
+    return this;
+  }
+
+  /// argFields might be String or List<String>.
+  ///
+  /// Example 1: argFields='field1, field2'
+  ///
+  /// Example 2: argFields = ['field1', 'field2']
+  Tbl_electrics_temp_problemFilterBuilder orderByDesc(dynamic argFields) {
+    if (argFields != null) {
+      if (argFields is String) {
+        orderByList.add('$argFields desc ');
+      } else {
+        for (String s in argFields as List<String>) {
+          if (s != null && s.isNotEmpty) {
+            orderByList.add(' $s desc ');
+          }
+        }
+      }
+    }
+    return this;
+  }
+
+  /// argFields might be String or List<String>.
+  ///
+  /// Example 1: argFields='field1, field2'
+  ///
+  /// Example 2: argFields = ['field1', 'field2']
+  Tbl_electrics_temp_problemFilterBuilder groupBy(dynamic argFields) {
+    if (argFields != null) {
+      if (argFields is String) {
+        groupByList.add(' $argFields ');
+      } else {
+        for (String s in argFields as List<String>) {
+          if (s != null && s.isNotEmpty) {
+            groupByList.add(' $s ');
+          }
+        }
+      }
+    }
+    return this;
+  }
+
+  /// argFields might be String or List<String>.
+  ///
+  /// Example 1: argFields='name, date'
+  ///
+  /// Example 2: argFields = ['name', 'date']
+  Tbl_electrics_temp_problemFilterBuilder having(dynamic argFields) {
+    if (argFields != null) {
+      if (argFields is String) {
+        havingList.add(argFields);
+      } else {
+        for (String s in argFields as List<String>) {
+          if (s != null && s.isNotEmpty) {
+            havingList.add(' $s ');
+          }
+        }
+      }
+    }
+    return this;
+  }
+
+  Tbl_electrics_temp_problemField setField(
+      Tbl_electrics_temp_problemField field, String colName, DbType dbtype) {
+    return Tbl_electrics_temp_problemField(this)
+      ..param = DbParameter(
+          dbType: dbtype,
+          columnName: colName,
+          wStartBlock: _addedBlocks.waitingStartBlock[_blockIndex]);
+  }
+
+  Tbl_electrics_temp_problemField _ROWID;
+  Tbl_electrics_temp_problemField get ROWID {
+    return _ROWID = setField(_ROWID, 'ROWID', DbType.integer);
+  }
+
+  Tbl_electrics_temp_problemField _id;
+  Tbl_electrics_temp_problemField get id {
+    return _id = setField(_id, 'id', DbType.integer);
+  }
+
+  Tbl_electrics_temp_problemField _unit_code;
+  Tbl_electrics_temp_problemField get unit_code {
+    return _unit_code = setField(_unit_code, 'unit_code', DbType.text);
+  }
+
+  Tbl_electrics_temp_problemField _bulan;
+  Tbl_electrics_temp_problemField get bulan {
+    return _bulan = setField(_bulan, 'bulan', DbType.text);
+  }
+
+  Tbl_electrics_temp_problemField _tahun;
+  Tbl_electrics_temp_problemField get tahun {
+    return _tahun = setField(_tahun, 'tahun', DbType.text);
+  }
+
+  Tbl_electrics_temp_problemField _idx_problem;
+  Tbl_electrics_temp_problemField get idx_problem {
+    return _idx_problem = setField(_idx_problem, 'idx_problem', DbType.text);
+  }
+
+  bool _getIsDeleted;
+
+  void _buildParameters() {
+    if (_page > 0 && _pagesize > 0) {
+      qparams
+        ..limit = _pagesize
+        ..offset = (_page - 1) * _pagesize;
+    } else {
+      qparams
+        ..limit = _pagesize
+        ..offset = _page;
+    }
+    for (DbParameter param in parameters) {
+      if (param.columnName != null) {
+        if (param.value is List && !param.hasParameter) {
+          param.value = param.dbType == DbType.text
+              ? '\'${param.value.join('\',\'')}\''
+              : param.value.join(',');
+          whereString += param.whereString
+              .replaceAll('{field}', param.columnName)
+              .replaceAll('?', param.value.toString());
+          param.value = null;
+        } else {
+          if (param.value is Map<String, dynamic> &&
+              param.value['sql'] != null) {
+            param
+              ..whereString = param.whereString
+                  .replaceAll('?', param.value['sql'].toString())
+              ..dbType = DbType.integer
+              ..value = param.value['args'];
+          }
+          whereString +=
+              param.whereString.replaceAll('{field}', param.columnName);
+        }
+        if (!param.whereString.contains('?')) {
+        } else {
+          switch (param.dbType) {
+            case DbType.bool:
+              param.value = param.value == null
+                  ? null
+                  : param.value == true
+                      ? 1
+                      : 0;
+              param.value2 = param.value2 == null
+                  ? null
+                  : param.value2 == true
+                      ? 1
+                      : 0;
+              break;
+            case DbType.date:
+            case DbType.datetime:
+            case DbType.datetimeUtc:
+              param.value = param.value == null
+                  ? null
+                  : (param.value as DateTime).millisecondsSinceEpoch;
+              param.value2 = param.value2 == null
+                  ? null
+                  : (param.value2 as DateTime).millisecondsSinceEpoch;
+              break;
+            default:
+          }
+          if (param.value != null) {
+            if (param.value is List) {
+              for (var p in param.value) {
+                whereArguments.add(p);
+              }
+            } else {
+              whereArguments.add(param.value);
+            }
+          }
+          if (param.value2 != null) {
+            whereArguments.add(param.value2);
+          }
+        }
+      } else {
+        whereString += param.whereString;
+      }
+    }
+    if (Tbl_electrics_temp_problem._softDeleteActivated) {
+      if (whereString != '') {
+        whereString =
+            '${!_getIsDeleted ? 'ifnull(isDeleted,0)=0 AND' : ''} ($whereString)';
+      } else if (!_getIsDeleted) {
+        whereString = 'ifnull(isDeleted,0)=0';
+      }
+    }
+
+    if (whereString != '') {
+      qparams.whereString = whereString;
+    }
+    qparams
+      ..whereArguments = whereArguments
+      ..groupBy = groupByList.join(',')
+      ..orderBy = orderByList.join(',')
+      ..having = havingList.join(',');
+  }
+
+  /// Deletes List<Tbl_electrics_temp_problem> bulk by query
+  ///
+  /// <returns>BoolResult res.success=Deleted, not res.success=Can not deleted
+  Future<BoolResult> delete([bool hardDelete = false]) async {
+    _buildParameters();
+    var r = BoolResult();
+
+    if (Tbl_electrics_temp_problem._softDeleteActivated && !hardDelete) {
+      r = await _obj._mnTbl_electrics_temp_problem
+          .updateBatch(qparams, {'isDeleted': 1});
+    } else {
+      r = await _obj._mnTbl_electrics_temp_problem.delete(qparams);
+    }
+    return r;
+  }
+
+  /// using:
+  ///
+  /// update({'fieldName': Value})
+  ///
+  /// fieldName must be String. Value is dynamic, it can be any of the (int, bool, String.. )
+  Future<BoolResult> update(Map<String, dynamic> values) {
+    _buildParameters();
+    if (qparams.limit > 0 || qparams.offset > 0) {
+      qparams.whereString =
+          'ROWID IN (SELECT ROWID from tbl_electrics_temp_problem ${qparams.whereString.isNotEmpty ? 'WHERE ${qparams.whereString}' : ''}${qparams.limit > 0 ? ' LIMIT ${qparams.limit}' : ''}${qparams.offset > 0 ? ' OFFSET ${qparams.offset}' : ''})';
+    }
+    return _obj._mnTbl_electrics_temp_problem.updateBatch(qparams, values);
+  }
+
+  /// This method always returns Tbl_electrics_temp_problem Obj if exist, otherwise returns null
+  ///
+  /// bool preload: if true, loads all related child objects (Set preload to true if you want to load all fields related to child or parent)
+  ///
+  /// ex: toSingle(preload:true) -> Loads all related objects
+  ///
+  /// List<String> preloadFields: specify the fields you want to preload (preload parameter's value should also be "true")
+  ///
+  /// ex: toSingle(preload:true, preloadFields:['plField1','plField2'... etc])  -> Loads only certain fields what you specified
+  ///
+  /// bool loadParents: if true, loads all parent objects until the object has no parent
+
+  ///
+  /// <returns>List<Tbl_electrics_temp_problem>
+  Future<Tbl_electrics_temp_problem> toSingle(
+      {bool preload = false,
+      List<String> preloadFields,
+      bool loadParents = false,
+      List<String> loadedFields}) async {
+    _pagesize = 1;
+    _buildParameters();
+    final objFuture = _obj._mnTbl_electrics_temp_problem.toList(qparams);
+    final data = await objFuture;
+    Tbl_electrics_temp_problem obj;
+    if (data.isNotEmpty) {
+      obj = Tbl_electrics_temp_problem.fromMap(data[0] as Map<String, dynamic>);
+    } else {
+      obj = null;
+    }
+    return obj;
+  }
+
+  /// This method returns int. [Tbl_electrics_temp_problem]
+  ///
+  /// <returns>int
+  Future<int> toCount(
+      [VoidCallback Function(int c) tbl_electrics_temp_problemCount]) async {
+    _buildParameters();
+    qparams.selectColumns = ['COUNT(1) AS CNT'];
+    final tbl_electrics_temp_problemsFuture =
+        await _obj._mnTbl_electrics_temp_problem.toList(qparams);
+    final int count = tbl_electrics_temp_problemsFuture[0]['CNT'] as int;
+    if (tbl_electrics_temp_problemCount != null) {
+      tbl_electrics_temp_problemCount(count);
+    }
+    return count;
+  }
+
+  /// This method returns List<Tbl_electrics_temp_problem> [Tbl_electrics_temp_problem]
+  ///
+  /// bool preload: if true, loads all related child objects (Set preload to true if you want to load all fields related to child or parent)
+  ///
+  /// ex: toList(preload:true) -> Loads all related objects
+  ///
+  /// List<String> preloadFields: specify the fields you want to preload (preload parameter's value should also be "true")
+  ///
+  /// ex: toList(preload:true, preloadFields:['plField1','plField2'... etc])  -> Loads only certain fields what you specified
+  ///
+  /// bool loadParents: if true, loads all parent objects until the object has no parent
+
+  ///
+  /// <returns>List<Tbl_electrics_temp_problem>
+  Future<List<Tbl_electrics_temp_problem>> toList(
+      {bool preload = false,
+      List<String> preloadFields,
+      bool loadParents = false,
+      List<String> loadedFields}) async {
+    final data = await toMapList();
+    final List<Tbl_electrics_temp_problem> tbl_electrics_temp_problemsData =
+        await Tbl_electrics_temp_problem.fromMapList(data,
+            preload: preload,
+            preloadFields: preloadFields,
+            loadParents: loadParents,
+            loadedFields: loadedFields,
+            setDefaultValues: qparams.selectColumns == null);
+    return tbl_electrics_temp_problemsData;
+  }
+
+  /// This method returns Json String [Tbl_electrics_temp_problem]
+  Future<String> toJson() async {
+    final list = <dynamic>[];
+    final data = await toList();
+    for (var o in data) {
+      list.add(o.toMap(forJson: true));
+    }
+    return json.encode(list);
+  }
+
+  /// This method returns Json String. [Tbl_electrics_temp_problem]
+  Future<String> toJsonWithChilds() async {
+    final list = <dynamic>[];
+    final data = await toList();
+    for (var o in data) {
+      list.add(await o.toMapWithChildren(false, true));
+    }
+    return json.encode(list);
+  }
+
+  /// This method returns List<dynamic>. [Tbl_electrics_temp_problem]
+  ///
+  /// <returns>List<dynamic>
+  Future<List<dynamic>> toMapList() async {
+    _buildParameters();
+    return await _obj._mnTbl_electrics_temp_problem.toList(qparams);
+  }
+
+  /// This method returns Primary Key List SQL and Parameters retVal = Map<String,dynamic>. [Tbl_electrics_temp_problem]
+  ///
+  /// retVal['sql'] = SQL statement string, retVal['args'] = whereArguments List<dynamic>;
+  ///
+  /// <returns>List<String>
+  Map<String, dynamic> toListPrimaryKeySQL([bool buildParameters = true]) {
+    final Map<String, dynamic> _retVal = <String, dynamic>{};
+    if (buildParameters) {
+      _buildParameters();
+    }
+    _retVal['sql'] =
+        'SELECT `ROWID` FROM tbl_electrics_temp_problem WHERE ${qparams.whereString}';
+    _retVal['args'] = qparams.whereArguments;
+    return _retVal;
+  }
+
+  /// This method returns Primary Key List<int>.
+  /// <returns>List<int>
+  Future<List<int>> toListPrimaryKey([bool buildParameters = true]) async {
+    if (buildParameters) {
+      _buildParameters();
+    }
+    final List<int> ROWIDData = <int>[];
+    qparams.selectColumns = ['ROWID'];
+    final ROWIDFuture =
+        await _obj._mnTbl_electrics_temp_problem.toList(qparams);
+
+    final int count = ROWIDFuture.length;
+    for (int i = 0; i < count; i++) {
+      ROWIDData.add(ROWIDFuture[i]['ROWID'] as int);
+    }
+    return ROWIDData;
+  }
+
+  /// Returns List<dynamic> for selected columns. Use this method for 'groupBy' with min,max,avg..  [Tbl_electrics_temp_problem]
+  ///
+  /// Sample usage: (see EXAMPLE 4.2 at https://github.com/hhtokpinar/sqfEntity#group-by)
+  Future<List<dynamic>> toListObject() async {
+    _buildParameters();
+
+    final objectFuture = _obj._mnTbl_electrics_temp_problem.toList(qparams);
+
+    final List<dynamic> objectsData = <dynamic>[];
+    final data = await objectFuture;
+    final int count = data.length;
+    for (int i = 0; i < count; i++) {
+      objectsData.add(data[i]);
+    }
+    return objectsData;
+  }
+
+  /// Returns List<String> for selected first column
+  ///
+  /// Sample usage: await Tbl_electrics_temp_problem.select(columnsToSelect: ['columnName']).toListString()
+  Future<List<String>> toListString(
+      [VoidCallback Function(List<String> o) listString]) async {
+    _buildParameters();
+
+    final objectFuture = _obj._mnTbl_electrics_temp_problem.toList(qparams);
+
+    final List<String> objectsData = <String>[];
+    final data = await objectFuture;
+    final int count = data.length;
+    for (int i = 0; i < count; i++) {
+      objectsData.add(data[i][qparams.selectColumns[0]].toString());
+    }
+    if (listString != null) {
+      listString(objectsData);
+    }
+    return objectsData;
+  }
+}
+// endregion Tbl_electrics_temp_problemFilterBuilder
+
+// region Tbl_electrics_temp_problemFields
+class Tbl_electrics_temp_problemFields {
+  static TableField _fROWID;
+  static TableField get ROWID {
+    return _fROWID =
+        _fROWID ?? SqlSyntax.setField(_fROWID, 'rowid', DbType.integer);
+  }
+
+  static TableField _fId;
+  static TableField get id {
+    return _fId = _fId ?? SqlSyntax.setField(_fId, 'id', DbType.integer);
+  }
+
+  static TableField _fUnit_code;
+  static TableField get unit_code {
+    return _fUnit_code = _fUnit_code ??
+        SqlSyntax.setField(_fUnit_code, 'unit_code', DbType.text);
+  }
+
+  static TableField _fBulan;
+  static TableField get bulan {
+    return _fBulan =
+        _fBulan ?? SqlSyntax.setField(_fBulan, 'bulan', DbType.text);
+  }
+
+  static TableField _fTahun;
+  static TableField get tahun {
+    return _fTahun =
+        _fTahun ?? SqlSyntax.setField(_fTahun, 'tahun', DbType.text);
+  }
+
+  static TableField _fIdx_problem;
+  static TableField get idx_problem {
+    return _fIdx_problem = _fIdx_problem ??
+        SqlSyntax.setField(_fIdx_problem, 'idx_problem', DbType.text);
+  }
+}
+// endregion Tbl_electrics_temp_problemFields
+
+//region Tbl_electrics_temp_problemManager
+class Tbl_electrics_temp_problemManager extends SqfEntityProvider {
+  Tbl_electrics_temp_problemManager()
+      : super(DbModel(),
+            tableName: _tableName,
+            primaryKeyList: _primaryKeyList,
+            whereStr: _whereStr);
+  static final String _tableName = 'tbl_electrics_temp_problem';
+  static final List<String> _primaryKeyList = ['ROWID'];
+  static final String _whereStr = 'ROWID=?';
+}
+
+//endregion Tbl_electrics_temp_problemManager
+// region Tbl_waters_temp_problem_qc
+class Tbl_waters_temp_problem_qc {
+  Tbl_waters_temp_problem_qc(
+      {this.ROWID,
+      this.id,
+      this.unit_code,
+      this.bulan,
+      this.tahun,
+      this.idx_problem}) {
+    _setDefaultValues();
+  }
+  Tbl_waters_temp_problem_qc.withFields(
+      this.id, this.unit_code, this.bulan, this.tahun, this.idx_problem) {
+    _setDefaultValues();
+  }
+  Tbl_waters_temp_problem_qc.withId(this.ROWID, this.id, this.unit_code,
+      this.bulan, this.tahun, this.idx_problem) {
+    _setDefaultValues();
+  }
+  Tbl_waters_temp_problem_qc.fromMap(Map<String, dynamic> o,
+      {bool setDefaultValues = true}) {
+    if (setDefaultValues) {
+      _setDefaultValues();
+    }
+    ROWID = int.tryParse(o['ROWID'].toString());
+    if (o['id'] != null) {
+      id = int.tryParse(o['id'].toString());
+    }
+    if (o['unit_code'] != null) {
+      unit_code = o['unit_code'] as String;
+    }
+    if (o['bulan'] != null) {
+      bulan = o['bulan'] as String;
+    }
+    if (o['tahun'] != null) {
+      tahun = o['tahun'] as String;
+    }
+    if (o['idx_problem'] != null) {
+      idx_problem = o['idx_problem'] as String;
+    }
+  }
+  // FIELDS (Tbl_waters_temp_problem_qc)
+  int ROWID;
+  int id;
+  String unit_code;
+  String bulan;
+  String tahun;
+  String idx_problem;
+
+  BoolResult saveResult;
+  // end FIELDS (Tbl_waters_temp_problem_qc)
+
+  static const bool _softDeleteActivated = false;
+  Tbl_waters_temp_problem_qcManager __mnTbl_waters_temp_problem_qc;
+
+  Tbl_waters_temp_problem_qcManager get _mnTbl_waters_temp_problem_qc {
+    return __mnTbl_waters_temp_problem_qc =
+        __mnTbl_waters_temp_problem_qc ?? Tbl_waters_temp_problem_qcManager();
+  }
+
+  // METHODS
+  Map<String, dynamic> toMap(
+      {bool forQuery = false, bool forJson = false, bool forView = false}) {
+    final map = <String, dynamic>{};
+    if (ROWID != null) {
+      map['ROWID'] = ROWID;
+    }
+    if (id != null) {
+      map['id'] = id;
+    }
+
+    if (unit_code != null) {
+      map['unit_code'] = unit_code;
+    }
+
+    if (bulan != null) {
+      map['bulan'] = bulan;
+    }
+
+    if (tahun != null) {
+      map['tahun'] = tahun;
+    }
+
+    if (idx_problem != null) {
+      map['idx_problem'] = idx_problem;
+    }
+
+    return map;
+  }
+
+  Future<Map<String, dynamic>> toMapWithChildren(
+      [bool forQuery = false,
+      bool forJson = false,
+      bool forView = false]) async {
+    final map = <String, dynamic>{};
+    if (ROWID != null) {
+      map['ROWID'] = ROWID;
+    }
+    if (id != null) {
+      map['id'] = id;
+    }
+
+    if (unit_code != null) {
+      map['unit_code'] = unit_code;
+    }
+
+    if (bulan != null) {
+      map['bulan'] = bulan;
+    }
+
+    if (tahun != null) {
+      map['tahun'] = tahun;
+    }
+
+    if (idx_problem != null) {
+      map['idx_problem'] = idx_problem;
+    }
+
+    return map;
+  }
+
+  /// This method returns Json String [Tbl_waters_temp_problem_qc]
+  String toJson() {
+    return json.encode(toMap(forJson: true));
+  }
+
+  /// This method returns Json String [Tbl_waters_temp_problem_qc]
+  Future<String> toJsonWithChilds() async {
+    return json.encode(await toMapWithChildren(false, true));
+  }
+
+  List<dynamic> toArgs() {
+    return [id, unit_code, bulan, tahun, idx_problem];
+  }
+
+  List<dynamic> toArgsWithIds() {
+    return [ROWID, id, unit_code, bulan, tahun, idx_problem];
+  }
+
+  static Future<List<Tbl_waters_temp_problem_qc>> fromWebUrl(String url,
+      {Map<String, String> headers}) async {
+    try {
+      final response = await http.get(url, headers: headers);
+      return await fromJson(response.body);
+    } catch (e) {
+      print(
+          'SQFENTITY ERROR Tbl_waters_temp_problem_qc.fromWebUrl: ErrorMessage: ${e.toString()}');
+      return null;
+    }
+  }
+
+  Future<http.Response> postUrl(String url, {Map<String, String> headers}) {
+    return http.post(url, headers: headers, body: toJson());
+  }
+
+  static Future<List<Tbl_waters_temp_problem_qc>> fromJson(
+      String jsonBody) async {
+    final Iterable list = await json.decode(jsonBody) as Iterable;
+    var objList = <Tbl_waters_temp_problem_qc>[];
+    try {
+      objList = list
+          .map((tbl_waters_temp_problem_qc) =>
+              Tbl_waters_temp_problem_qc.fromMap(
+                  tbl_waters_temp_problem_qc as Map<String, dynamic>))
+          .toList();
+    } catch (e) {
+      print(
+          'SQFENTITY ERROR Tbl_waters_temp_problem_qc.fromJson: ErrorMessage: ${e.toString()}');
+    }
+    return objList;
+  }
+
+  static Future<List<Tbl_waters_temp_problem_qc>> fromMapList(
+      List<dynamic> data,
+      {bool preload = false,
+      List<String> preloadFields,
+      bool loadParents = false,
+      List<String> loadedFields,
+      bool setDefaultValues = true}) async {
+    final List<Tbl_waters_temp_problem_qc> objList =
+        <Tbl_waters_temp_problem_qc>[];
+    loadedFields = loadedFields ?? [];
+    for (final map in data) {
+      final obj = Tbl_waters_temp_problem_qc.fromMap(
+          map as Map<String, dynamic>,
+          setDefaultValues: setDefaultValues);
+
+      objList.add(obj);
+    }
+    return objList;
+  }
+
+  /// returns Tbl_waters_temp_problem_qc by ID if exist, otherwise returns null
+  ///
+  /// Primary Keys: int ROWID
+  ///
+  /// bool preload: if true, loads all related child objects (Set preload to true if you want to load all fields related to child or parent)
+  ///
+  /// ex: getById(preload:true) -> Loads all related objects
+  ///
+  /// List<String> preloadFields: specify the fields you want to preload (preload parameter's value should also be "true")
+  ///
+  /// ex: getById(preload:true, preloadFields:['plField1','plField2'... etc])  -> Loads only certain fields what you specified
+  ///
+  /// bool loadParents: if true, loads all parent objects until the object has no parent
+
+  ///
+  /// <returns>returns Tbl_waters_temp_problem_qc if exist, otherwise returns null
+  Future<Tbl_waters_temp_problem_qc> getById(int ROWID,
+      {bool preload = false,
+      List<String> preloadFields,
+      bool loadParents = false,
+      List<String> loadedFields}) async {
+    if (ROWID == null) {
+      return null;
+    }
+    Tbl_waters_temp_problem_qc obj;
+    final data = await _mnTbl_waters_temp_problem_qc.getById([ROWID]);
+    if (data.length != 0) {
+      obj = Tbl_waters_temp_problem_qc.fromMap(data[0] as Map<String, dynamic>);
+    } else {
+      obj = null;
+    }
+    return obj;
+  }
+
+  /// Saves the (Tbl_waters_temp_problem_qc) object. If the ROWID field is null, saves as a new record and returns new ROWID, if ROWID is not null then updates record
+
+  /// <returns>Returns ROWID
+  Future<int> save() async {
+    if (ROWID == null || ROWID == 0) {
+      ROWID = await _mnTbl_waters_temp_problem_qc.insert(this);
+    } else {
+      // ROWID= await _upsert(); // removed in sqfentity_gen 1.3.0+6
+      await _mnTbl_waters_temp_problem_qc.update(this);
+    }
+
+    return ROWID;
+  }
+
+  /// saveAs Tbl_waters_temp_problem_qc. Returns a new Primary Key value of Tbl_waters_temp_problem_qc
+
+  /// <returns>Returns a new Primary Key value of Tbl_waters_temp_problem_qc
+  Future<int> saveAs() async {
+    ROWID = null;
+
+    return save();
+  }
+
+  /// saveAll method saves the sent List<Tbl_waters_temp_problem_qc> as a bulk in one transaction
+  ///
+  /// Returns a <List<BoolResult>>
+  static Future<List<dynamic>> saveAll(
+      List<Tbl_waters_temp_problem_qc> tbl_waters_temp_problem_qcs) async {
+    // final results = _mnTbl_waters_temp_problem_qc.saveAll('INSERT OR REPLACE INTO tbl_waters_temp_problem_qc (ROWID,id, unit_code, bulan, tahun, idx_problem)  VALUES (?,?,?,?,?,?)',tbl_waters_temp_problem_qcs);
+    // return results; removed in sqfentity_gen 1.3.0+6
+    await DbModel().batchStart();
+    for (final obj in tbl_waters_temp_problem_qcs) {
+      await obj.save();
+    }
+    //    return DbModel().batchCommit();
+    final result = await DbModel().batchCommit();
+    for (int i = 0; i < tbl_waters_temp_problem_qcs.length; i++) {
+      if (tbl_waters_temp_problem_qcs[i].ROWID == null) {
+        tbl_waters_temp_problem_qcs[i].ROWID = result[i] as int;
+      }
+    }
+
+    return result;
+  }
+
+  /// Updates if the record exists, otherwise adds a new row
+
+  /// <returns>Returns ROWID
+  Future<int> upsert() async {
+    try {
+      if (await _mnTbl_waters_temp_problem_qc.rawInsert(
+              'INSERT OR REPLACE INTO tbl_waters_temp_problem_qc (ROWID,id, unit_code, bulan, tahun, idx_problem)  VALUES (?,?,?,?,?,?)',
+              [ROWID, id, unit_code, bulan, tahun, idx_problem]) ==
+          1) {
+        saveResult = BoolResult(
+            success: true,
+            successMessage:
+                'Tbl_waters_temp_problem_qc ROWID=$ROWID updated successfully');
+      } else {
+        saveResult = BoolResult(
+            success: false,
+            errorMessage:
+                'Tbl_waters_temp_problem_qc ROWID=$ROWID did not update');
+      }
+      return ROWID;
+    } catch (e) {
+      saveResult = BoolResult(
+          success: false,
+          errorMessage:
+              'Tbl_waters_temp_problem_qc Save failed. Error: ${e.toString()}');
+      return 0;
+    }
+  }
+
+  /// inserts or replaces the sent List<<Tbl_waters_temp_problem_qc>> as a bulk in one transaction.
+  ///
+  /// upsertAll() method is faster then saveAll() method. upsertAll() should be used when you are sure that the primary key is greater than zero
+  ///
+  /// Returns a BoolCommitResult
+  Future<BoolCommitResult> upsertAll(
+      List<Tbl_waters_temp_problem_qc> tbl_waters_temp_problem_qcs) async {
+    final results = await _mnTbl_waters_temp_problem_qc.rawInsertAll(
+        'INSERT OR REPLACE INTO tbl_waters_temp_problem_qc (ROWID,id, unit_code, bulan, tahun, idx_problem)  VALUES (?,?,?,?,?,?)',
+        tbl_waters_temp_problem_qcs);
+    return results;
+  }
+
+  /// Deletes Tbl_waters_temp_problem_qc
+
+  /// <returns>BoolResult res.success=Deleted, not res.success=Can not deleted
+  Future<BoolResult> delete([bool hardDelete = false]) async {
+    print(
+        'SQFENTITIY: delete Tbl_waters_temp_problem_qc invoked (ROWID=$ROWID)');
+    if (!_softDeleteActivated || hardDelete) {
+      return _mnTbl_waters_temp_problem_qc
+          .delete(QueryParams(whereString: 'ROWID=?', whereArguments: [ROWID]));
+    } else {
+      return _mnTbl_waters_temp_problem_qc.updateBatch(
+          QueryParams(whereString: 'ROWID=?', whereArguments: [ROWID]),
+          {'isDeleted': 1});
+    }
+  }
+
+  Tbl_waters_temp_problem_qcFilterBuilder select(
+      {List<String> columnsToSelect, bool getIsDeleted}) {
+    return Tbl_waters_temp_problem_qcFilterBuilder(this)
+      .._getIsDeleted = getIsDeleted == true
+      ..qparams.selectColumns = columnsToSelect;
+  }
+
+  Tbl_waters_temp_problem_qcFilterBuilder distinct(
+      {List<String> columnsToSelect, bool getIsDeleted}) {
+    return Tbl_waters_temp_problem_qcFilterBuilder(this)
+      .._getIsDeleted = getIsDeleted == true
+      ..qparams.selectColumns = columnsToSelect
+      ..qparams.distinct = true;
+  }
+
+  void _setDefaultValues() {}
+  // END METHODS
+  // CUSTOM CODES
+  /*
+      you must define customCode property of your SqfEntityTable constant for ex:
+      const tablePerson = SqfEntityTable(
+      tableName: 'person',
+      primaryKeyName: 'id',
+      primaryKeyType: PrimaryKeyType.integer_auto_incremental,
+      fields: [
+        SqfEntityField('firstName', DbType.text),
+        SqfEntityField('lastName', DbType.text),
+      ],
+      customCode: '''
+       String fullName()
+       { 
+         return '$firstName $lastName';
+       }
+      ''');
+     */
+  // END CUSTOM CODES
+}
+// endregion tbl_waters_temp_problem_qc
+
+// region Tbl_waters_temp_problem_qcField
+class Tbl_waters_temp_problem_qcField extends SearchCriteria {
+  Tbl_waters_temp_problem_qcField(this.tbl_waters_temp_problem_qcFB) {
+    param = DbParameter();
+  }
+  DbParameter param;
+  String _waitingNot = '';
+  Tbl_waters_temp_problem_qcFilterBuilder tbl_waters_temp_problem_qcFB;
+
+  Tbl_waters_temp_problem_qcField get not {
+    _waitingNot = ' NOT ';
+    return this;
+  }
+
+  Tbl_waters_temp_problem_qcFilterBuilder equals(dynamic pValue) {
+    param.expression = '=';
+    tbl_waters_temp_problem_qcFB._addedBlocks = _waitingNot == ''
+        ? setCriteria(pValue, tbl_waters_temp_problem_qcFB.parameters, param,
+            SqlSyntax.EQuals, tbl_waters_temp_problem_qcFB._addedBlocks)
+        : setCriteria(pValue, tbl_waters_temp_problem_qcFB.parameters, param,
+            SqlSyntax.NotEQuals, tbl_waters_temp_problem_qcFB._addedBlocks);
+    _waitingNot = '';
+    tbl_waters_temp_problem_qcFB._addedBlocks
+            .needEndBlock[tbl_waters_temp_problem_qcFB._blockIndex] =
+        tbl_waters_temp_problem_qcFB._addedBlocks.retVal;
+    return tbl_waters_temp_problem_qcFB;
+  }
+
+  Tbl_waters_temp_problem_qcFilterBuilder equalsOrNull(dynamic pValue) {
+    param.expression = '=';
+    tbl_waters_temp_problem_qcFB._addedBlocks = _waitingNot == ''
+        ? setCriteria(pValue, tbl_waters_temp_problem_qcFB.parameters, param,
+            SqlSyntax.EQualsOrNull, tbl_waters_temp_problem_qcFB._addedBlocks)
+        : setCriteria(
+            pValue,
+            tbl_waters_temp_problem_qcFB.parameters,
+            param,
+            SqlSyntax.NotEQualsOrNull,
+            tbl_waters_temp_problem_qcFB._addedBlocks);
+    _waitingNot = '';
+    tbl_waters_temp_problem_qcFB._addedBlocks
+            .needEndBlock[tbl_waters_temp_problem_qcFB._blockIndex] =
+        tbl_waters_temp_problem_qcFB._addedBlocks.retVal;
+    return tbl_waters_temp_problem_qcFB;
+  }
+
+  Tbl_waters_temp_problem_qcFilterBuilder isNull() {
+    tbl_waters_temp_problem_qcFB._addedBlocks = setCriteria(
+        0,
+        tbl_waters_temp_problem_qcFB.parameters,
+        param,
+        SqlSyntax.IsNULL.replaceAll(SqlSyntax.notKeyword, _waitingNot),
+        tbl_waters_temp_problem_qcFB._addedBlocks);
+    _waitingNot = '';
+    tbl_waters_temp_problem_qcFB._addedBlocks
+            .needEndBlock[tbl_waters_temp_problem_qcFB._blockIndex] =
+        tbl_waters_temp_problem_qcFB._addedBlocks.retVal;
+    return tbl_waters_temp_problem_qcFB;
+  }
+
+  Tbl_waters_temp_problem_qcFilterBuilder contains(dynamic pValue) {
+    if (pValue != null) {
+      tbl_waters_temp_problem_qcFB._addedBlocks = setCriteria(
+          '%${pValue.toString()}%',
+          tbl_waters_temp_problem_qcFB.parameters,
+          param,
+          SqlSyntax.Contains.replaceAll(SqlSyntax.notKeyword, _waitingNot),
+          tbl_waters_temp_problem_qcFB._addedBlocks);
+      _waitingNot = '';
+      tbl_waters_temp_problem_qcFB._addedBlocks
+              .needEndBlock[tbl_waters_temp_problem_qcFB._blockIndex] =
+          tbl_waters_temp_problem_qcFB._addedBlocks.retVal;
+    }
+    return tbl_waters_temp_problem_qcFB;
+  }
+
+  Tbl_waters_temp_problem_qcFilterBuilder startsWith(dynamic pValue) {
+    if (pValue != null) {
+      tbl_waters_temp_problem_qcFB._addedBlocks = setCriteria(
+          '${pValue.toString()}%',
+          tbl_waters_temp_problem_qcFB.parameters,
+          param,
+          SqlSyntax.Contains.replaceAll(SqlSyntax.notKeyword, _waitingNot),
+          tbl_waters_temp_problem_qcFB._addedBlocks);
+      _waitingNot = '';
+      tbl_waters_temp_problem_qcFB._addedBlocks
+              .needEndBlock[tbl_waters_temp_problem_qcFB._blockIndex] =
+          tbl_waters_temp_problem_qcFB._addedBlocks.retVal;
+      tbl_waters_temp_problem_qcFB._addedBlocks
+              .needEndBlock[tbl_waters_temp_problem_qcFB._blockIndex] =
+          tbl_waters_temp_problem_qcFB._addedBlocks.retVal;
+    }
+    return tbl_waters_temp_problem_qcFB;
+  }
+
+  Tbl_waters_temp_problem_qcFilterBuilder endsWith(dynamic pValue) {
+    if (pValue != null) {
+      tbl_waters_temp_problem_qcFB._addedBlocks = setCriteria(
+          '%${pValue.toString()}',
+          tbl_waters_temp_problem_qcFB.parameters,
+          param,
+          SqlSyntax.Contains.replaceAll(SqlSyntax.notKeyword, _waitingNot),
+          tbl_waters_temp_problem_qcFB._addedBlocks);
+      _waitingNot = '';
+      tbl_waters_temp_problem_qcFB._addedBlocks
+              .needEndBlock[tbl_waters_temp_problem_qcFB._blockIndex] =
+          tbl_waters_temp_problem_qcFB._addedBlocks.retVal;
+    }
+    return tbl_waters_temp_problem_qcFB;
+  }
+
+  Tbl_waters_temp_problem_qcFilterBuilder between(
+      dynamic pFirst, dynamic pLast) {
+    if (pFirst != null && pLast != null) {
+      tbl_waters_temp_problem_qcFB._addedBlocks = setCriteria(
+          pFirst,
+          tbl_waters_temp_problem_qcFB.parameters,
+          param,
+          SqlSyntax.Between.replaceAll(SqlSyntax.notKeyword, _waitingNot),
+          tbl_waters_temp_problem_qcFB._addedBlocks,
+          pLast);
+    } else if (pFirst != null) {
+      if (_waitingNot != '') {
+        tbl_waters_temp_problem_qcFB._addedBlocks = setCriteria(
+            pFirst,
+            tbl_waters_temp_problem_qcFB.parameters,
+            param,
+            SqlSyntax.LessThan,
+            tbl_waters_temp_problem_qcFB._addedBlocks);
+      } else {
+        tbl_waters_temp_problem_qcFB._addedBlocks = setCriteria(
+            pFirst,
+            tbl_waters_temp_problem_qcFB.parameters,
+            param,
+            SqlSyntax.GreaterThanOrEquals,
+            tbl_waters_temp_problem_qcFB._addedBlocks);
+      }
+    } else if (pLast != null) {
+      if (_waitingNot != '') {
+        tbl_waters_temp_problem_qcFB._addedBlocks = setCriteria(
+            pLast,
+            tbl_waters_temp_problem_qcFB.parameters,
+            param,
+            SqlSyntax.GreaterThan,
+            tbl_waters_temp_problem_qcFB._addedBlocks);
+      } else {
+        tbl_waters_temp_problem_qcFB._addedBlocks = setCriteria(
+            pLast,
+            tbl_waters_temp_problem_qcFB.parameters,
+            param,
+            SqlSyntax.LessThanOrEquals,
+            tbl_waters_temp_problem_qcFB._addedBlocks);
+      }
+    }
+    _waitingNot = '';
+    tbl_waters_temp_problem_qcFB._addedBlocks
+            .needEndBlock[tbl_waters_temp_problem_qcFB._blockIndex] =
+        tbl_waters_temp_problem_qcFB._addedBlocks.retVal;
+    return tbl_waters_temp_problem_qcFB;
+  }
+
+  Tbl_waters_temp_problem_qcFilterBuilder greaterThan(dynamic pValue) {
+    param.expression = '>';
+    tbl_waters_temp_problem_qcFB._addedBlocks = _waitingNot == ''
+        ? setCriteria(pValue, tbl_waters_temp_problem_qcFB.parameters, param,
+            SqlSyntax.GreaterThan, tbl_waters_temp_problem_qcFB._addedBlocks)
+        : setCriteria(
+            pValue,
+            tbl_waters_temp_problem_qcFB.parameters,
+            param,
+            SqlSyntax.LessThanOrEquals,
+            tbl_waters_temp_problem_qcFB._addedBlocks);
+    _waitingNot = '';
+    tbl_waters_temp_problem_qcFB._addedBlocks
+            .needEndBlock[tbl_waters_temp_problem_qcFB._blockIndex] =
+        tbl_waters_temp_problem_qcFB._addedBlocks.retVal;
+    return tbl_waters_temp_problem_qcFB;
+  }
+
+  Tbl_waters_temp_problem_qcFilterBuilder lessThan(dynamic pValue) {
+    param.expression = '<';
+    tbl_waters_temp_problem_qcFB._addedBlocks = _waitingNot == ''
+        ? setCriteria(pValue, tbl_waters_temp_problem_qcFB.parameters, param,
+            SqlSyntax.LessThan, tbl_waters_temp_problem_qcFB._addedBlocks)
+        : setCriteria(
+            pValue,
+            tbl_waters_temp_problem_qcFB.parameters,
+            param,
+            SqlSyntax.GreaterThanOrEquals,
+            tbl_waters_temp_problem_qcFB._addedBlocks);
+    _waitingNot = '';
+    tbl_waters_temp_problem_qcFB._addedBlocks
+            .needEndBlock[tbl_waters_temp_problem_qcFB._blockIndex] =
+        tbl_waters_temp_problem_qcFB._addedBlocks.retVal;
+    return tbl_waters_temp_problem_qcFB;
+  }
+
+  Tbl_waters_temp_problem_qcFilterBuilder greaterThanOrEquals(dynamic pValue) {
+    param.expression = '>=';
+    tbl_waters_temp_problem_qcFB._addedBlocks = _waitingNot == ''
+        ? setCriteria(
+            pValue,
+            tbl_waters_temp_problem_qcFB.parameters,
+            param,
+            SqlSyntax.GreaterThanOrEquals,
+            tbl_waters_temp_problem_qcFB._addedBlocks)
+        : setCriteria(pValue, tbl_waters_temp_problem_qcFB.parameters, param,
+            SqlSyntax.LessThan, tbl_waters_temp_problem_qcFB._addedBlocks);
+    _waitingNot = '';
+    tbl_waters_temp_problem_qcFB._addedBlocks
+            .needEndBlock[tbl_waters_temp_problem_qcFB._blockIndex] =
+        tbl_waters_temp_problem_qcFB._addedBlocks.retVal;
+    return tbl_waters_temp_problem_qcFB;
+  }
+
+  Tbl_waters_temp_problem_qcFilterBuilder lessThanOrEquals(dynamic pValue) {
+    param.expression = '<=';
+    tbl_waters_temp_problem_qcFB._addedBlocks = _waitingNot == ''
+        ? setCriteria(
+            pValue,
+            tbl_waters_temp_problem_qcFB.parameters,
+            param,
+            SqlSyntax.LessThanOrEquals,
+            tbl_waters_temp_problem_qcFB._addedBlocks)
+        : setCriteria(pValue, tbl_waters_temp_problem_qcFB.parameters, param,
+            SqlSyntax.GreaterThan, tbl_waters_temp_problem_qcFB._addedBlocks);
+    _waitingNot = '';
+    tbl_waters_temp_problem_qcFB._addedBlocks
+            .needEndBlock[tbl_waters_temp_problem_qcFB._blockIndex] =
+        tbl_waters_temp_problem_qcFB._addedBlocks.retVal;
+    return tbl_waters_temp_problem_qcFB;
+  }
+
+  Tbl_waters_temp_problem_qcFilterBuilder inValues(dynamic pValue) {
+    tbl_waters_temp_problem_qcFB._addedBlocks = setCriteria(
+        pValue,
+        tbl_waters_temp_problem_qcFB.parameters,
+        param,
+        SqlSyntax.IN.replaceAll(SqlSyntax.notKeyword, _waitingNot),
+        tbl_waters_temp_problem_qcFB._addedBlocks);
+    _waitingNot = '';
+    tbl_waters_temp_problem_qcFB._addedBlocks
+            .needEndBlock[tbl_waters_temp_problem_qcFB._blockIndex] =
+        tbl_waters_temp_problem_qcFB._addedBlocks.retVal;
+    return tbl_waters_temp_problem_qcFB;
+  }
+}
+// endregion Tbl_waters_temp_problem_qcField
+
+// region Tbl_waters_temp_problem_qcFilterBuilder
+class Tbl_waters_temp_problem_qcFilterBuilder extends SearchCriteria {
+  Tbl_waters_temp_problem_qcFilterBuilder(Tbl_waters_temp_problem_qc obj) {
+    whereString = '';
+    qparams = QueryParams();
+    parameters = <DbParameter>[];
+    orderByList = <String>[];
+    groupByList = <String>[];
+    _addedBlocks = AddedBlocks(<bool>[], <bool>[]);
+    _addedBlocks.needEndBlock.add(false);
+    _addedBlocks.waitingStartBlock.add(false);
+    _pagesize = 0;
+    _page = 0;
+    _obj = obj;
+  }
+  AddedBlocks _addedBlocks;
+  int _blockIndex = 0;
+  List<DbParameter> parameters;
+  List<String> orderByList;
+  Tbl_waters_temp_problem_qc _obj;
+  QueryParams qparams;
+  int _pagesize;
+  int _page;
+
+  /// put the sql keyword 'AND'
+  Tbl_waters_temp_problem_qcFilterBuilder get and {
+    if (parameters.isNotEmpty) {
+      parameters[parameters.length - 1].wOperator = ' AND ';
+    }
+    return this;
+  }
+
+  /// put the sql keyword 'OR'
+  Tbl_waters_temp_problem_qcFilterBuilder get or {
+    if (parameters.isNotEmpty) {
+      parameters[parameters.length - 1].wOperator = ' OR ';
+    }
+    return this;
+  }
+
+  /// open parentheses
+  Tbl_waters_temp_problem_qcFilterBuilder get startBlock {
+    _addedBlocks.waitingStartBlock.add(true);
+    _addedBlocks.needEndBlock.add(false);
+    _blockIndex++;
+    if (_blockIndex > 1) {
+      _addedBlocks.needEndBlock[_blockIndex - 1] = true;
+    }
+    return this;
+  }
+
+  /// String whereCriteria, write raw query without 'where' keyword. Like this: 'field1 like 'test%' and field2 = 3'
+  Tbl_waters_temp_problem_qcFilterBuilder where(String whereCriteria,
+      {dynamic parameterValue}) {
+    if (whereCriteria != null && whereCriteria != '') {
+      final DbParameter param = DbParameter(
+          columnName: parameterValue == null ? null : '',
+          hasParameter: parameterValue != null);
+      _addedBlocks = setCriteria(parameterValue ?? 0, parameters, param,
+          '($whereCriteria)', _addedBlocks);
+      _addedBlocks.needEndBlock[_blockIndex] = _addedBlocks.retVal;
+    }
+    return this;
+  }
+
+  /// page = page number,
+  ///
+  /// pagesize = row(s) per page
+  Tbl_waters_temp_problem_qcFilterBuilder page(int page, int pagesize) {
+    if (page > 0) {
+      _page = page;
+    }
+    if (pagesize > 0) {
+      _pagesize = pagesize;
+    }
+    return this;
+  }
+
+  /// int count = LIMIT
+  Tbl_waters_temp_problem_qcFilterBuilder top(int count) {
+    if (count > 0) {
+      _pagesize = count;
+    }
+    return this;
+  }
+
+  /// close parentheses
+  Tbl_waters_temp_problem_qcFilterBuilder get endBlock {
+    if (_addedBlocks.needEndBlock[_blockIndex]) {
+      parameters[parameters.length - 1].whereString += ' ) ';
+    }
+    _addedBlocks.needEndBlock.removeAt(_blockIndex);
+    _addedBlocks.waitingStartBlock.removeAt(_blockIndex);
+    _blockIndex--;
+    return this;
+  }
+
+  /// argFields might be String or List<String>.
+  ///
+  /// Example 1: argFields='name, date'
+  ///
+  /// Example 2: argFields = ['name', 'date']
+  Tbl_waters_temp_problem_qcFilterBuilder orderBy(dynamic argFields) {
+    if (argFields != null) {
+      if (argFields is String) {
+        orderByList.add(argFields);
+      } else {
+        for (String s in argFields as List<String>) {
+          if (s != null && s.isNotEmpty) {
+            orderByList.add(' $s ');
+          }
+        }
+      }
+    }
+    return this;
+  }
+
+  /// argFields might be String or List<String>.
+  ///
+  /// Example 1: argFields='field1, field2'
+  ///
+  /// Example 2: argFields = ['field1', 'field2']
+  Tbl_waters_temp_problem_qcFilterBuilder orderByDesc(dynamic argFields) {
+    if (argFields != null) {
+      if (argFields is String) {
+        orderByList.add('$argFields desc ');
+      } else {
+        for (String s in argFields as List<String>) {
+          if (s != null && s.isNotEmpty) {
+            orderByList.add(' $s desc ');
+          }
+        }
+      }
+    }
+    return this;
+  }
+
+  /// argFields might be String or List<String>.
+  ///
+  /// Example 1: argFields='field1, field2'
+  ///
+  /// Example 2: argFields = ['field1', 'field2']
+  Tbl_waters_temp_problem_qcFilterBuilder groupBy(dynamic argFields) {
+    if (argFields != null) {
+      if (argFields is String) {
+        groupByList.add(' $argFields ');
+      } else {
+        for (String s in argFields as List<String>) {
+          if (s != null && s.isNotEmpty) {
+            groupByList.add(' $s ');
+          }
+        }
+      }
+    }
+    return this;
+  }
+
+  /// argFields might be String or List<String>.
+  ///
+  /// Example 1: argFields='name, date'
+  ///
+  /// Example 2: argFields = ['name', 'date']
+  Tbl_waters_temp_problem_qcFilterBuilder having(dynamic argFields) {
+    if (argFields != null) {
+      if (argFields is String) {
+        havingList.add(argFields);
+      } else {
+        for (String s in argFields as List<String>) {
+          if (s != null && s.isNotEmpty) {
+            havingList.add(' $s ');
+          }
+        }
+      }
+    }
+    return this;
+  }
+
+  Tbl_waters_temp_problem_qcField setField(
+      Tbl_waters_temp_problem_qcField field, String colName, DbType dbtype) {
+    return Tbl_waters_temp_problem_qcField(this)
+      ..param = DbParameter(
+          dbType: dbtype,
+          columnName: colName,
+          wStartBlock: _addedBlocks.waitingStartBlock[_blockIndex]);
+  }
+
+  Tbl_waters_temp_problem_qcField _ROWID;
+  Tbl_waters_temp_problem_qcField get ROWID {
+    return _ROWID = setField(_ROWID, 'ROWID', DbType.integer);
+  }
+
+  Tbl_waters_temp_problem_qcField _id;
+  Tbl_waters_temp_problem_qcField get id {
+    return _id = setField(_id, 'id', DbType.integer);
+  }
+
+  Tbl_waters_temp_problem_qcField _unit_code;
+  Tbl_waters_temp_problem_qcField get unit_code {
+    return _unit_code = setField(_unit_code, 'unit_code', DbType.text);
+  }
+
+  Tbl_waters_temp_problem_qcField _bulan;
+  Tbl_waters_temp_problem_qcField get bulan {
+    return _bulan = setField(_bulan, 'bulan', DbType.text);
+  }
+
+  Tbl_waters_temp_problem_qcField _tahun;
+  Tbl_waters_temp_problem_qcField get tahun {
+    return _tahun = setField(_tahun, 'tahun', DbType.text);
+  }
+
+  Tbl_waters_temp_problem_qcField _idx_problem;
+  Tbl_waters_temp_problem_qcField get idx_problem {
+    return _idx_problem = setField(_idx_problem, 'idx_problem', DbType.text);
+  }
+
+  bool _getIsDeleted;
+
+  void _buildParameters() {
+    if (_page > 0 && _pagesize > 0) {
+      qparams
+        ..limit = _pagesize
+        ..offset = (_page - 1) * _pagesize;
+    } else {
+      qparams
+        ..limit = _pagesize
+        ..offset = _page;
+    }
+    for (DbParameter param in parameters) {
+      if (param.columnName != null) {
+        if (param.value is List && !param.hasParameter) {
+          param.value = param.dbType == DbType.text
+              ? '\'${param.value.join('\',\'')}\''
+              : param.value.join(',');
+          whereString += param.whereString
+              .replaceAll('{field}', param.columnName)
+              .replaceAll('?', param.value.toString());
+          param.value = null;
+        } else {
+          if (param.value is Map<String, dynamic> &&
+              param.value['sql'] != null) {
+            param
+              ..whereString = param.whereString
+                  .replaceAll('?', param.value['sql'].toString())
+              ..dbType = DbType.integer
+              ..value = param.value['args'];
+          }
+          whereString +=
+              param.whereString.replaceAll('{field}', param.columnName);
+        }
+        if (!param.whereString.contains('?')) {
+        } else {
+          switch (param.dbType) {
+            case DbType.bool:
+              param.value = param.value == null
+                  ? null
+                  : param.value == true
+                      ? 1
+                      : 0;
+              param.value2 = param.value2 == null
+                  ? null
+                  : param.value2 == true
+                      ? 1
+                      : 0;
+              break;
+            case DbType.date:
+            case DbType.datetime:
+            case DbType.datetimeUtc:
+              param.value = param.value == null
+                  ? null
+                  : (param.value as DateTime).millisecondsSinceEpoch;
+              param.value2 = param.value2 == null
+                  ? null
+                  : (param.value2 as DateTime).millisecondsSinceEpoch;
+              break;
+            default:
+          }
+          if (param.value != null) {
+            if (param.value is List) {
+              for (var p in param.value) {
+                whereArguments.add(p);
+              }
+            } else {
+              whereArguments.add(param.value);
+            }
+          }
+          if (param.value2 != null) {
+            whereArguments.add(param.value2);
+          }
+        }
+      } else {
+        whereString += param.whereString;
+      }
+    }
+    if (Tbl_waters_temp_problem_qc._softDeleteActivated) {
+      if (whereString != '') {
+        whereString =
+            '${!_getIsDeleted ? 'ifnull(isDeleted,0)=0 AND' : ''} ($whereString)';
+      } else if (!_getIsDeleted) {
+        whereString = 'ifnull(isDeleted,0)=0';
+      }
+    }
+
+    if (whereString != '') {
+      qparams.whereString = whereString;
+    }
+    qparams
+      ..whereArguments = whereArguments
+      ..groupBy = groupByList.join(',')
+      ..orderBy = orderByList.join(',')
+      ..having = havingList.join(',');
+  }
+
+  /// Deletes List<Tbl_waters_temp_problem_qc> bulk by query
+  ///
+  /// <returns>BoolResult res.success=Deleted, not res.success=Can not deleted
+  Future<BoolResult> delete([bool hardDelete = false]) async {
+    _buildParameters();
+    var r = BoolResult();
+
+    if (Tbl_waters_temp_problem_qc._softDeleteActivated && !hardDelete) {
+      r = await _obj._mnTbl_waters_temp_problem_qc
+          .updateBatch(qparams, {'isDeleted': 1});
+    } else {
+      r = await _obj._mnTbl_waters_temp_problem_qc.delete(qparams);
+    }
+    return r;
+  }
+
+  /// using:
+  ///
+  /// update({'fieldName': Value})
+  ///
+  /// fieldName must be String. Value is dynamic, it can be any of the (int, bool, String.. )
+  Future<BoolResult> update(Map<String, dynamic> values) {
+    _buildParameters();
+    if (qparams.limit > 0 || qparams.offset > 0) {
+      qparams.whereString =
+          'ROWID IN (SELECT ROWID from tbl_waters_temp_problem_qc ${qparams.whereString.isNotEmpty ? 'WHERE ${qparams.whereString}' : ''}${qparams.limit > 0 ? ' LIMIT ${qparams.limit}' : ''}${qparams.offset > 0 ? ' OFFSET ${qparams.offset}' : ''})';
+    }
+    return _obj._mnTbl_waters_temp_problem_qc.updateBatch(qparams, values);
+  }
+
+  /// This method always returns Tbl_waters_temp_problem_qc Obj if exist, otherwise returns null
+  ///
+  /// bool preload: if true, loads all related child objects (Set preload to true if you want to load all fields related to child or parent)
+  ///
+  /// ex: toSingle(preload:true) -> Loads all related objects
+  ///
+  /// List<String> preloadFields: specify the fields you want to preload (preload parameter's value should also be "true")
+  ///
+  /// ex: toSingle(preload:true, preloadFields:['plField1','plField2'... etc])  -> Loads only certain fields what you specified
+  ///
+  /// bool loadParents: if true, loads all parent objects until the object has no parent
+
+  ///
+  /// <returns>List<Tbl_waters_temp_problem_qc>
+  Future<Tbl_waters_temp_problem_qc> toSingle(
+      {bool preload = false,
+      List<String> preloadFields,
+      bool loadParents = false,
+      List<String> loadedFields}) async {
+    _pagesize = 1;
+    _buildParameters();
+    final objFuture = _obj._mnTbl_waters_temp_problem_qc.toList(qparams);
+    final data = await objFuture;
+    Tbl_waters_temp_problem_qc obj;
+    if (data.isNotEmpty) {
+      obj = Tbl_waters_temp_problem_qc.fromMap(data[0] as Map<String, dynamic>);
+    } else {
+      obj = null;
+    }
+    return obj;
+  }
+
+  /// This method returns int. [Tbl_waters_temp_problem_qc]
+  ///
+  /// <returns>int
+  Future<int> toCount(
+      [VoidCallback Function(int c) tbl_waters_temp_problem_qcCount]) async {
+    _buildParameters();
+    qparams.selectColumns = ['COUNT(1) AS CNT'];
+    final tbl_waters_temp_problem_qcsFuture =
+        await _obj._mnTbl_waters_temp_problem_qc.toList(qparams);
+    final int count = tbl_waters_temp_problem_qcsFuture[0]['CNT'] as int;
+    if (tbl_waters_temp_problem_qcCount != null) {
+      tbl_waters_temp_problem_qcCount(count);
+    }
+    return count;
+  }
+
+  /// This method returns List<Tbl_waters_temp_problem_qc> [Tbl_waters_temp_problem_qc]
+  ///
+  /// bool preload: if true, loads all related child objects (Set preload to true if you want to load all fields related to child or parent)
+  ///
+  /// ex: toList(preload:true) -> Loads all related objects
+  ///
+  /// List<String> preloadFields: specify the fields you want to preload (preload parameter's value should also be "true")
+  ///
+  /// ex: toList(preload:true, preloadFields:['plField1','plField2'... etc])  -> Loads only certain fields what you specified
+  ///
+  /// bool loadParents: if true, loads all parent objects until the object has no parent
+
+  ///
+  /// <returns>List<Tbl_waters_temp_problem_qc>
+  Future<List<Tbl_waters_temp_problem_qc>> toList(
+      {bool preload = false,
+      List<String> preloadFields,
+      bool loadParents = false,
+      List<String> loadedFields}) async {
+    final data = await toMapList();
+    final List<Tbl_waters_temp_problem_qc> tbl_waters_temp_problem_qcsData =
+        await Tbl_waters_temp_problem_qc.fromMapList(data,
+            preload: preload,
+            preloadFields: preloadFields,
+            loadParents: loadParents,
+            loadedFields: loadedFields,
+            setDefaultValues: qparams.selectColumns == null);
+    return tbl_waters_temp_problem_qcsData;
+  }
+
+  /// This method returns Json String [Tbl_waters_temp_problem_qc]
+  Future<String> toJson() async {
+    final list = <dynamic>[];
+    final data = await toList();
+    for (var o in data) {
+      list.add(o.toMap(forJson: true));
+    }
+    return json.encode(list);
+  }
+
+  /// This method returns Json String. [Tbl_waters_temp_problem_qc]
+  Future<String> toJsonWithChilds() async {
+    final list = <dynamic>[];
+    final data = await toList();
+    for (var o in data) {
+      list.add(await o.toMapWithChildren(false, true));
+    }
+    return json.encode(list);
+  }
+
+  /// This method returns List<dynamic>. [Tbl_waters_temp_problem_qc]
+  ///
+  /// <returns>List<dynamic>
+  Future<List<dynamic>> toMapList() async {
+    _buildParameters();
+    return await _obj._mnTbl_waters_temp_problem_qc.toList(qparams);
+  }
+
+  /// This method returns Primary Key List SQL and Parameters retVal = Map<String,dynamic>. [Tbl_waters_temp_problem_qc]
+  ///
+  /// retVal['sql'] = SQL statement string, retVal['args'] = whereArguments List<dynamic>;
+  ///
+  /// <returns>List<String>
+  Map<String, dynamic> toListPrimaryKeySQL([bool buildParameters = true]) {
+    final Map<String, dynamic> _retVal = <String, dynamic>{};
+    if (buildParameters) {
+      _buildParameters();
+    }
+    _retVal['sql'] =
+        'SELECT `ROWID` FROM tbl_waters_temp_problem_qc WHERE ${qparams.whereString}';
+    _retVal['args'] = qparams.whereArguments;
+    return _retVal;
+  }
+
+  /// This method returns Primary Key List<int>.
+  /// <returns>List<int>
+  Future<List<int>> toListPrimaryKey([bool buildParameters = true]) async {
+    if (buildParameters) {
+      _buildParameters();
+    }
+    final List<int> ROWIDData = <int>[];
+    qparams.selectColumns = ['ROWID'];
+    final ROWIDFuture =
+        await _obj._mnTbl_waters_temp_problem_qc.toList(qparams);
+
+    final int count = ROWIDFuture.length;
+    for (int i = 0; i < count; i++) {
+      ROWIDData.add(ROWIDFuture[i]['ROWID'] as int);
+    }
+    return ROWIDData;
+  }
+
+  /// Returns List<dynamic> for selected columns. Use this method for 'groupBy' with min,max,avg..  [Tbl_waters_temp_problem_qc]
+  ///
+  /// Sample usage: (see EXAMPLE 4.2 at https://github.com/hhtokpinar/sqfEntity#group-by)
+  Future<List<dynamic>> toListObject() async {
+    _buildParameters();
+
+    final objectFuture = _obj._mnTbl_waters_temp_problem_qc.toList(qparams);
+
+    final List<dynamic> objectsData = <dynamic>[];
+    final data = await objectFuture;
+    final int count = data.length;
+    for (int i = 0; i < count; i++) {
+      objectsData.add(data[i]);
+    }
+    return objectsData;
+  }
+
+  /// Returns List<String> for selected first column
+  ///
+  /// Sample usage: await Tbl_waters_temp_problem_qc.select(columnsToSelect: ['columnName']).toListString()
+  Future<List<String>> toListString(
+      [VoidCallback Function(List<String> o) listString]) async {
+    _buildParameters();
+
+    final objectFuture = _obj._mnTbl_waters_temp_problem_qc.toList(qparams);
+
+    final List<String> objectsData = <String>[];
+    final data = await objectFuture;
+    final int count = data.length;
+    for (int i = 0; i < count; i++) {
+      objectsData.add(data[i][qparams.selectColumns[0]].toString());
+    }
+    if (listString != null) {
+      listString(objectsData);
+    }
+    return objectsData;
+  }
+}
+// endregion Tbl_waters_temp_problem_qcFilterBuilder
+
+// region Tbl_waters_temp_problem_qcFields
+class Tbl_waters_temp_problem_qcFields {
+  static TableField _fROWID;
+  static TableField get ROWID {
+    return _fROWID =
+        _fROWID ?? SqlSyntax.setField(_fROWID, 'rowid', DbType.integer);
+  }
+
+  static TableField _fId;
+  static TableField get id {
+    return _fId = _fId ?? SqlSyntax.setField(_fId, 'id', DbType.integer);
+  }
+
+  static TableField _fUnit_code;
+  static TableField get unit_code {
+    return _fUnit_code = _fUnit_code ??
+        SqlSyntax.setField(_fUnit_code, 'unit_code', DbType.text);
+  }
+
+  static TableField _fBulan;
+  static TableField get bulan {
+    return _fBulan =
+        _fBulan ?? SqlSyntax.setField(_fBulan, 'bulan', DbType.text);
+  }
+
+  static TableField _fTahun;
+  static TableField get tahun {
+    return _fTahun =
+        _fTahun ?? SqlSyntax.setField(_fTahun, 'tahun', DbType.text);
+  }
+
+  static TableField _fIdx_problem;
+  static TableField get idx_problem {
+    return _fIdx_problem = _fIdx_problem ??
+        SqlSyntax.setField(_fIdx_problem, 'idx_problem', DbType.text);
+  }
+}
+// endregion Tbl_waters_temp_problem_qcFields
+
+//region Tbl_waters_temp_problem_qcManager
+class Tbl_waters_temp_problem_qcManager extends SqfEntityProvider {
+  Tbl_waters_temp_problem_qcManager()
+      : super(DbModel(),
+            tableName: _tableName,
+            primaryKeyList: _primaryKeyList,
+            whereStr: _whereStr);
+  static final String _tableName = 'tbl_waters_temp_problem_qc';
+  static final List<String> _primaryKeyList = ['ROWID'];
+  static final String _whereStr = 'ROWID=?';
+}
+
+//endregion Tbl_waters_temp_problem_qcManager
+// region Tbl_electrics_temp_problem_qc
+class Tbl_electrics_temp_problem_qc {
+  Tbl_electrics_temp_problem_qc(
+      {this.ROWID,
+      this.id,
+      this.unit_code,
+      this.bulan,
+      this.tahun,
+      this.idx_problem}) {
+    _setDefaultValues();
+  }
+  Tbl_electrics_temp_problem_qc.withFields(
+      this.id, this.unit_code, this.bulan, this.tahun, this.idx_problem) {
+    _setDefaultValues();
+  }
+  Tbl_electrics_temp_problem_qc.withId(this.ROWID, this.id, this.unit_code,
+      this.bulan, this.tahun, this.idx_problem) {
+    _setDefaultValues();
+  }
+  Tbl_electrics_temp_problem_qc.fromMap(Map<String, dynamic> o,
+      {bool setDefaultValues = true}) {
+    if (setDefaultValues) {
+      _setDefaultValues();
+    }
+    ROWID = int.tryParse(o['ROWID'].toString());
+    if (o['id'] != null) {
+      id = int.tryParse(o['id'].toString());
+    }
+    if (o['unit_code'] != null) {
+      unit_code = o['unit_code'] as String;
+    }
+    if (o['bulan'] != null) {
+      bulan = o['bulan'] as String;
+    }
+    if (o['tahun'] != null) {
+      tahun = o['tahun'] as String;
+    }
+    if (o['idx_problem'] != null) {
+      idx_problem = o['idx_problem'] as String;
+    }
+  }
+  // FIELDS (Tbl_electrics_temp_problem_qc)
+  int ROWID;
+  int id;
+  String unit_code;
+  String bulan;
+  String tahun;
+  String idx_problem;
+
+  BoolResult saveResult;
+  // end FIELDS (Tbl_electrics_temp_problem_qc)
+
+  static const bool _softDeleteActivated = false;
+  Tbl_electrics_temp_problem_qcManager __mnTbl_electrics_temp_problem_qc;
+
+  Tbl_electrics_temp_problem_qcManager get _mnTbl_electrics_temp_problem_qc {
+    return __mnTbl_electrics_temp_problem_qc =
+        __mnTbl_electrics_temp_problem_qc ??
+            Tbl_electrics_temp_problem_qcManager();
+  }
+
+  // METHODS
+  Map<String, dynamic> toMap(
+      {bool forQuery = false, bool forJson = false, bool forView = false}) {
+    final map = <String, dynamic>{};
+    if (ROWID != null) {
+      map['ROWID'] = ROWID;
+    }
+    if (id != null) {
+      map['id'] = id;
+    }
+
+    if (unit_code != null) {
+      map['unit_code'] = unit_code;
+    }
+
+    if (bulan != null) {
+      map['bulan'] = bulan;
+    }
+
+    if (tahun != null) {
+      map['tahun'] = tahun;
+    }
+
+    if (idx_problem != null) {
+      map['idx_problem'] = idx_problem;
+    }
+
+    return map;
+  }
+
+  Future<Map<String, dynamic>> toMapWithChildren(
+      [bool forQuery = false,
+      bool forJson = false,
+      bool forView = false]) async {
+    final map = <String, dynamic>{};
+    if (ROWID != null) {
+      map['ROWID'] = ROWID;
+    }
+    if (id != null) {
+      map['id'] = id;
+    }
+
+    if (unit_code != null) {
+      map['unit_code'] = unit_code;
+    }
+
+    if (bulan != null) {
+      map['bulan'] = bulan;
+    }
+
+    if (tahun != null) {
+      map['tahun'] = tahun;
+    }
+
+    if (idx_problem != null) {
+      map['idx_problem'] = idx_problem;
+    }
+
+    return map;
+  }
+
+  /// This method returns Json String [Tbl_electrics_temp_problem_qc]
+  String toJson() {
+    return json.encode(toMap(forJson: true));
+  }
+
+  /// This method returns Json String [Tbl_electrics_temp_problem_qc]
+  Future<String> toJsonWithChilds() async {
+    return json.encode(await toMapWithChildren(false, true));
+  }
+
+  List<dynamic> toArgs() {
+    return [id, unit_code, bulan, tahun, idx_problem];
+  }
+
+  List<dynamic> toArgsWithIds() {
+    return [ROWID, id, unit_code, bulan, tahun, idx_problem];
+  }
+
+  static Future<List<Tbl_electrics_temp_problem_qc>> fromWebUrl(String url,
+      {Map<String, String> headers}) async {
+    try {
+      final response = await http.get(url, headers: headers);
+      return await fromJson(response.body);
+    } catch (e) {
+      print(
+          'SQFENTITY ERROR Tbl_electrics_temp_problem_qc.fromWebUrl: ErrorMessage: ${e.toString()}');
+      return null;
+    }
+  }
+
+  Future<http.Response> postUrl(String url, {Map<String, String> headers}) {
+    return http.post(url, headers: headers, body: toJson());
+  }
+
+  static Future<List<Tbl_electrics_temp_problem_qc>> fromJson(
+      String jsonBody) async {
+    final Iterable list = await json.decode(jsonBody) as Iterable;
+    var objList = <Tbl_electrics_temp_problem_qc>[];
+    try {
+      objList = list
+          .map((tbl_electrics_temp_problem_qc) =>
+              Tbl_electrics_temp_problem_qc.fromMap(
+                  tbl_electrics_temp_problem_qc as Map<String, dynamic>))
+          .toList();
+    } catch (e) {
+      print(
+          'SQFENTITY ERROR Tbl_electrics_temp_problem_qc.fromJson: ErrorMessage: ${e.toString()}');
+    }
+    return objList;
+  }
+
+  static Future<List<Tbl_electrics_temp_problem_qc>> fromMapList(
+      List<dynamic> data,
+      {bool preload = false,
+      List<String> preloadFields,
+      bool loadParents = false,
+      List<String> loadedFields,
+      bool setDefaultValues = true}) async {
+    final List<Tbl_electrics_temp_problem_qc> objList =
+        <Tbl_electrics_temp_problem_qc>[];
+    loadedFields = loadedFields ?? [];
+    for (final map in data) {
+      final obj = Tbl_electrics_temp_problem_qc.fromMap(
+          map as Map<String, dynamic>,
+          setDefaultValues: setDefaultValues);
+
+      objList.add(obj);
+    }
+    return objList;
+  }
+
+  /// returns Tbl_electrics_temp_problem_qc by ID if exist, otherwise returns null
+  ///
+  /// Primary Keys: int ROWID
+  ///
+  /// bool preload: if true, loads all related child objects (Set preload to true if you want to load all fields related to child or parent)
+  ///
+  /// ex: getById(preload:true) -> Loads all related objects
+  ///
+  /// List<String> preloadFields: specify the fields you want to preload (preload parameter's value should also be "true")
+  ///
+  /// ex: getById(preload:true, preloadFields:['plField1','plField2'... etc])  -> Loads only certain fields what you specified
+  ///
+  /// bool loadParents: if true, loads all parent objects until the object has no parent
+
+  ///
+  /// <returns>returns Tbl_electrics_temp_problem_qc if exist, otherwise returns null
+  Future<Tbl_electrics_temp_problem_qc> getById(int ROWID,
+      {bool preload = false,
+      List<String> preloadFields,
+      bool loadParents = false,
+      List<String> loadedFields}) async {
+    if (ROWID == null) {
+      return null;
+    }
+    Tbl_electrics_temp_problem_qc obj;
+    final data = await _mnTbl_electrics_temp_problem_qc.getById([ROWID]);
+    if (data.length != 0) {
+      obj = Tbl_electrics_temp_problem_qc.fromMap(
+          data[0] as Map<String, dynamic>);
+    } else {
+      obj = null;
+    }
+    return obj;
+  }
+
+  /// Saves the (Tbl_electrics_temp_problem_qc) object. If the ROWID field is null, saves as a new record and returns new ROWID, if ROWID is not null then updates record
+
+  /// <returns>Returns ROWID
+  Future<int> save() async {
+    if (ROWID == null || ROWID == 0) {
+      ROWID = await _mnTbl_electrics_temp_problem_qc.insert(this);
+    } else {
+      // ROWID= await _upsert(); // removed in sqfentity_gen 1.3.0+6
+      await _mnTbl_electrics_temp_problem_qc.update(this);
+    }
+
+    return ROWID;
+  }
+
+  /// saveAs Tbl_electrics_temp_problem_qc. Returns a new Primary Key value of Tbl_electrics_temp_problem_qc
+
+  /// <returns>Returns a new Primary Key value of Tbl_electrics_temp_problem_qc
+  Future<int> saveAs() async {
+    ROWID = null;
+
+    return save();
+  }
+
+  /// saveAll method saves the sent List<Tbl_electrics_temp_problem_qc> as a bulk in one transaction
+  ///
+  /// Returns a <List<BoolResult>>
+  static Future<List<dynamic>> saveAll(
+      List<Tbl_electrics_temp_problem_qc>
+          tbl_electrics_temp_problem_qcs) async {
+    // final results = _mnTbl_electrics_temp_problem_qc.saveAll('INSERT OR REPLACE INTO tbl_electrics_temp_problem_qc (ROWID,id, unit_code, bulan, tahun, idx_problem)  VALUES (?,?,?,?,?,?)',tbl_electrics_temp_problem_qcs);
+    // return results; removed in sqfentity_gen 1.3.0+6
+    await DbModel().batchStart();
+    for (final obj in tbl_electrics_temp_problem_qcs) {
+      await obj.save();
+    }
+    //    return DbModel().batchCommit();
+    final result = await DbModel().batchCommit();
+    for (int i = 0; i < tbl_electrics_temp_problem_qcs.length; i++) {
+      if (tbl_electrics_temp_problem_qcs[i].ROWID == null) {
+        tbl_electrics_temp_problem_qcs[i].ROWID = result[i] as int;
+      }
+    }
+
+    return result;
+  }
+
+  /// Updates if the record exists, otherwise adds a new row
+
+  /// <returns>Returns ROWID
+  Future<int> upsert() async {
+    try {
+      if (await _mnTbl_electrics_temp_problem_qc.rawInsert(
+              'INSERT OR REPLACE INTO tbl_electrics_temp_problem_qc (ROWID,id, unit_code, bulan, tahun, idx_problem)  VALUES (?,?,?,?,?,?)',
+              [ROWID, id, unit_code, bulan, tahun, idx_problem]) ==
+          1) {
+        saveResult = BoolResult(
+            success: true,
+            successMessage:
+                'Tbl_electrics_temp_problem_qc ROWID=$ROWID updated successfully');
+      } else {
+        saveResult = BoolResult(
+            success: false,
+            errorMessage:
+                'Tbl_electrics_temp_problem_qc ROWID=$ROWID did not update');
+      }
+      return ROWID;
+    } catch (e) {
+      saveResult = BoolResult(
+          success: false,
+          errorMessage:
+              'Tbl_electrics_temp_problem_qc Save failed. Error: ${e.toString()}');
+      return 0;
+    }
+  }
+
+  /// inserts or replaces the sent List<<Tbl_electrics_temp_problem_qc>> as a bulk in one transaction.
+  ///
+  /// upsertAll() method is faster then saveAll() method. upsertAll() should be used when you are sure that the primary key is greater than zero
+  ///
+  /// Returns a BoolCommitResult
+  Future<BoolCommitResult> upsertAll(
+      List<Tbl_electrics_temp_problem_qc>
+          tbl_electrics_temp_problem_qcs) async {
+    final results = await _mnTbl_electrics_temp_problem_qc.rawInsertAll(
+        'INSERT OR REPLACE INTO tbl_electrics_temp_problem_qc (ROWID,id, unit_code, bulan, tahun, idx_problem)  VALUES (?,?,?,?,?,?)',
+        tbl_electrics_temp_problem_qcs);
+    return results;
+  }
+
+  /// Deletes Tbl_electrics_temp_problem_qc
+
+  /// <returns>BoolResult res.success=Deleted, not res.success=Can not deleted
+  Future<BoolResult> delete([bool hardDelete = false]) async {
+    print(
+        'SQFENTITIY: delete Tbl_electrics_temp_problem_qc invoked (ROWID=$ROWID)');
+    if (!_softDeleteActivated || hardDelete) {
+      return _mnTbl_electrics_temp_problem_qc
+          .delete(QueryParams(whereString: 'ROWID=?', whereArguments: [ROWID]));
+    } else {
+      return _mnTbl_electrics_temp_problem_qc.updateBatch(
+          QueryParams(whereString: 'ROWID=?', whereArguments: [ROWID]),
+          {'isDeleted': 1});
+    }
+  }
+
+  Tbl_electrics_temp_problem_qcFilterBuilder select(
+      {List<String> columnsToSelect, bool getIsDeleted}) {
+    return Tbl_electrics_temp_problem_qcFilterBuilder(this)
+      .._getIsDeleted = getIsDeleted == true
+      ..qparams.selectColumns = columnsToSelect;
+  }
+
+  Tbl_electrics_temp_problem_qcFilterBuilder distinct(
+      {List<String> columnsToSelect, bool getIsDeleted}) {
+    return Tbl_electrics_temp_problem_qcFilterBuilder(this)
+      .._getIsDeleted = getIsDeleted == true
+      ..qparams.selectColumns = columnsToSelect
+      ..qparams.distinct = true;
+  }
+
+  void _setDefaultValues() {}
+  // END METHODS
+  // CUSTOM CODES
+  /*
+      you must define customCode property of your SqfEntityTable constant for ex:
+      const tablePerson = SqfEntityTable(
+      tableName: 'person',
+      primaryKeyName: 'id',
+      primaryKeyType: PrimaryKeyType.integer_auto_incremental,
+      fields: [
+        SqfEntityField('firstName', DbType.text),
+        SqfEntityField('lastName', DbType.text),
+      ],
+      customCode: '''
+       String fullName()
+       { 
+         return '$firstName $lastName';
+       }
+      ''');
+     */
+  // END CUSTOM CODES
+}
+// endregion tbl_electrics_temp_problem_qc
+
+// region Tbl_electrics_temp_problem_qcField
+class Tbl_electrics_temp_problem_qcField extends SearchCriteria {
+  Tbl_electrics_temp_problem_qcField(this.tbl_electrics_temp_problem_qcFB) {
+    param = DbParameter();
+  }
+  DbParameter param;
+  String _waitingNot = '';
+  Tbl_electrics_temp_problem_qcFilterBuilder tbl_electrics_temp_problem_qcFB;
+
+  Tbl_electrics_temp_problem_qcField get not {
+    _waitingNot = ' NOT ';
+    return this;
+  }
+
+  Tbl_electrics_temp_problem_qcFilterBuilder equals(dynamic pValue) {
+    param.expression = '=';
+    tbl_electrics_temp_problem_qcFB._addedBlocks = _waitingNot == ''
+        ? setCriteria(pValue, tbl_electrics_temp_problem_qcFB.parameters, param,
+            SqlSyntax.EQuals, tbl_electrics_temp_problem_qcFB._addedBlocks)
+        : setCriteria(pValue, tbl_electrics_temp_problem_qcFB.parameters, param,
+            SqlSyntax.NotEQuals, tbl_electrics_temp_problem_qcFB._addedBlocks);
+    _waitingNot = '';
+    tbl_electrics_temp_problem_qcFB._addedBlocks
+            .needEndBlock[tbl_electrics_temp_problem_qcFB._blockIndex] =
+        tbl_electrics_temp_problem_qcFB._addedBlocks.retVal;
+    return tbl_electrics_temp_problem_qcFB;
+  }
+
+  Tbl_electrics_temp_problem_qcFilterBuilder equalsOrNull(dynamic pValue) {
+    param.expression = '=';
+    tbl_electrics_temp_problem_qcFB._addedBlocks = _waitingNot == ''
+        ? setCriteria(
+            pValue,
+            tbl_electrics_temp_problem_qcFB.parameters,
+            param,
+            SqlSyntax.EQualsOrNull,
+            tbl_electrics_temp_problem_qcFB._addedBlocks)
+        : setCriteria(
+            pValue,
+            tbl_electrics_temp_problem_qcFB.parameters,
+            param,
+            SqlSyntax.NotEQualsOrNull,
+            tbl_electrics_temp_problem_qcFB._addedBlocks);
+    _waitingNot = '';
+    tbl_electrics_temp_problem_qcFB._addedBlocks
+            .needEndBlock[tbl_electrics_temp_problem_qcFB._blockIndex] =
+        tbl_electrics_temp_problem_qcFB._addedBlocks.retVal;
+    return tbl_electrics_temp_problem_qcFB;
+  }
+
+  Tbl_electrics_temp_problem_qcFilterBuilder isNull() {
+    tbl_electrics_temp_problem_qcFB._addedBlocks = setCriteria(
+        0,
+        tbl_electrics_temp_problem_qcFB.parameters,
+        param,
+        SqlSyntax.IsNULL.replaceAll(SqlSyntax.notKeyword, _waitingNot),
+        tbl_electrics_temp_problem_qcFB._addedBlocks);
+    _waitingNot = '';
+    tbl_electrics_temp_problem_qcFB._addedBlocks
+            .needEndBlock[tbl_electrics_temp_problem_qcFB._blockIndex] =
+        tbl_electrics_temp_problem_qcFB._addedBlocks.retVal;
+    return tbl_electrics_temp_problem_qcFB;
+  }
+
+  Tbl_electrics_temp_problem_qcFilterBuilder contains(dynamic pValue) {
+    if (pValue != null) {
+      tbl_electrics_temp_problem_qcFB._addedBlocks = setCriteria(
+          '%${pValue.toString()}%',
+          tbl_electrics_temp_problem_qcFB.parameters,
+          param,
+          SqlSyntax.Contains.replaceAll(SqlSyntax.notKeyword, _waitingNot),
+          tbl_electrics_temp_problem_qcFB._addedBlocks);
+      _waitingNot = '';
+      tbl_electrics_temp_problem_qcFB._addedBlocks
+              .needEndBlock[tbl_electrics_temp_problem_qcFB._blockIndex] =
+          tbl_electrics_temp_problem_qcFB._addedBlocks.retVal;
+    }
+    return tbl_electrics_temp_problem_qcFB;
+  }
+
+  Tbl_electrics_temp_problem_qcFilterBuilder startsWith(dynamic pValue) {
+    if (pValue != null) {
+      tbl_electrics_temp_problem_qcFB._addedBlocks = setCriteria(
+          '${pValue.toString()}%',
+          tbl_electrics_temp_problem_qcFB.parameters,
+          param,
+          SqlSyntax.Contains.replaceAll(SqlSyntax.notKeyword, _waitingNot),
+          tbl_electrics_temp_problem_qcFB._addedBlocks);
+      _waitingNot = '';
+      tbl_electrics_temp_problem_qcFB._addedBlocks
+              .needEndBlock[tbl_electrics_temp_problem_qcFB._blockIndex] =
+          tbl_electrics_temp_problem_qcFB._addedBlocks.retVal;
+      tbl_electrics_temp_problem_qcFB._addedBlocks
+              .needEndBlock[tbl_electrics_temp_problem_qcFB._blockIndex] =
+          tbl_electrics_temp_problem_qcFB._addedBlocks.retVal;
+    }
+    return tbl_electrics_temp_problem_qcFB;
+  }
+
+  Tbl_electrics_temp_problem_qcFilterBuilder endsWith(dynamic pValue) {
+    if (pValue != null) {
+      tbl_electrics_temp_problem_qcFB._addedBlocks = setCriteria(
+          '%${pValue.toString()}',
+          tbl_electrics_temp_problem_qcFB.parameters,
+          param,
+          SqlSyntax.Contains.replaceAll(SqlSyntax.notKeyword, _waitingNot),
+          tbl_electrics_temp_problem_qcFB._addedBlocks);
+      _waitingNot = '';
+      tbl_electrics_temp_problem_qcFB._addedBlocks
+              .needEndBlock[tbl_electrics_temp_problem_qcFB._blockIndex] =
+          tbl_electrics_temp_problem_qcFB._addedBlocks.retVal;
+    }
+    return tbl_electrics_temp_problem_qcFB;
+  }
+
+  Tbl_electrics_temp_problem_qcFilterBuilder between(
+      dynamic pFirst, dynamic pLast) {
+    if (pFirst != null && pLast != null) {
+      tbl_electrics_temp_problem_qcFB._addedBlocks = setCriteria(
+          pFirst,
+          tbl_electrics_temp_problem_qcFB.parameters,
+          param,
+          SqlSyntax.Between.replaceAll(SqlSyntax.notKeyword, _waitingNot),
+          tbl_electrics_temp_problem_qcFB._addedBlocks,
+          pLast);
+    } else if (pFirst != null) {
+      if (_waitingNot != '') {
+        tbl_electrics_temp_problem_qcFB._addedBlocks = setCriteria(
+            pFirst,
+            tbl_electrics_temp_problem_qcFB.parameters,
+            param,
+            SqlSyntax.LessThan,
+            tbl_electrics_temp_problem_qcFB._addedBlocks);
+      } else {
+        tbl_electrics_temp_problem_qcFB._addedBlocks = setCriteria(
+            pFirst,
+            tbl_electrics_temp_problem_qcFB.parameters,
+            param,
+            SqlSyntax.GreaterThanOrEquals,
+            tbl_electrics_temp_problem_qcFB._addedBlocks);
+      }
+    } else if (pLast != null) {
+      if (_waitingNot != '') {
+        tbl_electrics_temp_problem_qcFB._addedBlocks = setCriteria(
+            pLast,
+            tbl_electrics_temp_problem_qcFB.parameters,
+            param,
+            SqlSyntax.GreaterThan,
+            tbl_electrics_temp_problem_qcFB._addedBlocks);
+      } else {
+        tbl_electrics_temp_problem_qcFB._addedBlocks = setCriteria(
+            pLast,
+            tbl_electrics_temp_problem_qcFB.parameters,
+            param,
+            SqlSyntax.LessThanOrEquals,
+            tbl_electrics_temp_problem_qcFB._addedBlocks);
+      }
+    }
+    _waitingNot = '';
+    tbl_electrics_temp_problem_qcFB._addedBlocks
+            .needEndBlock[tbl_electrics_temp_problem_qcFB._blockIndex] =
+        tbl_electrics_temp_problem_qcFB._addedBlocks.retVal;
+    return tbl_electrics_temp_problem_qcFB;
+  }
+
+  Tbl_electrics_temp_problem_qcFilterBuilder greaterThan(dynamic pValue) {
+    param.expression = '>';
+    tbl_electrics_temp_problem_qcFB._addedBlocks = _waitingNot == ''
+        ? setCriteria(pValue, tbl_electrics_temp_problem_qcFB.parameters, param,
+            SqlSyntax.GreaterThan, tbl_electrics_temp_problem_qcFB._addedBlocks)
+        : setCriteria(
+            pValue,
+            tbl_electrics_temp_problem_qcFB.parameters,
+            param,
+            SqlSyntax.LessThanOrEquals,
+            tbl_electrics_temp_problem_qcFB._addedBlocks);
+    _waitingNot = '';
+    tbl_electrics_temp_problem_qcFB._addedBlocks
+            .needEndBlock[tbl_electrics_temp_problem_qcFB._blockIndex] =
+        tbl_electrics_temp_problem_qcFB._addedBlocks.retVal;
+    return tbl_electrics_temp_problem_qcFB;
+  }
+
+  Tbl_electrics_temp_problem_qcFilterBuilder lessThan(dynamic pValue) {
+    param.expression = '<';
+    tbl_electrics_temp_problem_qcFB._addedBlocks = _waitingNot == ''
+        ? setCriteria(pValue, tbl_electrics_temp_problem_qcFB.parameters, param,
+            SqlSyntax.LessThan, tbl_electrics_temp_problem_qcFB._addedBlocks)
+        : setCriteria(
+            pValue,
+            tbl_electrics_temp_problem_qcFB.parameters,
+            param,
+            SqlSyntax.GreaterThanOrEquals,
+            tbl_electrics_temp_problem_qcFB._addedBlocks);
+    _waitingNot = '';
+    tbl_electrics_temp_problem_qcFB._addedBlocks
+            .needEndBlock[tbl_electrics_temp_problem_qcFB._blockIndex] =
+        tbl_electrics_temp_problem_qcFB._addedBlocks.retVal;
+    return tbl_electrics_temp_problem_qcFB;
+  }
+
+  Tbl_electrics_temp_problem_qcFilterBuilder greaterThanOrEquals(
+      dynamic pValue) {
+    param.expression = '>=';
+    tbl_electrics_temp_problem_qcFB._addedBlocks = _waitingNot == ''
+        ? setCriteria(
+            pValue,
+            tbl_electrics_temp_problem_qcFB.parameters,
+            param,
+            SqlSyntax.GreaterThanOrEquals,
+            tbl_electrics_temp_problem_qcFB._addedBlocks)
+        : setCriteria(pValue, tbl_electrics_temp_problem_qcFB.parameters, param,
+            SqlSyntax.LessThan, tbl_electrics_temp_problem_qcFB._addedBlocks);
+    _waitingNot = '';
+    tbl_electrics_temp_problem_qcFB._addedBlocks
+            .needEndBlock[tbl_electrics_temp_problem_qcFB._blockIndex] =
+        tbl_electrics_temp_problem_qcFB._addedBlocks.retVal;
+    return tbl_electrics_temp_problem_qcFB;
+  }
+
+  Tbl_electrics_temp_problem_qcFilterBuilder lessThanOrEquals(dynamic pValue) {
+    param.expression = '<=';
+    tbl_electrics_temp_problem_qcFB._addedBlocks = _waitingNot == ''
+        ? setCriteria(
+            pValue,
+            tbl_electrics_temp_problem_qcFB.parameters,
+            param,
+            SqlSyntax.LessThanOrEquals,
+            tbl_electrics_temp_problem_qcFB._addedBlocks)
+        : setCriteria(
+            pValue,
+            tbl_electrics_temp_problem_qcFB.parameters,
+            param,
+            SqlSyntax.GreaterThan,
+            tbl_electrics_temp_problem_qcFB._addedBlocks);
+    _waitingNot = '';
+    tbl_electrics_temp_problem_qcFB._addedBlocks
+            .needEndBlock[tbl_electrics_temp_problem_qcFB._blockIndex] =
+        tbl_electrics_temp_problem_qcFB._addedBlocks.retVal;
+    return tbl_electrics_temp_problem_qcFB;
+  }
+
+  Tbl_electrics_temp_problem_qcFilterBuilder inValues(dynamic pValue) {
+    tbl_electrics_temp_problem_qcFB._addedBlocks = setCriteria(
+        pValue,
+        tbl_electrics_temp_problem_qcFB.parameters,
+        param,
+        SqlSyntax.IN.replaceAll(SqlSyntax.notKeyword, _waitingNot),
+        tbl_electrics_temp_problem_qcFB._addedBlocks);
+    _waitingNot = '';
+    tbl_electrics_temp_problem_qcFB._addedBlocks
+            .needEndBlock[tbl_electrics_temp_problem_qcFB._blockIndex] =
+        tbl_electrics_temp_problem_qcFB._addedBlocks.retVal;
+    return tbl_electrics_temp_problem_qcFB;
+  }
+}
+// endregion Tbl_electrics_temp_problem_qcField
+
+// region Tbl_electrics_temp_problem_qcFilterBuilder
+class Tbl_electrics_temp_problem_qcFilterBuilder extends SearchCriteria {
+  Tbl_electrics_temp_problem_qcFilterBuilder(
+      Tbl_electrics_temp_problem_qc obj) {
+    whereString = '';
+    qparams = QueryParams();
+    parameters = <DbParameter>[];
+    orderByList = <String>[];
+    groupByList = <String>[];
+    _addedBlocks = AddedBlocks(<bool>[], <bool>[]);
+    _addedBlocks.needEndBlock.add(false);
+    _addedBlocks.waitingStartBlock.add(false);
+    _pagesize = 0;
+    _page = 0;
+    _obj = obj;
+  }
+  AddedBlocks _addedBlocks;
+  int _blockIndex = 0;
+  List<DbParameter> parameters;
+  List<String> orderByList;
+  Tbl_electrics_temp_problem_qc _obj;
+  QueryParams qparams;
+  int _pagesize;
+  int _page;
+
+  /// put the sql keyword 'AND'
+  Tbl_electrics_temp_problem_qcFilterBuilder get and {
+    if (parameters.isNotEmpty) {
+      parameters[parameters.length - 1].wOperator = ' AND ';
+    }
+    return this;
+  }
+
+  /// put the sql keyword 'OR'
+  Tbl_electrics_temp_problem_qcFilterBuilder get or {
+    if (parameters.isNotEmpty) {
+      parameters[parameters.length - 1].wOperator = ' OR ';
+    }
+    return this;
+  }
+
+  /// open parentheses
+  Tbl_electrics_temp_problem_qcFilterBuilder get startBlock {
+    _addedBlocks.waitingStartBlock.add(true);
+    _addedBlocks.needEndBlock.add(false);
+    _blockIndex++;
+    if (_blockIndex > 1) {
+      _addedBlocks.needEndBlock[_blockIndex - 1] = true;
+    }
+    return this;
+  }
+
+  /// String whereCriteria, write raw query without 'where' keyword. Like this: 'field1 like 'test%' and field2 = 3'
+  Tbl_electrics_temp_problem_qcFilterBuilder where(String whereCriteria,
+      {dynamic parameterValue}) {
+    if (whereCriteria != null && whereCriteria != '') {
+      final DbParameter param = DbParameter(
+          columnName: parameterValue == null ? null : '',
+          hasParameter: parameterValue != null);
+      _addedBlocks = setCriteria(parameterValue ?? 0, parameters, param,
+          '($whereCriteria)', _addedBlocks);
+      _addedBlocks.needEndBlock[_blockIndex] = _addedBlocks.retVal;
+    }
+    return this;
+  }
+
+  /// page = page number,
+  ///
+  /// pagesize = row(s) per page
+  Tbl_electrics_temp_problem_qcFilterBuilder page(int page, int pagesize) {
+    if (page > 0) {
+      _page = page;
+    }
+    if (pagesize > 0) {
+      _pagesize = pagesize;
+    }
+    return this;
+  }
+
+  /// int count = LIMIT
+  Tbl_electrics_temp_problem_qcFilterBuilder top(int count) {
+    if (count > 0) {
+      _pagesize = count;
+    }
+    return this;
+  }
+
+  /// close parentheses
+  Tbl_electrics_temp_problem_qcFilterBuilder get endBlock {
+    if (_addedBlocks.needEndBlock[_blockIndex]) {
+      parameters[parameters.length - 1].whereString += ' ) ';
+    }
+    _addedBlocks.needEndBlock.removeAt(_blockIndex);
+    _addedBlocks.waitingStartBlock.removeAt(_blockIndex);
+    _blockIndex--;
+    return this;
+  }
+
+  /// argFields might be String or List<String>.
+  ///
+  /// Example 1: argFields='name, date'
+  ///
+  /// Example 2: argFields = ['name', 'date']
+  Tbl_electrics_temp_problem_qcFilterBuilder orderBy(dynamic argFields) {
+    if (argFields != null) {
+      if (argFields is String) {
+        orderByList.add(argFields);
+      } else {
+        for (String s in argFields as List<String>) {
+          if (s != null && s.isNotEmpty) {
+            orderByList.add(' $s ');
+          }
+        }
+      }
+    }
+    return this;
+  }
+
+  /// argFields might be String or List<String>.
+  ///
+  /// Example 1: argFields='field1, field2'
+  ///
+  /// Example 2: argFields = ['field1', 'field2']
+  Tbl_electrics_temp_problem_qcFilterBuilder orderByDesc(dynamic argFields) {
+    if (argFields != null) {
+      if (argFields is String) {
+        orderByList.add('$argFields desc ');
+      } else {
+        for (String s in argFields as List<String>) {
+          if (s != null && s.isNotEmpty) {
+            orderByList.add(' $s desc ');
+          }
+        }
+      }
+    }
+    return this;
+  }
+
+  /// argFields might be String or List<String>.
+  ///
+  /// Example 1: argFields='field1, field2'
+  ///
+  /// Example 2: argFields = ['field1', 'field2']
+  Tbl_electrics_temp_problem_qcFilterBuilder groupBy(dynamic argFields) {
+    if (argFields != null) {
+      if (argFields is String) {
+        groupByList.add(' $argFields ');
+      } else {
+        for (String s in argFields as List<String>) {
+          if (s != null && s.isNotEmpty) {
+            groupByList.add(' $s ');
+          }
+        }
+      }
+    }
+    return this;
+  }
+
+  /// argFields might be String or List<String>.
+  ///
+  /// Example 1: argFields='name, date'
+  ///
+  /// Example 2: argFields = ['name', 'date']
+  Tbl_electrics_temp_problem_qcFilterBuilder having(dynamic argFields) {
+    if (argFields != null) {
+      if (argFields is String) {
+        havingList.add(argFields);
+      } else {
+        for (String s in argFields as List<String>) {
+          if (s != null && s.isNotEmpty) {
+            havingList.add(' $s ');
+          }
+        }
+      }
+    }
+    return this;
+  }
+
+  Tbl_electrics_temp_problem_qcField setField(
+      Tbl_electrics_temp_problem_qcField field, String colName, DbType dbtype) {
+    return Tbl_electrics_temp_problem_qcField(this)
+      ..param = DbParameter(
+          dbType: dbtype,
+          columnName: colName,
+          wStartBlock: _addedBlocks.waitingStartBlock[_blockIndex]);
+  }
+
+  Tbl_electrics_temp_problem_qcField _ROWID;
+  Tbl_electrics_temp_problem_qcField get ROWID {
+    return _ROWID = setField(_ROWID, 'ROWID', DbType.integer);
+  }
+
+  Tbl_electrics_temp_problem_qcField _id;
+  Tbl_electrics_temp_problem_qcField get id {
+    return _id = setField(_id, 'id', DbType.integer);
+  }
+
+  Tbl_electrics_temp_problem_qcField _unit_code;
+  Tbl_electrics_temp_problem_qcField get unit_code {
+    return _unit_code = setField(_unit_code, 'unit_code', DbType.text);
+  }
+
+  Tbl_electrics_temp_problem_qcField _bulan;
+  Tbl_electrics_temp_problem_qcField get bulan {
+    return _bulan = setField(_bulan, 'bulan', DbType.text);
+  }
+
+  Tbl_electrics_temp_problem_qcField _tahun;
+  Tbl_electrics_temp_problem_qcField get tahun {
+    return _tahun = setField(_tahun, 'tahun', DbType.text);
+  }
+
+  Tbl_electrics_temp_problem_qcField _idx_problem;
+  Tbl_electrics_temp_problem_qcField get idx_problem {
+    return _idx_problem = setField(_idx_problem, 'idx_problem', DbType.text);
+  }
+
+  bool _getIsDeleted;
+
+  void _buildParameters() {
+    if (_page > 0 && _pagesize > 0) {
+      qparams
+        ..limit = _pagesize
+        ..offset = (_page - 1) * _pagesize;
+    } else {
+      qparams
+        ..limit = _pagesize
+        ..offset = _page;
+    }
+    for (DbParameter param in parameters) {
+      if (param.columnName != null) {
+        if (param.value is List && !param.hasParameter) {
+          param.value = param.dbType == DbType.text
+              ? '\'${param.value.join('\',\'')}\''
+              : param.value.join(',');
+          whereString += param.whereString
+              .replaceAll('{field}', param.columnName)
+              .replaceAll('?', param.value.toString());
+          param.value = null;
+        } else {
+          if (param.value is Map<String, dynamic> &&
+              param.value['sql'] != null) {
+            param
+              ..whereString = param.whereString
+                  .replaceAll('?', param.value['sql'].toString())
+              ..dbType = DbType.integer
+              ..value = param.value['args'];
+          }
+          whereString +=
+              param.whereString.replaceAll('{field}', param.columnName);
+        }
+        if (!param.whereString.contains('?')) {
+        } else {
+          switch (param.dbType) {
+            case DbType.bool:
+              param.value = param.value == null
+                  ? null
+                  : param.value == true
+                      ? 1
+                      : 0;
+              param.value2 = param.value2 == null
+                  ? null
+                  : param.value2 == true
+                      ? 1
+                      : 0;
+              break;
+            case DbType.date:
+            case DbType.datetime:
+            case DbType.datetimeUtc:
+              param.value = param.value == null
+                  ? null
+                  : (param.value as DateTime).millisecondsSinceEpoch;
+              param.value2 = param.value2 == null
+                  ? null
+                  : (param.value2 as DateTime).millisecondsSinceEpoch;
+              break;
+            default:
+          }
+          if (param.value != null) {
+            if (param.value is List) {
+              for (var p in param.value) {
+                whereArguments.add(p);
+              }
+            } else {
+              whereArguments.add(param.value);
+            }
+          }
+          if (param.value2 != null) {
+            whereArguments.add(param.value2);
+          }
+        }
+      } else {
+        whereString += param.whereString;
+      }
+    }
+    if (Tbl_electrics_temp_problem_qc._softDeleteActivated) {
+      if (whereString != '') {
+        whereString =
+            '${!_getIsDeleted ? 'ifnull(isDeleted,0)=0 AND' : ''} ($whereString)';
+      } else if (!_getIsDeleted) {
+        whereString = 'ifnull(isDeleted,0)=0';
+      }
+    }
+
+    if (whereString != '') {
+      qparams.whereString = whereString;
+    }
+    qparams
+      ..whereArguments = whereArguments
+      ..groupBy = groupByList.join(',')
+      ..orderBy = orderByList.join(',')
+      ..having = havingList.join(',');
+  }
+
+  /// Deletes List<Tbl_electrics_temp_problem_qc> bulk by query
+  ///
+  /// <returns>BoolResult res.success=Deleted, not res.success=Can not deleted
+  Future<BoolResult> delete([bool hardDelete = false]) async {
+    _buildParameters();
+    var r = BoolResult();
+
+    if (Tbl_electrics_temp_problem_qc._softDeleteActivated && !hardDelete) {
+      r = await _obj._mnTbl_electrics_temp_problem_qc
+          .updateBatch(qparams, {'isDeleted': 1});
+    } else {
+      r = await _obj._mnTbl_electrics_temp_problem_qc.delete(qparams);
+    }
+    return r;
+  }
+
+  /// using:
+  ///
+  /// update({'fieldName': Value})
+  ///
+  /// fieldName must be String. Value is dynamic, it can be any of the (int, bool, String.. )
+  Future<BoolResult> update(Map<String, dynamic> values) {
+    _buildParameters();
+    if (qparams.limit > 0 || qparams.offset > 0) {
+      qparams.whereString =
+          'ROWID IN (SELECT ROWID from tbl_electrics_temp_problem_qc ${qparams.whereString.isNotEmpty ? 'WHERE ${qparams.whereString}' : ''}${qparams.limit > 0 ? ' LIMIT ${qparams.limit}' : ''}${qparams.offset > 0 ? ' OFFSET ${qparams.offset}' : ''})';
+    }
+    return _obj._mnTbl_electrics_temp_problem_qc.updateBatch(qparams, values);
+  }
+
+  /// This method always returns Tbl_electrics_temp_problem_qc Obj if exist, otherwise returns null
+  ///
+  /// bool preload: if true, loads all related child objects (Set preload to true if you want to load all fields related to child or parent)
+  ///
+  /// ex: toSingle(preload:true) -> Loads all related objects
+  ///
+  /// List<String> preloadFields: specify the fields you want to preload (preload parameter's value should also be "true")
+  ///
+  /// ex: toSingle(preload:true, preloadFields:['plField1','plField2'... etc])  -> Loads only certain fields what you specified
+  ///
+  /// bool loadParents: if true, loads all parent objects until the object has no parent
+
+  ///
+  /// <returns>List<Tbl_electrics_temp_problem_qc>
+  Future<Tbl_electrics_temp_problem_qc> toSingle(
+      {bool preload = false,
+      List<String> preloadFields,
+      bool loadParents = false,
+      List<String> loadedFields}) async {
+    _pagesize = 1;
+    _buildParameters();
+    final objFuture = _obj._mnTbl_electrics_temp_problem_qc.toList(qparams);
+    final data = await objFuture;
+    Tbl_electrics_temp_problem_qc obj;
+    if (data.isNotEmpty) {
+      obj = Tbl_electrics_temp_problem_qc.fromMap(
+          data[0] as Map<String, dynamic>);
+    } else {
+      obj = null;
+    }
+    return obj;
+  }
+
+  /// This method returns int. [Tbl_electrics_temp_problem_qc]
+  ///
+  /// <returns>int
+  Future<int> toCount(
+      [VoidCallback Function(int c) tbl_electrics_temp_problem_qcCount]) async {
+    _buildParameters();
+    qparams.selectColumns = ['COUNT(1) AS CNT'];
+    final tbl_electrics_temp_problem_qcsFuture =
+        await _obj._mnTbl_electrics_temp_problem_qc.toList(qparams);
+    final int count = tbl_electrics_temp_problem_qcsFuture[0]['CNT'] as int;
+    if (tbl_electrics_temp_problem_qcCount != null) {
+      tbl_electrics_temp_problem_qcCount(count);
+    }
+    return count;
+  }
+
+  /// This method returns List<Tbl_electrics_temp_problem_qc> [Tbl_electrics_temp_problem_qc]
+  ///
+  /// bool preload: if true, loads all related child objects (Set preload to true if you want to load all fields related to child or parent)
+  ///
+  /// ex: toList(preload:true) -> Loads all related objects
+  ///
+  /// List<String> preloadFields: specify the fields you want to preload (preload parameter's value should also be "true")
+  ///
+  /// ex: toList(preload:true, preloadFields:['plField1','plField2'... etc])  -> Loads only certain fields what you specified
+  ///
+  /// bool loadParents: if true, loads all parent objects until the object has no parent
+
+  ///
+  /// <returns>List<Tbl_electrics_temp_problem_qc>
+  Future<List<Tbl_electrics_temp_problem_qc>> toList(
+      {bool preload = false,
+      List<String> preloadFields,
+      bool loadParents = false,
+      List<String> loadedFields}) async {
+    final data = await toMapList();
+    final List<Tbl_electrics_temp_problem_qc>
+        tbl_electrics_temp_problem_qcsData =
+        await Tbl_electrics_temp_problem_qc.fromMapList(data,
+            preload: preload,
+            preloadFields: preloadFields,
+            loadParents: loadParents,
+            loadedFields: loadedFields,
+            setDefaultValues: qparams.selectColumns == null);
+    return tbl_electrics_temp_problem_qcsData;
+  }
+
+  /// This method returns Json String [Tbl_electrics_temp_problem_qc]
+  Future<String> toJson() async {
+    final list = <dynamic>[];
+    final data = await toList();
+    for (var o in data) {
+      list.add(o.toMap(forJson: true));
+    }
+    return json.encode(list);
+  }
+
+  /// This method returns Json String. [Tbl_electrics_temp_problem_qc]
+  Future<String> toJsonWithChilds() async {
+    final list = <dynamic>[];
+    final data = await toList();
+    for (var o in data) {
+      list.add(await o.toMapWithChildren(false, true));
+    }
+    return json.encode(list);
+  }
+
+  /// This method returns List<dynamic>. [Tbl_electrics_temp_problem_qc]
+  ///
+  /// <returns>List<dynamic>
+  Future<List<dynamic>> toMapList() async {
+    _buildParameters();
+    return await _obj._mnTbl_electrics_temp_problem_qc.toList(qparams);
+  }
+
+  /// This method returns Primary Key List SQL and Parameters retVal = Map<String,dynamic>. [Tbl_electrics_temp_problem_qc]
+  ///
+  /// retVal['sql'] = SQL statement string, retVal['args'] = whereArguments List<dynamic>;
+  ///
+  /// <returns>List<String>
+  Map<String, dynamic> toListPrimaryKeySQL([bool buildParameters = true]) {
+    final Map<String, dynamic> _retVal = <String, dynamic>{};
+    if (buildParameters) {
+      _buildParameters();
+    }
+    _retVal['sql'] =
+        'SELECT `ROWID` FROM tbl_electrics_temp_problem_qc WHERE ${qparams.whereString}';
+    _retVal['args'] = qparams.whereArguments;
+    return _retVal;
+  }
+
+  /// This method returns Primary Key List<int>.
+  /// <returns>List<int>
+  Future<List<int>> toListPrimaryKey([bool buildParameters = true]) async {
+    if (buildParameters) {
+      _buildParameters();
+    }
+    final List<int> ROWIDData = <int>[];
+    qparams.selectColumns = ['ROWID'];
+    final ROWIDFuture =
+        await _obj._mnTbl_electrics_temp_problem_qc.toList(qparams);
+
+    final int count = ROWIDFuture.length;
+    for (int i = 0; i < count; i++) {
+      ROWIDData.add(ROWIDFuture[i]['ROWID'] as int);
+    }
+    return ROWIDData;
+  }
+
+  /// Returns List<dynamic> for selected columns. Use this method for 'groupBy' with min,max,avg..  [Tbl_electrics_temp_problem_qc]
+  ///
+  /// Sample usage: (see EXAMPLE 4.2 at https://github.com/hhtokpinar/sqfEntity#group-by)
+  Future<List<dynamic>> toListObject() async {
+    _buildParameters();
+
+    final objectFuture = _obj._mnTbl_electrics_temp_problem_qc.toList(qparams);
+
+    final List<dynamic> objectsData = <dynamic>[];
+    final data = await objectFuture;
+    final int count = data.length;
+    for (int i = 0; i < count; i++) {
+      objectsData.add(data[i]);
+    }
+    return objectsData;
+  }
+
+  /// Returns List<String> for selected first column
+  ///
+  /// Sample usage: await Tbl_electrics_temp_problem_qc.select(columnsToSelect: ['columnName']).toListString()
+  Future<List<String>> toListString(
+      [VoidCallback Function(List<String> o) listString]) async {
+    _buildParameters();
+
+    final objectFuture = _obj._mnTbl_electrics_temp_problem_qc.toList(qparams);
+
+    final List<String> objectsData = <String>[];
+    final data = await objectFuture;
+    final int count = data.length;
+    for (int i = 0; i < count; i++) {
+      objectsData.add(data[i][qparams.selectColumns[0]].toString());
+    }
+    if (listString != null) {
+      listString(objectsData);
+    }
+    return objectsData;
+  }
+}
+// endregion Tbl_electrics_temp_problem_qcFilterBuilder
+
+// region Tbl_electrics_temp_problem_qcFields
+class Tbl_electrics_temp_problem_qcFields {
+  static TableField _fROWID;
+  static TableField get ROWID {
+    return _fROWID =
+        _fROWID ?? SqlSyntax.setField(_fROWID, 'rowid', DbType.integer);
+  }
+
+  static TableField _fId;
+  static TableField get id {
+    return _fId = _fId ?? SqlSyntax.setField(_fId, 'id', DbType.integer);
+  }
+
+  static TableField _fUnit_code;
+  static TableField get unit_code {
+    return _fUnit_code = _fUnit_code ??
+        SqlSyntax.setField(_fUnit_code, 'unit_code', DbType.text);
+  }
+
+  static TableField _fBulan;
+  static TableField get bulan {
+    return _fBulan =
+        _fBulan ?? SqlSyntax.setField(_fBulan, 'bulan', DbType.text);
+  }
+
+  static TableField _fTahun;
+  static TableField get tahun {
+    return _fTahun =
+        _fTahun ?? SqlSyntax.setField(_fTahun, 'tahun', DbType.text);
+  }
+
+  static TableField _fIdx_problem;
+  static TableField get idx_problem {
+    return _fIdx_problem = _fIdx_problem ??
+        SqlSyntax.setField(_fIdx_problem, 'idx_problem', DbType.text);
+  }
+}
+// endregion Tbl_electrics_temp_problem_qcFields
+
+//region Tbl_electrics_temp_problem_qcManager
+class Tbl_electrics_temp_problem_qcManager extends SqfEntityProvider {
+  Tbl_electrics_temp_problem_qcManager()
+      : super(DbModel(),
+            tableName: _tableName,
+            primaryKeyList: _primaryKeyList,
+            whereStr: _whereStr);
+  static final String _tableName = 'tbl_electrics_temp_problem_qc';
+  static final List<String> _primaryKeyList = ['ROWID'];
+  static final String _whereStr = 'ROWID=?';
+}
+
+//endregion Tbl_electrics_temp_problem_qcManager
 /// Region SEQUENCE IdentitySequence
 class IdentitySequence {
   /// Assigns a new value when it is triggered and returns the new value

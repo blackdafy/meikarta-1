@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:easymoveinapp/main_nav.dart';
+import 'package:easymoveinapp/pages/menu/home.dart';
 import 'package:easymoveinapp/pages/auth/login.dart';
 import 'package:easymoveinapp/style/size.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
             (Route<dynamic> route) => false);
       } else {
         Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => MainNav()),
+            MaterialPageRoute(builder: (context) => Home()),
             (Route<dynamic> route) => false);
       }
     });

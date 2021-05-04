@@ -43,7 +43,7 @@ class _RestClient implements RestClient {
     final _data = <String, dynamic>{};
     _data.addAll(param?.toJson() ?? <String, dynamic>{});
     final _result = await _dio.request<Map<String, dynamic>>(
-        'get_mkrt_units.php',
+        'reading_qr/get_mkrt_units.php',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -62,7 +62,8 @@ class _RestClient implements RestClient {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(param?.toJson() ?? <String, dynamic>{});
-    final _result = await _dio.request<Map<String, dynamic>>('post_qr_code.php',
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'reading_qr/post_qr_code.php',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -80,7 +81,7 @@ class _RestClient implements RestClient {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.request<Map<String, dynamic>>(
-        'get_range_input.php',
+        'reading_qr/get_range_input.php',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -99,7 +100,8 @@ class _RestClient implements RestClient {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(param?.toJson() ?? <String, dynamic>{});
-    final _result = await _dio.request<Map<String, dynamic>>('upload.php',
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'reading_qr/upload.php',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -112,12 +114,13 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<ModelSyncUnits> getUnits() async {
+  Future<ModelSyncUnits> getUnits(blocks) async {
+    ArgumentError.checkNotNull(blocks, 'blocks');
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'blocks': blocks};
     final _data = <String, dynamic>{};
     final _result = await _dio.request<Map<String, dynamic>>(
-        'get_mkrt_units_all.php',
+        'reading_qr/get_mkrt_units_all.php',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -135,7 +138,7 @@ class _RestClient implements RestClient {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.request<Map<String, dynamic>>(
-        'get_electrics.php',
+        'reading_qr/get_electrics.php',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -152,7 +155,8 @@ class _RestClient implements RestClient {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.request<Map<String, dynamic>>('get_waters.php',
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'reading_qr/get_waters.php',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -161,6 +165,24 @@ class _RestClient implements RestClient {
             baseUrl: baseUrl),
         data: _data);
     final value = ModelSyncWaters.fromJson(_result.data);
+    return value;
+  }
+
+  @override
+  Future<ModelResponMasterProblem> getMasterProblem() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'reading_qr/get_master_problem.php',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'GET',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = ModelResponMasterProblem.fromJson(_result.data);
     return value;
   }
 }

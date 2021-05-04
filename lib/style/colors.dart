@@ -16,6 +16,12 @@ class ColorsTheme {
   static const text3 = Color(0xFF808080);
   static const text4 = Color(0xFF99B0D1);
 
+  static const bgqr0 = Color(0xFFb4c6e7);
+  static const bgqr1 = Color(0xFFc6e0b4);
+  static const bgqr2 = Color(0xFF548235);
+  static const bgqr3 = Color(0xFFf4b084);
+  static const bgqr4 = Color(0xFFc00000);
+
   static const hijau = Color(0xFF46C490);
   static const merah = Color(0xFFEA5164);
   static const merahTr = Color(0x40EA5164);

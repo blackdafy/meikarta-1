@@ -35,8 +35,12 @@ class _ShowDataQRState extends State<ShowDataQR> {
   bool camera;
   String img64;
   String lastMeteran = "0";
+  String lastMonth = "0";
+  String lastYear = "0";
   String curMonth = "";
   bool loading = true;
+  String bulan;
+  String tahun;
 
   TextEditingController ctrlMeteran = TextEditingController();
   TextEditingController ctrlPemakaian = TextEditingController();
@@ -130,10 +134,6 @@ class _ShowDataQRState extends State<ShowDataQR> {
         barrierDismissible: false,
         builder: (BuildContext context) => WidgetProgressSubmit());
 
-    DateTime now = DateTime.now();
-    String bulan = DateFormat('MM').format(now);
-    String tahun = DateFormat('yyyy').format(now);
-
     ModelPostQrCode dataPost = new ModelPostQrCode();
     dataPost.unitCode = mkrtUnit.unit_code;
     dataPost.type = widget.type;
@@ -169,8 +169,6 @@ class _ShowDataQRState extends State<ShowDataQR> {
         builder: (BuildContext context) => WidgetProgressSubmit());
 
     DateTime now = DateTime.now();
-    String bulan = DateFormat('MM').format(now);
-    String tahun = DateFormat('yyyy').format(now);
     String insertDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(now);
 
     if (widget.type.toLowerCase() == 'water') {
@@ -317,13 +315,58 @@ class _ShowDataQRState extends State<ShowDataQR> {
     }
   }
 
+  minBulan(bulan) {
+    switch (bulan) {
+      case "01":
+        return "12";
+        break;
+      case "02":
+        return "01";
+        break;
+      case "03":
+        return "02";
+        break;
+      case "04":
+        return "03";
+        break;
+      case "05":
+        return "04";
+        break;
+      case "06":
+        return "05";
+        break;
+      case "07":
+        return "06";
+        break;
+      case "08":
+        return "07";
+        break;
+      case "09":
+        return "08";
+        break;
+      case "10":
+        return "09";
+        break;
+      case "11":
+        return "10";
+        break;
+      case "12":
+        return "11";
+        break;
+    }
+  }
+
   Future getData() async {
     DateTime now = DateTime.now();
-    // var now = new DateTime(2021, 3, 19);
     if (now.day >= 19) {
       now = new DateTime(now.year, now.month + 1, now.day);
     }
-    String bulan = DateFormat('MMM').format(now);
+    curMonth = DateFormat('MMM').format(now);
+    tahun = DateFormat('y').format(now);
+    bulan = DateFormat('MM').format(now);
+    if (bulan == "12") {
+      tahun = (int.parse(tahun) + 1).toString();
+    }
 
     if (widget.type.toLowerCase() == 'water') {
       var dataWater = await Tbl_water()
@@ -347,6 +390,49 @@ class _ShowDataQRState extends State<ShowDataQR> {
           pemakaian: item.pemakaian,
         ));
         lastMeteran = item.meteran;
+        lastMonth = item.bulan;
+        lastYear = item.tahun;
+      }
+      Tbl_water data = await Tbl_water()
+          .select()
+          .unit_code
+          .equals(widget.res.unit_code)
+          .toSingle();
+      if (data == null) {
+        lastMeteran = "0";
+      } else {
+        Tbl_water data = await Tbl_water()
+            .select()
+            .unit_code
+            .equals(widget.res.unit_code)
+            .and
+            .bulan
+            .equals(bulan)
+            .and
+            .tahun
+            .equals(tahun)
+            .toSingle();
+        if (data != null) {
+          String minusBulan = minBulan(data.bulan);
+          String minusTahun = tahun;
+          if (minusBulan == "01") {
+            minusTahun = (int.parse(tahun) - 1).toString();
+          }
+          Tbl_water dataMin = await Tbl_water()
+              .select()
+              .unit_code
+              .equals(widget.res.unit_code)
+              .and
+              .bulan
+              .equals(minBulan(data.bulan))
+              .and
+              .tahun
+              .equals(minusTahun)
+              .toSingle();
+          if (dataMin != null) {
+            lastMeteran = dataMin.bulan;
+          }
+        }
       }
     } else {
       var dataElectric = await Tbl_electric()
@@ -370,17 +456,65 @@ class _ShowDataQRState extends State<ShowDataQR> {
           pemakaian: item.pemakaian,
         ));
         lastMeteran = item.meteran;
+        lastMonth = item.bulan;
+        lastYear = item.tahun;
+      }
+      Tbl_electric data = await Tbl_electric()
+          .select()
+          .unit_code
+          .equals(widget.res.unit_code)
+          .toSingle();
+      if (data == null) {
+        lastMeteran = "0";
+      } else {
+        Tbl_electric data = await Tbl_electric()
+            .select()
+            .unit_code
+            .equals(widget.res.unit_code)
+            .and
+            .bulan
+            .equals(bulan)
+            .and
+            .tahun
+            .equals(tahun)
+            .toSingle();
+        if (data != null) {
+          String minusBulan = minBulan(data.bulan);
+          String minusTahun = tahun;
+          if (minusBulan == "01") {
+            minusTahun = (int.parse(tahun) - 1).toString();
+          }
+          Tbl_electric dataMin = await Tbl_electric()
+              .select()
+              .unit_code
+              .equals(widget.res.unit_code)
+              .and
+              .bulan
+              .equals(minBulan(data.bulan))
+              .and
+              .tahun
+              .equals(minusTahun)
+              .toSingle();
+          if (dataMin != null) {
+            lastMeteran = dataMin.bulan;
+          }
+        }
       }
     }
 
     setState(() {
-      curMonth = bulan;
+      curMonth = curMonth + " " + tahun;
       mkrtUnit = widget.res;
       dataList = dataList;
       lastMeteran = lastMeteran;
       loading = false;
       print("=> GET DATA LOADING FALSE");
     });
+  }
+
+  roundedDecimal(double data) {
+    String res = data.toStringAsFixed(2);
+    return res;
   }
 
   @override
@@ -720,7 +854,7 @@ class _ShowDataQRState extends State<ShowDataQR> {
     String pemakaian,
   ) {
     return Padding(
-      padding: const EdgeInsets.all(4),
+      padding: EdgeInsets.all(0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -942,8 +1076,8 @@ class _ShowDataQRState extends State<ShowDataQR> {
                   } else {
                     double lastMeteranDouble = double.parse(lastMeteran);
                     double textDouble = double.parse(text);
-                    double pemakaianDouble = textDouble - lastMeteranDouble;
-                    ctrlPemakaian.text = pemakaianDouble.toString();
+                    double pemakaianDouble = (textDouble - lastMeteranDouble);
+                    ctrlPemakaian.text = roundedDecimal(pemakaianDouble);
                   }
                 },
                 decoration: new InputDecoration(

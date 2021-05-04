@@ -8,6 +8,7 @@ import 'package:easymoveinapp/models/post_qrcode_list.dart';
 import 'package:easymoveinapp/models/post_search_by_qr.dart';
 import 'package:easymoveinapp/models/res_mkrt_unit.dart';
 import 'package:easymoveinapp/models/sync/res_electrics.dart';
+import 'package:easymoveinapp/models/sync/res_master_problem.dart';
 import 'package:easymoveinapp/models/sync/res_units.dart';
 import 'package:easymoveinapp/models/sync/res_waters.dart';
 import 'package:retrofit/retrofit.dart';
@@ -30,24 +31,27 @@ abstract class RestClient {
   @POST("login.php")
   Future<ModelResponLogin> postLogin(@Body() ModelPostLogin param);
 
-  @POST("get_mkrt_units.php")
+  @POST("reading_qr/get_mkrt_units.php")
   Future<ModelResponMkrtUnit> postQrCode(@Body() ModelPostQr param);
 
-  @POST("post_qr_code.php")
+  @POST("reading_qr/post_qr_code.php")
   Future<ModelGeneralResponse> postQrCodeInput(@Body() ModelPostQrCode param);
 
-  @GET("get_range_input.php")
+  @GET("reading_qr/get_range_input.php")
   Future<ModelGeneralResponse> getRangeInput();
 
-  @POST("upload.php")
+  @POST("reading_qr/upload.php")
   Future<ModelGeneralResponse> synchronize(@Body() ModelPostQrCodeList param);
 
-  @GET("get_mkrt_units_all.php")
-  Future<ModelSyncUnits> getUnits();
+  @GET("reading_qr/get_mkrt_units_all.php")
+  Future<ModelSyncUnits> getUnits(@Query("blocks") String blocks);
 
-  @GET("get_electrics.php")
+  @GET("reading_qr/get_electrics.php")
   Future<ModelSyncElectrics> getElectrics();
 
-  @GET("get_waters.php")
+  @GET("reading_qr/get_waters.php")
   Future<ModelSyncWaters> getWaters();
+
+  @GET("reading_qr/get_master_problem.php")
+  Future<ModelResponMasterProblem> getMasterProblem();
 }
