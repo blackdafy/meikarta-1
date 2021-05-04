@@ -76,7 +76,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   getMasterProblem() {
-    getClient().getWaters().then((res) async {
+    getClient().getMasterProblem().then((res) async {
       Navigator.pop(context);
       if (res.status) {
         List<Tbl_master_problem> listProblem = [];

@@ -114,6 +114,26 @@ class _RestClient implements RestClient {
   }
 
   @override
+  Future<ModelGeneralResponse> synchronizeQC(param) async {
+    ArgumentError.checkNotNull(param, 'param');
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(param?.toJson() ?? <String, dynamic>{});
+    final _result = await _dio.request<Map<String, dynamic>>(
+        'reading_qr/upload_qc.php',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = ModelGeneralResponse.fromJson(_result.data);
+    return value;
+  }
+
+  @override
   Future<ModelSyncUnits> getUnits(blocks) async {
     ArgumentError.checkNotNull(blocks, 'blocks');
     const _extra = <String, dynamic>{};
@@ -133,9 +153,10 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<ModelSyncElectrics> getElectrics() async {
+  Future<ModelSyncElectrics> getElectrics(blocks) async {
+    ArgumentError.checkNotNull(blocks, 'blocks');
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'blocks': blocks};
     final _data = <String, dynamic>{};
     final _result = await _dio.request<Map<String, dynamic>>(
         'reading_qr/get_electrics.php',
@@ -151,9 +172,10 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<ModelSyncWaters> getWaters() async {
+  Future<ModelSyncWaters> getWaters(blocks) async {
+    ArgumentError.checkNotNull(blocks, 'blocks');
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'blocks': blocks};
     final _data = <String, dynamic>{};
     final _result = await _dio.request<Map<String, dynamic>>(
         'reading_qr/get_waters.php',

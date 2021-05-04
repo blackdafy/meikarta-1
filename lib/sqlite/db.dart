@@ -26,13 +26,29 @@ const dbModel = SqfEntityModel(
       TblWatersTempProblem,
       TblElectricsTempProblem,
       TblWatersTempProblemQC,
-      TblElectricsTempProblemQC
+      TblElectricsTempProblemQC,
+      TblWatersProblem,
+      TblElectricsProblem
     ],
     sequences: [seqIdentity],
     // put defined sequences into the sequences list.
     bundledDatabasePath:
         null // 'assets/sample.db' // This value is optional. When bundledDatabasePath is empty then EntityBase creats a new database when initializing the database
     );
+
+const TblMasterProblem = SqfEntityTable(
+    tableName: 'tbl_master_problem',
+    primaryKeyName: 'ROWID',
+    primaryKeyType: PrimaryKeyType.integer_auto_incremental,
+    useSoftDeleting: false,
+    modelName: null,
+    fields: [
+      SqfEntityField("id", DbType.integer),
+      SqfEntityField("idx", DbType.text),
+      SqfEntityField("problem", DbType.text),
+      SqfEntityField("type", DbType.text),
+      SqfEntityField("is_checked", DbType.bool, defaultValue: false)
+    ]);
 
 const TableMkrtUnits = SqfEntityTable(
     tableName: 'tbl_mkrt_units',
@@ -85,6 +101,21 @@ const TblElectrics = SqfEntityTable(
       SqfEntityField("sync_date", DbType.text),
     ]);
 
+const TblElectricsProblem = SqfEntityTable(
+    tableName: 'tbl_electrics_problem',
+    primaryKeyName: 'ROWID',
+    primaryKeyType: PrimaryKeyType.integer_auto_incremental,
+    useSoftDeleting: false,
+    modelName: null,
+    fields: [
+      SqfEntityField("idx", DbType.text),
+      SqfEntityField("unit_code", DbType.text),
+      SqfEntityField("tahun", DbType.text),
+      SqfEntityField("bulan", DbType.text),
+      SqfEntityField("idx_problem", DbType.text),
+      SqfEntityField("type", DbType.text)
+    ]);
+
 const TblWaters = SqfEntityTable(
     tableName: 'tbl_waters',
     primaryKeyName: 'ROWID',
@@ -104,6 +135,22 @@ const TblWaters = SqfEntityTable(
       SqfEntityField("sync_date", DbType.text),
     ]);
 
+const TblWatersProblem = SqfEntityTable(
+    tableName: 'tbl_waters_problem',
+    primaryKeyName: 'ROWID',
+    primaryKeyType: PrimaryKeyType.integer_auto_incremental,
+    useSoftDeleting: false,
+    modelName: null,
+    fields: [
+      SqfEntityField("idx", DbType.text),
+      SqfEntityField("unit_code", DbType.text),
+      SqfEntityField("tahun", DbType.text),
+      SqfEntityField("bulan", DbType.text),
+      SqfEntityField("type", DbType.text),
+      SqfEntityField("idx_problem", DbType.text)
+    ]);
+
+//READING ELECTRICS TEMPORARY =============================
 const TblElectricsTemp = SqfEntityTable(
     tableName: 'tbl_electrics_temp',
     primaryKeyName: 'ROWID',
@@ -124,6 +171,53 @@ const TblElectricsTemp = SqfEntityTable(
       SqfEntityField("problem", DbType.text)
     ]);
 
+const TblElectricsTempProblem = SqfEntityTable(
+    tableName: 'tbl_electrics_temp_problem',
+    primaryKeyName: 'ROWID',
+    primaryKeyType: PrimaryKeyType.integer_auto_incremental,
+    useSoftDeleting: false,
+    modelName: null,
+    fields: [
+      SqfEntityField("id", DbType.integer),
+      SqfEntityField("unit_code", DbType.text),
+      SqfEntityField("bulan", DbType.text),
+      SqfEntityField("tahun", DbType.text),
+      SqfEntityField("idx_problem", DbType.text)
+    ]);
+
+//QC ELECTRICS TEMPORARY =============================
+const TblElectricsTempQC = SqfEntityTable(
+    tableName: 'tbl_electrics_temp_qc',
+    primaryKeyName: 'ROWID',
+    primaryKeyType: PrimaryKeyType.integer_auto_incremental,
+    useSoftDeleting: false,
+    modelName: null,
+    fields: [
+      SqfEntityField("id", DbType.integer),
+      SqfEntityField("unit_code", DbType.text),
+      SqfEntityField("type", DbType.text),
+      SqfEntityField("bulan", DbType.text),
+      SqfEntityField("tahun", DbType.text),
+      SqfEntityField("qc_check", DbType.text),
+      SqfEntityField("qc_date", DbType.text),
+      SqfEntityField("qc_id", DbType.text)
+    ]);
+
+const TblElectricsTempProblemQC = SqfEntityTable(
+    tableName: 'tbl_electrics_temp_problem_qc',
+    primaryKeyName: 'ROWID',
+    primaryKeyType: PrimaryKeyType.integer_auto_incremental,
+    useSoftDeleting: false,
+    modelName: null,
+    fields: [
+      SqfEntityField("id", DbType.integer),
+      SqfEntityField("unit_code", DbType.text),
+      SqfEntityField("bulan", DbType.text),
+      SqfEntityField("tahun", DbType.text),
+      SqfEntityField("idx_problem", DbType.text)
+    ]);
+
+//READING WATER TEMPORARY =============================
 const TblWatersTemp = SqfEntityTable(
     tableName: 'tbl_waters_temp',
     primaryKeyName: 'ROWID',
@@ -144,8 +238,8 @@ const TblWatersTemp = SqfEntityTable(
       SqfEntityField("problem", DbType.text)
     ]);
 
-const TblElectricsTempQC = SqfEntityTable(
-    tableName: 'tbl_electrics_temp_qc',
+const TblWatersTempProblem = SqfEntityTable(
+    tableName: 'tbl_waters_temp_problem',
     primaryKeyName: 'ROWID',
     primaryKeyType: PrimaryKeyType.integer_auto_incremental,
     useSoftDeleting: false,
@@ -153,14 +247,12 @@ const TblElectricsTempQC = SqfEntityTable(
     fields: [
       SqfEntityField("id", DbType.integer),
       SqfEntityField("unit_code", DbType.text),
-      SqfEntityField("type", DbType.text),
       SqfEntityField("bulan", DbType.text),
       SqfEntityField("tahun", DbType.text),
-      SqfEntityField("qc_check", DbType.text),
-      SqfEntityField("qc_date", DbType.text),
-      SqfEntityField("qc_id", DbType.text)
+      SqfEntityField("idx_problem", DbType.text)
     ]);
 
+//QC WATER TEMPORARY =============================
 const TblWatersTempQC = SqfEntityTable(
     tableName: 'tbl_waters_temp_qc',
     primaryKeyName: 'ROWID',
@@ -178,34 +270,6 @@ const TblWatersTempQC = SqfEntityTable(
       SqfEntityField("qc_id", DbType.text)
     ]);
 
-const TblWatersTempProblem = SqfEntityTable(
-    tableName: 'tbl_waters_temp_problem',
-    primaryKeyName: 'ROWID',
-    primaryKeyType: PrimaryKeyType.integer_auto_incremental,
-    useSoftDeleting: false,
-    modelName: null,
-    fields: [
-      SqfEntityField("id", DbType.integer),
-      SqfEntityField("unit_code", DbType.text),
-      SqfEntityField("bulan", DbType.text),
-      SqfEntityField("tahun", DbType.text),
-      SqfEntityField("idx_problem", DbType.text)
-    ]);
-
-const TblElectricsTempProblem = SqfEntityTable(
-    tableName: 'tbl_electrics_temp_problem',
-    primaryKeyName: 'ROWID',
-    primaryKeyType: PrimaryKeyType.integer_auto_incremental,
-    useSoftDeleting: false,
-    modelName: null,
-    fields: [
-      SqfEntityField("id", DbType.integer),
-      SqfEntityField("unit_code", DbType.text),
-      SqfEntityField("bulan", DbType.text),
-      SqfEntityField("tahun", DbType.text),
-      SqfEntityField("idx_problem", DbType.text)
-    ]);
-
 const TblWatersTempProblemQC = SqfEntityTable(
     tableName: 'tbl_waters_temp_problem_qc',
     primaryKeyName: 'ROWID',
@@ -218,32 +282,4 @@ const TblWatersTempProblemQC = SqfEntityTable(
       SqfEntityField("bulan", DbType.text),
       SqfEntityField("tahun", DbType.text),
       SqfEntityField("idx_problem", DbType.text)
-    ]);
-
-const TblElectricsTempProblemQC = SqfEntityTable(
-    tableName: 'tbl_electrics_temp_problem_qc',
-    primaryKeyName: 'ROWID',
-    primaryKeyType: PrimaryKeyType.integer_auto_incremental,
-    useSoftDeleting: false,
-    modelName: null,
-    fields: [
-      SqfEntityField("id", DbType.integer),
-      SqfEntityField("unit_code", DbType.text),
-      SqfEntityField("bulan", DbType.text),
-      SqfEntityField("tahun", DbType.text),
-      SqfEntityField("idx_problem", DbType.text)
-    ]);
-
-const TblMasterProblem = SqfEntityTable(
-    tableName: 'tbl_master_problem',
-    primaryKeyName: 'ROWID',
-    primaryKeyType: PrimaryKeyType.integer_auto_incremental,
-    useSoftDeleting: false,
-    modelName: null,
-    fields: [
-      SqfEntityField("id", DbType.integer),
-      SqfEntityField("idx", DbType.text),
-      SqfEntityField("problem", DbType.text),
-      SqfEntityField("type", DbType.text),
-      SqfEntityField("is_checked", DbType.bool, defaultValue: false)
     ]);

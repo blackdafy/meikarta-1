@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:badges/badges.dart';
 import 'package:easymoveinapp/api/service.dart';
 import 'package:easymoveinapp/models/post_qrcode_list.dart';
+import 'package:easymoveinapp/models/post_qrcode_list_qc.dart';
 import 'package:easymoveinapp/models/res_menus.dart';
 import 'package:easymoveinapp/pages/auth/login.dart';
 import 'package:easymoveinapp/pages/general_widgets/widget_progress.dart';
@@ -31,6 +32,8 @@ class _HomeState extends State<Home> {
   bool isConnect = true;
   List<Tbl_electric> listElectric = [];
   List<Tbl_water> listWater = [];
+  List<Tbl_electrics_problem> listElectricPR = [];
+  List<Tbl_waters_problem> listWaterPR = [];
   List<Tbl_mkrt_unit> listMkrtUnit = [];
   int countTempWater = 0;
   int countTempElectric = 0;
@@ -154,29 +157,33 @@ class _HomeState extends State<Home> {
     });
   }
 
-  syncUpload(String uploadType) async {
+  syncUpload() async {
     showDialog(
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) => WidgetProgressSubmit());
 
     ModelPostQrCodeList dataPost = new ModelPostQrCodeList();
-    List<Electric> electrics = [];
-    List<Electric> waters = [];
+    List<WaterElectric> electrics = [];
+    List<WaterElectric> waters = [];
+    List<WaterElectricProblem> electricsProblem = [];
+    List<WaterElectricProblem> watersProblem = [];
     var dataElectric = await Tbl_electrics_temp()
         .select()
         .orderBy("bulan")
         .orderBy("insert_date")
         .toList();
-
     var dataWater = await Tbl_waters_temp()
         .select()
         .orderBy("bulan")
         .orderBy("insert_date")
         .toList();
+    var dataElectricProblem =
+        await Tbl_electrics_temp_problem().select().toList();
+    var dataWaterProblem = await Tbl_waters_temp_problem().select().toList();
 
     for (var e in dataElectric) {
-      electrics.add(new Electric(
+      electrics.add(new WaterElectric(
           unitCode: e.unit_code,
           type: "Electric",
           bulan: e.bulan,
@@ -188,7 +195,7 @@ class _HomeState extends State<Home> {
           insertDate: e.insert_date));
     }
     for (var w in dataWater) {
-      waters.add(new Electric(
+      waters.add(new WaterElectric(
           unitCode: w.unit_code,
           type: "Water",
           bulan: w.bulan,
@@ -199,22 +206,138 @@ class _HomeState extends State<Home> {
           foto: w.foto,
           insertDate: w.insert_date));
     }
+    for (var ep in dataElectricProblem) {
+      electricsProblem.add(new WaterElectricProblem(
+          unitCode: ep.unit_code,
+          type: "READING",
+          bulan: ep.bulan,
+          tahun: ep.tahun,
+          idxProblem: ep.idx_problem));
+    }
+    for (var wp in dataWaterProblem) {
+      watersProblem.add(new WaterElectricProblem(
+          unitCode: wp.unit_code,
+          type: "READING",
+          bulan: wp.bulan,
+          tahun: wp.tahun,
+          idxProblem: wp.idx_problem));
+    }
 
     dataPost.electrics = electrics;
     dataPost.waters = waters;
+    dataPost.electricsProblem = electricsProblem;
+    dataPost.watersProblem = watersProblem;
     getClient().synchronize(dataPost).then((res) async {
       Navigator.pop(context);
       if (res.status) {
         await Tbl_electrics_temp().select().delete();
         await Tbl_waters_temp().select().delete();
+        await Tbl_electrics_temp_problem().select().delete();
+        await Tbl_waters_temp_problem().select().delete();
+        if (dataElectric.length > 0 || dataElectricProblem.length > 0) {
+          syncElectrics();
+        }
+        if (dataWater.length > 0 || dataWaterProblem.length > 0) {
+          syncWaters();
+        }
+      } else {
+        WidgetSnackbar(
+            context: context, message: "Failed to upload", warna: "merah");
+      }
+    }).catchError((Object obj) {
+      print(obj.toString());
+      Navigator.pop(context);
+      WidgetSnackbar(
+          context: context,
+          message: "Failed connect to server!",
+          warna: "merah");
+    });
+  }
+
+  syncUploadQC() async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) => WidgetProgressSubmit());
+
+    ModelPostQrCodeListQc dataPost = new ModelPostQrCodeListQc();
+    List<WaterElectricQc> electricsQC = [];
+    List<WaterElectricQc> watersQC = [];
+    List<WaterElectricProblem> electricsProblemQC = [];
+    List<WaterElectricProblem> watersProblemQC = [];
+    final dataElectricQC =
+        await Tbl_electrics_temp_qc().select().orderBy("bulan").toList();
+    final dataWaterQC =
+        await Tbl_waters_temp_qc().select().orderBy("bulan").toList();
+    final dataElectricProblemQC =
+        await Tbl_electrics_temp_problem_qc().select().toList();
+    final dataWaterProblemQC =
+        await Tbl_waters_temp_problem_qc().select().toList();
+
+    for (var e in dataElectricQC) {
+      print(e.unit_code +
+          " == " +
+          e.tahun +
+          " == " +
+          e.bulan +
+          " == " +
+          e.qc_check +
+          " == " +
+          e.qc_date +
+          " == " +
+          e.qc_id.toString());
+      electricsQC.add(new WaterElectricQc(
+          unitCode: e.unit_code,
+          bulan: e.bulan,
+          tahun: e.tahun,
+          qcCheck: e.qc_check,
+          qcDate: e.qc_date,
+          qcId: e.qc_id));
+    }
+    for (var w in dataWaterQC) {
+      watersQC.add(new WaterElectricQc(
+          unitCode: w.unit_code,
+          bulan: w.bulan,
+          tahun: w.tahun,
+          qcCheck: w.qc_check,
+          qcDate: w.qc_date,
+          qcId: w.qc_id));
+    }
+    for (var ep in dataElectricProblemQC) {
+      electricsProblemQC.add(new WaterElectricProblem(
+          unitCode: ep.unit_code,
+          type: "QC",
+          bulan: ep.bulan,
+          tahun: ep.tahun,
+          idxProblem: ep.idx_problem));
+    }
+    for (var wp in dataWaterProblemQC) {
+      watersProblemQC.add(new WaterElectricProblem(
+          unitCode: wp.unit_code,
+          type: "QC",
+          bulan: wp.bulan,
+          tahun: wp.tahun,
+          idxProblem: wp.idx_problem));
+    }
+    dataPost.electricQc = electricsQC;
+    dataPost.waterQc = watersQC;
+    dataPost.electricsProblemQc = electricsProblemQC;
+    dataPost.watersProblemQc = watersProblemQC;
+    getClient().synchronizeQC(dataPost).then((res) async {
+      Navigator.pop(context);
+      if (res.status) {
+        // await Tbl_electrics_temp_qc().select().delete();
+        // await Tbl_waters_temp_qc().select().delete();
+        // await Tbl_electrics_temp_problem_qc().select().delete();
+        // await Tbl_waters_temp_problem_qc().select().delete();
         WidgetSnackbar(
             context: context,
             message: "Successfully Uploaded to Server",
             warna: "hijau");
-        if (dataElectric.length > 0) {
+        if (dataElectricQC.length > 0 || dataElectricProblemQC.length > 0) {
           syncElectrics();
         }
-        if (dataWater.length > 0) {
+        if (dataWaterQC.length > 0 || dataWaterProblemQC.length > 0) {
           syncWaters();
         }
       } else {
@@ -257,22 +380,26 @@ class _HomeState extends State<Home> {
   }
 
   syncElectrics() {
+    print(sesBlock);
     showDialog(
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) => WidgetProgressSubmit());
-    getClient().getElectrics().then((res) async {
+    getClient().getElectrics(sesBlock).then((res) async {
       Navigator.pop(context);
       if (res.status) {
         listElectric = res.listElectric;
+        listElectricPR = res.listElectricProblem;
         await Tbl_electric().select().delete();
         final results = await Tbl_electric().upsertAll(listElectric);
+        final results_pr =
+            await Tbl_electrics_problem().upsertAll(listElectricPR);
+
         WidgetSnackbar(context: context, message: res.remarks, warna: "hijau");
       } else {
         WidgetSnackbar(context: context, message: res.remarks, warna: "merah");
       }
     }).catchError((Object obj) {
-      print(obj.toString());
       Navigator.pop(context);
       WidgetSnackbar(
           context: context,
@@ -286,19 +413,21 @@ class _HomeState extends State<Home> {
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) => WidgetProgressSubmit());
-    getClient().getWaters().then((res) async {
+    getClient().getWaters(sesBlock).then((res) async {
       Navigator.pop(context);
       if (res.status) {
         listWater = res.listWater;
+        listWaterPR = res.listWaterPR;
         await Tbl_water().select().delete();
+        await Tbl_waters_problem().select().delete();
         final results = await Tbl_water().upsertAll(listWater);
+        final results_pr = await Tbl_waters_problem().upsertAll(listWaterPR);
 
         WidgetSnackbar(context: context, message: res.remarks, warna: "hijau");
       } else {
         WidgetSnackbar(context: context, message: res.remarks, warna: "merah");
       }
     }).catchError((Object obj) {
-      print(obj.toString());
       Navigator.pop(context);
       WidgetSnackbar(
           context: context,
@@ -325,7 +454,7 @@ class _HomeState extends State<Home> {
 
   getData() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-
+    setState(() {});
     getClient().getMasterProblem().then((res) async {
       if (res.status) {
         List<Tbl_master_problem> listMasterProblem = res.dataProblem;
@@ -410,9 +539,9 @@ class _HomeState extends State<Home> {
                 if (val == "Logout") {
                   displayDialog();
                 } else if (val == "Upload QC") {
-                  syncUpload("QC");
+                  syncUploadQC();
                 } else if (val == "Upload Reading") {
-                  syncUpload("Reading");
+                  syncUpload();
                 } else if (val == "Sync Units") {
                   syncUnits(sesBlock);
                 } else if (val == "Sync Electrics") {

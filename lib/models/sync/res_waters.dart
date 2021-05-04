@@ -16,11 +16,13 @@ class ModelSyncWaters {
     this.status,
     this.remarks,
     this.listWater,
+    this.listWaterPR,
   });
 
   bool status;
   String remarks;
   List<Tbl_water> listWater;
+  List<Tbl_waters_problem> listWaterPR;
 
   factory ModelSyncWaters.fromJson(Map<String, dynamic> json) =>
       ModelSyncWaters(
@@ -30,6 +32,10 @@ class ModelSyncWaters {
             ? null
             : List<Tbl_water>.from(
                 json["list_water"].map((x) => Tbl_water.fromMap(x))),
+        listWaterPR: json["list_water_problem"] == null
+            ? null
+            : List<Tbl_waters_problem>.from(json["list_water_problem"]
+                .map((x) => Tbl_waters_problem.fromMap(x))),
       );
 
   Map<String, dynamic> toMap() => {
@@ -38,5 +44,8 @@ class ModelSyncWaters {
         "list_water": listWater == null
             ? null
             : List<dynamic>.from(listWater.map((x) => x.toMap())),
+        "list_water_problem": listWaterPR == null
+            ? null
+            : List<dynamic>.from(listWaterPR.map((x) => x.toMap())),
       };
 }

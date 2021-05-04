@@ -216,75 +216,75 @@ class _MainNavState extends State<MainNav> with TickerProviderStateMixin {
         builder: (BuildContext context) => WidgetProgressSubmit());
 
     ModelPostQrCodeList dataPost = new ModelPostQrCodeList();
-    List<Electric> electrics = [];
-    List<Electric> waters = [];
-    var dataElectric = await Tbl_electrics_temp()
-        .select()
-        .orderBy("bulan")
-        .orderBy("insert_date")
-        .toList();
+    // List<Electric> electrics = [];
+    // List<Electric> waters = [];
+    // var dataElectric = await Tbl_electrics_temp()
+    //     .select()
+    //     .orderBy("bulan")
+    //     .orderBy("insert_date")
+    //     .toList();
 
-    var dataWater = await Tbl_waters_temp()
-        .select()
-        .orderBy("bulan")
-        .orderBy("insert_date")
-        .toList();
+    // var dataWater = await Tbl_waters_temp()
+    //     .select()
+    //     .orderBy("bulan")
+    //     .orderBy("insert_date")
+    //     .toList();
 
-    for (var e in dataElectric) {
-      electrics.add(new Electric(
-          unitCode: e.unit_code,
-          type: "Electric",
-          bulan: e.bulan,
-          tahun: e.tahun,
-          nomorSeri: e.nomor_seri,
-          pemakaian: e.pemakaian,
-          foto: e.foto,
-          insertBy: e.insert_by,
-          insertDate: e.insert_date));
-    }
-    for (var w in dataWater) {
-      waters.add(new Electric(
-          unitCode: w.unit_code,
-          type: "Water",
-          bulan: w.bulan,
-          tahun: w.tahun,
-          nomorSeri: w.nomor_seri,
-          pemakaian: w.pemakaian,
-          insertBy: w.insert_by,
-          foto: w.foto,
-          insertDate: w.insert_date));
-    }
+    // for (var e in dataElectric) {
+    //   electrics.add(new Electric(
+    //       unitCode: e.unit_code,
+    //       type: "Electric",
+    //       bulan: e.bulan,
+    //       tahun: e.tahun,
+    //       nomorSeri: e.nomor_seri,
+    //       pemakaian: e.pemakaian,
+    //       foto: e.foto,
+    //       insertBy: e.insert_by,
+    //       insertDate: e.insert_date));
+    // }
+    // for (var w in dataWater) {
+    //   waters.add(new Electric(
+    //       unitCode: w.unit_code,
+    //       type: "Water",
+    //       bulan: w.bulan,
+    //       tahun: w.tahun,
+    //       nomorSeri: w.nomor_seri,
+    //       pemakaian: w.pemakaian,
+    //       insertBy: w.insert_by,
+    //       foto: w.foto,
+    //       insertDate: w.insert_date));
+    // }
 
-    dataPost.electrics = electrics;
-    dataPost.waters = waters;
-    getClient().synchronize(dataPost).then((res) async {
-      Navigator.pop(context);
-      if (res.status) {
-        await Tbl_electrics_temp().select().delete();
-        await Tbl_waters_temp().select().delete();
-        WidgetSnackbar(
-            context: context,
-            message: "Successfully Upload to Server",
-            warna: "hijau");
-        if (dataElectric.length > 0) {
-          syncElectrics();
-        }
-        if (dataWater.length > 0) {
-          syncWaters();
-        }
-        currentPage(index);
-      } else {
-        WidgetSnackbar(
-            context: context, message: "Failed to upload", warna: "merah");
-      }
-    }).catchError((Object obj) {
-      print(obj.toString());
-      Navigator.pop(context);
-      WidgetSnackbar(
-          context: context,
-          message: "Failed connect to server!",
-          warna: "merah");
-    });
+    // dataPost.electrics = electrics;
+    // dataPost.waters = waters;
+    // getClient().synchronize(dataPost).then((res) async {
+    //   Navigator.pop(context);
+    //   if (res.status) {
+    //     await Tbl_electrics_temp().select().delete();
+    //     await Tbl_waters_temp().select().delete();
+    //     WidgetSnackbar(
+    //         context: context,
+    //         message: "Successfully Upload to Server",
+    //         warna: "hijau");
+    //     if (dataElectric.length > 0) {
+    //       syncElectrics();
+    //     }
+    //     if (dataWater.length > 0) {
+    //       syncWaters();
+    //     }
+    //     currentPage(index);
+    //   } else {
+    //     WidgetSnackbar(
+    //         context: context, message: "Failed to upload", warna: "merah");
+    //   }
+    // }).catchError((Object obj) {
+    //   print(obj.toString());
+    //   Navigator.pop(context);
+    //   WidgetSnackbar(
+    //       context: context,
+    //       message: "Failed connect to server!",
+    //       warna: "merah");
+    // });
   }
 
   syncUnits() {
@@ -319,7 +319,7 @@ class _MainNavState extends State<MainNav> with TickerProviderStateMixin {
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) => WidgetProgressSubmit());
-    getClient().getElectrics().then((res) async {
+    getClient().getElectrics("").then((res) async {
       Navigator.pop(context);
       if (res.status) {
         listElectric = res.listElectric;
@@ -346,7 +346,7 @@ class _MainNavState extends State<MainNav> with TickerProviderStateMixin {
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) => WidgetProgressSubmit());
-    getClient().getWaters().then((res) async {
+    getClient().getWaters("").then((res) async {
       Navigator.pop(context);
       if (res.status) {
         listWater = res.listWater;

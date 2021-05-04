@@ -16,11 +16,13 @@ class ModelSyncElectrics {
   bool status;
   String remarks;
   List<Tbl_electric> listElectric;
+  List<Tbl_electrics_problem> listElectricProblem;
 
   ModelSyncElectrics({
     this.status,
     this.remarks,
     this.listElectric,
+    this.listElectricProblem,
   });
 
   factory ModelSyncElectrics.fromJson(Map<String, dynamic> json) =>
@@ -31,6 +33,10 @@ class ModelSyncElectrics {
             ? null
             : List<Tbl_electric>.from(
                 json["list_electric"].map((x) => Tbl_electric.fromMap(x))),
+        listElectricProblem: json["list_electric_problem"] == null
+            ? null
+            : List<Tbl_electrics_problem>.from(json["list_electric_problem"]
+                .map((x) => Tbl_electrics_problem.fromMap(x))),
       );
 
   Map<String, dynamic> toMap() => {
@@ -39,5 +45,8 @@ class ModelSyncElectrics {
         "list_electric": listElectric == null
             ? null
             : List<dynamic>.from(listElectric.map((x) => x.toMap())),
+        "list_electric_problem": listElectric == null
+            ? null
+            : List<dynamic>.from(listElectricProblem.map((x) => x.toMap())),
       };
 }

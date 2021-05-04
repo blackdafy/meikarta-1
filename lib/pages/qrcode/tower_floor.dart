@@ -31,6 +31,7 @@ class _TowerFloorState extends State<TowerFloor> {
     setState(() {
       loading = true;
       dataList.clear();
+      dataCheck.clear();
     });
 
     final data = await DbModel().execDataTable(
@@ -59,17 +60,24 @@ class _TowerFloorState extends State<TowerFloor> {
           tower: eC['tower'],
           floor: eC['floor'],
           water: eC['water'],
-          ho: eC['ho'],
           electric: eC['electric'],
+          ho: eC['ho'],
         ));
       }
-      List<Tbl_mkrt_unit> dataHo =
-          dataCheck.where((i) => i.ho.contains('1')).toList();
+      List<Tbl_mkrt_unit> dataHo = dataCheck
+          .where((i) => i.ho.contains('1') && i.floor.contains(e['floor']))
+          .toList();
       List<Tbl_mkrt_unit> dataWater = dataCheck
-          .where((i) => i.water.contains('0') && i.ho.contains('1'))
+          .where((i) =>
+              i.water.contains('0') &&
+              i.ho.contains('1') &&
+              i.floor.contains(e['floor']))
           .toList();
       List<Tbl_mkrt_unit> dataElec = dataCheck
-          .where((i) => i.electric.contains('0') && i.ho.contains('1'))
+          .where((i) =>
+              i.electric.contains('0') &&
+              i.ho.contains('1') &&
+              i.floor.contains(e['floor']))
           .toList();
       String hoCheck = '0';
       if (dataHo.length > 0) {
@@ -82,10 +90,16 @@ class _TowerFloorState extends State<TowerFloor> {
         hoElec = '0';
         if (dataElec.length != dataHo.length) {
           List<Tbl_mkrt_unit> dataElecP = dataCheck
-              .where((i) => i.electric.contains('4') && i.ho.contains('1'))
+              .where((i) =>
+                  i.electric.contains('4') &&
+                  i.ho.contains('1') &&
+                  i.floor.contains(e['floor']))
               .toList();
           List<Tbl_mkrt_unit> dataElecOK = dataCheck
-              .where((i) => i.electric.contains('1') && i.ho.contains('1'))
+              .where((i) =>
+                  i.electric.contains('1') &&
+                  i.ho.contains('1') &&
+                  i.floor.contains(e['floor']))
               .toList();
           if (dataElecP.length > 0) {
             hoElec = '4';
@@ -97,10 +111,16 @@ class _TowerFloorState extends State<TowerFloor> {
         hoWater = '0';
         if (dataWater.length != dataHo.length) {
           List<Tbl_mkrt_unit> dataWaterP = dataCheck
-              .where((i) => i.water.contains('4') && i.ho.contains('1'))
+              .where((i) =>
+                  i.water.contains('4') &&
+                  i.ho.contains('1') &&
+                  i.floor.contains(e['floor']))
               .toList();
           List<Tbl_mkrt_unit> dataWaterOK = dataCheck
-              .where((i) => i.water.contains('1') && i.ho.contains('1'))
+              .where((i) =>
+                  i.water.contains('1') &&
+                  i.ho.contains('1') &&
+                  i.floor.contains(e['floor']))
               .toList();
           if (dataWaterP.length > 0) {
             hoWater = '4';
@@ -191,7 +211,7 @@ class _TowerFloorState extends State<TowerFloor> {
             tower +
             "' AND mu.floor = '" +
             floor +
-            "' and mu.ho = '1'");
+            "' and mu.ho = '1' ");
     List<ModelTempProblem> resData = await getDatatemp(unit);
     String result;
     List dataSuccess = resData.where((i) => i.problem.contains('1')).toList();
@@ -360,6 +380,7 @@ class _TowerFloorState extends State<TowerFloor> {
                       children: List.generate(
                         dataList.length,
                         (i) {
+                          print(dataList[i].toJson().toString());
                           return InkWell(
                               onTap: () {
                                 Navigator.push(

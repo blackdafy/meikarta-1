@@ -43,6 +43,11 @@ class _QCCheckState extends State<QCCheck> {
   List<Tbl_master_problem> listMasterProblemTemp = [];
   List<Tbl_master_problem> listMasterProblemTrue = [];
 
+  List<Tbl_electrics_problem> listPRElectric = [];
+  List<Tbl_waters_problem> listPRWater = [];
+  List<Tbl_electrics_temp_problem_qc> listPRElectricTemp = [];
+  List<Tbl_waters_temp_problem_qc> listPRWaterTemp = [];
+
   List<Electric> dataList = [];
   String lastMeteran = "0";
   String lastMonth = "0";
@@ -59,14 +64,114 @@ class _QCCheckState extends State<QCCheck> {
         await Tbl_master_problem().select().type.equals("QC").toList();
     dataUnit = await Tbl_mkrt_unit().select().unit_code.equals(unit).toSingle();
     setState(() {
+      loading = true;
       dataUnit = dataUnit;
       listMasterProblem = listMasterProblem;
       listMasterProblemTemp = listMasterProblem;
-      listMasterProblemTrue =
-          listMasterProblemTemp.where((i) => i.is_checked).toList();
-      loading = true;
     });
     getDataList();
+    setProblem(unit);
+  }
+
+  setProblem(unit) async {
+    if (table == 'tbl_electrics_qc') {
+      listPRElectricTemp = await Tbl_electrics_temp_problem_qc()
+          .select()
+          .unit_code
+          .equals(unit)
+          .and
+          .tahun
+          .equals(tahun)
+          .and
+          .bulan
+          .equals(bulan)
+          .toList();
+
+      if (listPRElectricTemp.length > 0) {
+        setState(() {
+          listPRElectricTemp = listPRElectricTemp;
+        });
+        setProblemTemp(unit);
+      } else {
+        listPRElectric = await Tbl_electrics_problem()
+            .select()
+            .unit_code
+            .equals(unit)
+            .and
+            .tahun
+            .equals(tahun)
+            .and
+            .bulan
+            .equals(bulan)
+            .toList();
+        for (var i in listPRElectric) {
+          final changeTo = listMasterProblemTemp
+              .firstWhere((item) => item.idx == i.idx_problem);
+          changeTo.is_checked = true;
+        }
+      }
+    } else {
+      listPRWaterTemp = await Tbl_waters_temp_problem_qc()
+          .select()
+          .unit_code
+          .equals(unit)
+          .and
+          .tahun
+          .equals(tahun)
+          .and
+          .bulan
+          .equals(bulan)
+          .toList();
+      if (listPRWaterTemp.length > 0) {
+        setState(() {
+          listPRWaterTemp = listPRWaterTemp;
+        });
+        setProblemTemp(unit);
+      } else {
+        listPRWater = await Tbl_waters_problem()
+            .select()
+            .unit_code
+            .equals(unit)
+            .and
+            .tahun
+            .equals(tahun)
+            .and
+            .bulan
+            .equals(bulan)
+            .toList();
+        for (var i in listPRWater) {
+          final changeTo = listMasterProblemTemp
+              .firstWhere((item) => item.idx == i.idx_problem);
+          changeTo.is_checked = true;
+        }
+      }
+    }
+    setState(() {
+      listMasterProblemTrue =
+          listMasterProblemTemp.where((i) => i.is_checked).toList();
+      showPR = listMasterProblemTrue.length > 0 ? true : false;
+    });
+  }
+
+  setProblemTemp(unit) async {
+    if (table == 'tbl_electrics_qc') {
+      for (var i in listPRElectricTemp) {
+        final changeTo = listMasterProblemTemp
+            .firstWhere((item) => item.idx == i.idx_problem);
+        changeTo.is_checked = true;
+      }
+    } else {
+      for (var i in listPRWaterTemp) {
+        final changeTo = listMasterProblemTemp
+            .firstWhere((item) => item.idx == i.idx_problem);
+        changeTo.is_checked = true;
+      }
+    }
+    setState(() {
+      listMasterProblemTrue =
+          listMasterProblemTemp.where((i) => i.is_checked).toList();
+      showPR = listMasterProblemTrue.length > 0 ? true : false;
+    });
   }
 
   textBulan(bulan) {
@@ -163,14 +268,16 @@ class _QCCheckState extends State<QCCheck> {
     if (now.day >= 19) {
       now = new DateTime(now.year, now.month + 1, now.day);
     }
-    curMonth = DateFormat('MMM').format(now);
-    tahun = DateFormat('y').format(now);
-    bulan = DateFormat('MM').format(now);
-    if (bulan == "12") {
-      tahun = (int.parse(tahun) + 1).toString();
-    }
+    setState(() {
+      curMonth = DateFormat('MMM').format(now);
+      tahun = DateFormat('y').format(now);
+      bulan = DateFormat('MM').format(now);
+      if (bulan == "12") {
+        tahun = (int.parse(tahun) + 1).toString();
+      }
+    });
 
-    if (table == 'tbl_waters_qc' || table == 'tbl_waters') {
+    if (table == 'tbl_waters_qc') {
       var dataWater = await Tbl_water()
           .select()
           .unit_code
@@ -300,10 +407,9 @@ class _QCCheckState extends State<QCCheck> {
 
     setState(() {
       curMonth = curMonth + " " + tahun;
-      dataList = dataList;
+      dataList = dataList.where((e) => e.meteran != null).toList();
       lastMeteran = lastMeteran;
       loading = false;
-      print(dataList.length.toString());
     });
   }
 
@@ -367,7 +473,7 @@ class _QCCheckState extends State<QCCheck> {
     DateTime now = DateTime.now();
     String insertDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(now);
 
-    if (table == 'tbl_waters_qc' || table == 'tbl_waters') {
+    if (table == 'tbl_waters_qc') {
       var check = await Tbl_waters_temp()
           .select()
           .unit_code
@@ -386,7 +492,6 @@ class _QCCheckState extends State<QCCheck> {
         dataSave.qc_date = insertDate;
         dataSave.qc_id = sesIduser;
         final res = await dataSave.save();
-        print(res.toString());
       } else {
         final res = await Tbl_waters_temp_qc()
             .select()
@@ -400,7 +505,6 @@ class _QCCheckState extends State<QCCheck> {
           "qc_id": sesIduser,
           "qc_date": insertDate,
         });
-        print(res.toString());
       }
     } else {
       var check = await Tbl_electrics_temp_qc()
@@ -421,7 +525,6 @@ class _QCCheckState extends State<QCCheck> {
         dataSave.qc_date = insertDate;
         dataSave.qc_id = sesIduser;
         final res = await dataSave.save();
-        print(res.toString());
       } else {
         final res = await Tbl_electrics_temp_qc()
             .select()
@@ -435,15 +538,59 @@ class _QCCheckState extends State<QCCheck> {
           "qc_id": sesIduser,
           "qc_date": insertDate,
         });
-        print(res.toString());
       }
     }
+    saveListProblem();
     Navigator.pop(context);
     goToHome();
     WidgetSnackbar(
         context: context,
         message: "Successfuly saving to local",
         warna: "hijau");
+  }
+
+  saveListProblem() async {
+    if (table == 'tbl_electrics_qc') {
+      await Tbl_electrics_temp_problem_qc()
+          .select()
+          .unit_code
+          .equals(unit)
+          .and
+          .tahun
+          .equals(bulan)
+          .and
+          .bulan
+          .equals(bulan)
+          .delete();
+      for (var item in listMasterProblemTrue) {
+        final dataSave = Tbl_electrics_temp_problem_qc();
+        dataSave.unit_code = unit;
+        dataSave.bulan = bulan;
+        dataSave.tahun = tahun;
+        dataSave.idx_problem = item.idx;
+        final res = await dataSave.save();
+      }
+    } else {
+      await Tbl_waters_temp_problem_qc()
+          .select()
+          .unit_code
+          .equals(unit)
+          .and
+          .tahun
+          .equals(bulan)
+          .and
+          .bulan
+          .equals(bulan)
+          .delete();
+      for (var item in listMasterProblemTrue) {
+        final dataSave = Tbl_waters_temp_problem_qc();
+        dataSave.unit_code = unit;
+        dataSave.bulan = bulan;
+        dataSave.tahun = tahun;
+        dataSave.idx_problem = item.idx;
+        final res = await dataSave.save();
+      }
+    }
   }
 
   getSession() async {
