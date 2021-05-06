@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:easymoveinapp/api/service.dart';
 import 'package:easymoveinapp/pages/menu/home.dart';
 import 'package:easymoveinapp/pages/auth/login.dart';
+import 'package:easymoveinapp/sqlite/db.dart';
 import 'package:easymoveinapp/style/size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,6 +15,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  bool ok = false;
+
   getData() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     var duration = const Duration(seconds: 3);
@@ -31,10 +35,24 @@ class _SplashScreenState extends State<SplashScreen> {
     });
   }
 
+  getMasterProblem() {
+    getClient().getMasterProblem().then((res) async {
+      if (res.status) {
+        List<Tbl_master_problem> listProblem = [];
+        await Tbl_master_problem().select().delete();
+        final results = await Tbl_master_problem().upsertAll(listProblem);
+      }
+      setState(() {
+        ok = true;
+      });
+      getData();
+    });
+  }
+
   @override
   void initState() {
     super.initState();
-    getData();
+    getMasterProblem();
   }
 
   @override

@@ -38,6 +38,7 @@ class _QCCheckState extends State<QCCheck> {
   String tipe = "";
   String unit = "";
   bool showPR = false;
+  bool showPROther = false;
   Tbl_mkrt_unit dataUnit;
   List<Tbl_master_problem> listMasterProblem = [];
   List<Tbl_master_problem> listMasterProblemTemp = [];
@@ -103,6 +104,9 @@ class _QCCheckState extends State<QCCheck> {
             .and
             .bulan
             .equals(bulan)
+            .and
+            .type
+            .equals("QC")
             .toList();
         for (var i in listPRElectric) {
           final changeTo = listMasterProblemTemp
@@ -138,6 +142,9 @@ class _QCCheckState extends State<QCCheck> {
             .and
             .bulan
             .equals(bulan)
+            .and
+            .type
+            .equals("QC")
             .toList();
         for (var i in listPRWater) {
           final changeTo = listMasterProblemTemp
@@ -151,6 +158,7 @@ class _QCCheckState extends State<QCCheck> {
           listMasterProblemTemp.where((i) => i.is_checked).toList();
       showPR = listMasterProblemTrue.length > 0 ? true : false;
     });
+    showOther();
   }
 
   setProblemTemp(unit) async {
@@ -171,6 +179,17 @@ class _QCCheckState extends State<QCCheck> {
       listMasterProblemTrue =
           listMasterProblemTemp.where((i) => i.is_checked).toList();
       showPR = listMasterProblemTrue.length > 0 ? true : false;
+      for (var i in listMasterProblemTemp) {
+        print(i.idx + " " + i.is_checked.toString());
+      }
+    });
+    showOther();
+  }
+
+  showOther() {
+    setState(() {
+      showPROther =
+          listMasterProblemTemp.firstWhere((i) => i.idx == '98').is_checked;
     });
   }
 
@@ -474,7 +493,7 @@ class _QCCheckState extends State<QCCheck> {
     String insertDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(now);
 
     if (table == 'tbl_waters_qc') {
-      var check = await Tbl_waters_temp()
+      var check = await Tbl_waters_temp_qc()
           .select()
           .unit_code
           .equals(unit)
@@ -1040,40 +1059,40 @@ class _QCCheckState extends State<QCCheck> {
                           ],
                         ),
                       ),
-                      // Padding(
-                      //   padding: const EdgeInsets.all(4),
-                      //   child: Center(
-                      //     child: InkWell(
-                      //         onTap: () {
-                      //           Navigator.push(
-                      //               context,
-                      //               MaterialPageRoute(
-                      //                   builder: (context) => ViewImage(
-                      //                         header: "Preview",
-                      //                         urlImage: foto,
-                      //                       )));
-                      //         },
-                      //         child: ClipRRect(
-                      //           borderRadius: BorderRadius.circular(8),
-                      //           child: Container(
-                      //             width: SizeConfig.screenWidth * 0.1,
-                      //             decoration: BoxDecoration(
-                      //                 borderRadius: BorderRadius.circular(8)),
-                      //             child: CachedNetworkImage(
-                      //               imageUrl: foto,
-                      //               fit: BoxFit.fill,
-                      //               placeholder:
-                      //                   (BuildContext context, String url) {
-                      //                 return Container(
-                      //                   height: 40,
-                      //                   color: ColorsTheme.background1,
-                      //                 );
-                      //               },
-                      //             ),
-                      //           ),
-                      //         )),
-                      //   ),
-                      // ),
+                      Padding(
+                        padding: const EdgeInsets.all(4),
+                        child: Center(
+                          child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ViewImage(
+                                              header: "Preview",
+                                              urlImage: foto,
+                                            )));
+                              },
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(8),
+                                child: Container(
+                                  width: SizeConfig.screenWidth * 0.1,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8)),
+                                  child: CachedNetworkImage(
+                                    imageUrl: foto,
+                                    fit: BoxFit.fill,
+                                    placeholder:
+                                        (BuildContext context, String url) {
+                                      return Container(
+                                        height: 40,
+                                        color: ColorsTheme.background1,
+                                      );
+                                    },
+                                  ),
+                                ),
+                              )),
+                        ),
+                      ),
                     ],
                   ),
                 ],

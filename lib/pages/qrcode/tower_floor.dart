@@ -27,6 +27,8 @@ class _TowerFloorState extends State<TowerFloor> {
   String tower = "1B";
   List<Tbl_mkrt_unit> dataList = [];
   List<Tbl_mkrt_unit> dataCheck = [];
+  List<Tbl_mkrt_unit> dataHo = [];
+
   getData() async {
     setState(() {
       loading = true;
@@ -64,7 +66,7 @@ class _TowerFloorState extends State<TowerFloor> {
           ho: eC['ho'],
         ));
       }
-      List<Tbl_mkrt_unit> dataHo = dataCheck
+      dataHo = dataCheck
           .where((i) => i.ho.contains('1') && i.floor.contains(e['floor']))
           .toList();
       List<Tbl_mkrt_unit> dataWater = dataCheck
@@ -97,14 +99,17 @@ class _TowerFloorState extends State<TowerFloor> {
               .toList();
           List<Tbl_mkrt_unit> dataElecOK = dataCheck
               .where((i) =>
-                  i.electric.contains('1') &&
+                  (i.electric.contains('1') ||
+                      i.electric.contains('2') ||
+                      i.electric.contains('3')) &&
                   i.ho.contains('1') &&
                   i.floor.contains(e['floor']))
               .toList();
-          if (dataElecP.length > 0) {
-            hoElec = '4';
-          } else if (dataElecOK.length == dataHo.length) {
+          int totalQC = dataElecP.length + dataElecOK.length;
+          if (totalQC == dataHo.length) {
             hoElec = '1';
+          } else if (totalQC != dataHo.length) {
+            hoElec = '4';
           }
         }
       } else if (widget.menu.className == 'QCAir') {
@@ -118,14 +123,17 @@ class _TowerFloorState extends State<TowerFloor> {
               .toList();
           List<Tbl_mkrt_unit> dataWaterOK = dataCheck
               .where((i) =>
-                  i.water.contains('1') &&
+                  (i.water.contains('1') ||
+                      i.water.contains('2') ||
+                      i.water.contains('3')) &&
                   i.ho.contains('1') &&
                   i.floor.contains(e['floor']))
               .toList();
-          if (dataWaterP.length > 0) {
-            hoWater = '4';
-          } else if (dataWaterOK.length == dataHo.length) {
+          int totalQC = dataWaterP.length + dataWaterOK.length;
+          if (totalQC == dataHo.length) {
             hoWater = '1';
+          } else if (totalQC != dataHo.length) {
+            hoWater = '4';
           }
         }
       } else if (widget.menu.className == 'ReadingListrik') {
@@ -137,10 +145,11 @@ class _TowerFloorState extends State<TowerFloor> {
           List<Tbl_mkrt_unit> dataElecOK = dataCheck
               .where((i) => i.electric.contains('2') && i.ho.contains('1'))
               .toList();
-          if (dataElecP.length > 0) {
-            hoElec = '3';
-          } else if (dataElecOK.length == dataHo.length) {
+          int totalReading = dataElecP.length + dataElecOK.length;
+          if (totalReading == dataHo.length) {
             hoElec = '2';
+          } else if (totalReading != dataHo.length) {
+            hoElec = '3';
           }
         }
       } else if (widget.menu.className == 'ReadingAir') {
@@ -152,10 +161,11 @@ class _TowerFloorState extends State<TowerFloor> {
           List<Tbl_mkrt_unit> dataWaterOK = dataCheck
               .where((i) => i.water.contains('2') && i.ho.contains('1'))
               .toList();
-          if (dataWaterP.length > 0) {
-            hoWater = '3';
-          } else if (dataWaterOK.length == dataHo.length) {
+          int totalReading = dataWaterP.length + dataWaterOK.length;
+          if (totalReading == dataHo.length) {
             hoWater = '2';
+          } else if (totalReading != dataHo.length) {
+            hoWater = '3';
           }
         }
       }
@@ -188,6 +198,7 @@ class _TowerFloorState extends State<TowerFloor> {
       dataList = dataList;
       dataCheck = dataCheck;
       loading = false;
+      dataHo = dataHo;
     });
   }
 
@@ -214,10 +225,7 @@ class _TowerFloorState extends State<TowerFloor> {
             "' and mu.ho = '1' ");
     List<ModelTempProblem> resData = await getDatatemp(unit);
     String result;
-    List dataSuccess = resData.where((i) => i.problem.contains('1')).toList();
-    if (resData.length != 0 && dataSuccess.length != dataColor.length) {
-      result = '2';
-    } else if (resData.length == 0) {
+    if (resData.length == 0) {
       result = '0';
     } else {
       result = '1';
@@ -380,7 +388,7 @@ class _TowerFloorState extends State<TowerFloor> {
                       children: List.generate(
                         dataList.length,
                         (i) {
-                          print(dataList[i].toJson().toString());
+                          // print(dataList[i].toJson().toString());
                           return InkWell(
                               onTap: () {
                                 Navigator.push(
@@ -436,7 +444,7 @@ class _TowerFloorState extends State<TowerFloor> {
               } else if (param == 'QCAir') {
                 if (dataList.water == '0') {
                   bgColor = Colors.red;
-                  fontColor = Colors.black;
+                  fontColor = Colors.white;
                 } else if (dataList.water == '1') {
                   bgColor = Colors.green;
                   fontColor = Colors.white;

@@ -3,6 +3,7 @@ import 'package:easymoveinapp/models/res_temp_problem.dart';
 import 'package:easymoveinapp/pages/general_widgets/widget_loading_page.dart';
 import 'package:easymoveinapp/pages/general_widgets/widget_snackbar.dart';
 import 'package:easymoveinapp/pages/qrcode/qc_check.dart';
+import 'package:easymoveinapp/pages/qrcode/reading_input.dart';
 import 'package:easymoveinapp/sqlite/db.dart';
 import 'package:easymoveinapp/style/colors.dart';
 import 'package:easymoveinapp/style/size.dart';
@@ -265,6 +266,7 @@ class _FloorNumberState extends State<FloorNumber> {
                             children: List.generate(
                               dataList.length,
                               (i) {
+                                print(dataList[i].toJson().toString());
                                 return cardTipe(context, dataList[i],
                                     widget.menu.className);
                               },
@@ -281,11 +283,20 @@ class _FloorNumberState extends State<FloorNumber> {
           context: context, message: "Unit Belum Handover", warna: "merah");
     } else {
       if (param == 'QCListrik' || param == 'QCAir') {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    QCCheck(menu: widget.menu, mkrtUnit: data)));
+        if (bgColor == ColorsTheme.bgqr0 ||
+            bgColor == ColorsTheme.bgqr1 ||
+            bgColor == ColorsTheme.bgqr4) {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      QCCheck(menu: widget.menu, mkrtUnit: data)));
+        } else {
+          WidgetSnackbar(
+              context: context,
+              message: "Sudah dilakukan input meteran",
+              warna: "merah");
+        }
       } else {
         if (bgColor == ColorsTheme.bgqr1 ||
             bgColor == ColorsTheme.bgqr2 ||
@@ -294,7 +305,7 @@ class _FloorNumberState extends State<FloorNumber> {
               context,
               MaterialPageRoute(
                   builder: (context) =>
-                      QCCheck(menu: widget.menu, mkrtUnit: data)));
+                      ReadingInput(menu: widget.menu, mkrtUnit: data)));
         } else {
           if (bgColor == ColorsTheme.bgqr0) {
             WidgetSnackbar(
@@ -325,6 +336,7 @@ class _FloorNumberState extends State<FloorNumber> {
           bool isLocal = false;
           String tempData = snapshot.data[0];
           Tbl_mkrt_unit dataList = snapshot.data[1];
+          print(dataList.unit_code + " == " + snapshot.data[0]);
           if (dataList.ho == '1') {
             if (tempData != '0') {
               isLocal = true;
@@ -353,6 +365,12 @@ class _FloorNumberState extends State<FloorNumber> {
                 } else if (dataList.electric == '1') {
                   bgColor = ColorsTheme.bgqr1;
                   fontColor = Colors.black;
+                } else if (dataList.electric == '2') {
+                  bgColor = ColorsTheme.bgqr2;
+                  fontColor = Colors.white;
+                } else if (dataList.electric == '3') {
+                  bgColor = ColorsTheme.bgqr3;
+                  fontColor = Colors.white;
                 } else if (dataList.electric == '4') {
                   bgColor = ColorsTheme.bgqr4;
                   fontColor = Colors.white;
@@ -364,6 +382,12 @@ class _FloorNumberState extends State<FloorNumber> {
                 } else if (dataList.water == '1') {
                   bgColor = ColorsTheme.bgqr1;
                   fontColor = Colors.black;
+                } else if (dataList.water == '2') {
+                  bgColor = ColorsTheme.bgqr2;
+                  fontColor = Colors.white;
+                } else if (dataList.water == '3') {
+                  bgColor = ColorsTheme.bgqr3;
+                  fontColor = Colors.white;
                 } else if (dataList.water == '4') {
                   bgColor = ColorsTheme.bgqr4;
                   fontColor = Colors.white;
@@ -377,10 +401,10 @@ class _FloorNumberState extends State<FloorNumber> {
                   fontColor = Colors.black;
                 } else if (dataList.electric == '2') {
                   bgColor = ColorsTheme.bgqr2;
-                  fontColor = Colors.black;
+                  fontColor = Colors.white;
                 } else if (dataList.electric == '3') {
                   bgColor = ColorsTheme.bgqr3;
-                  fontColor = Colors.black;
+                  fontColor = Colors.white;
                 } else if (dataList.electric == '4') {
                   bgColor = ColorsTheme.bgqr4;
                   fontColor = Colors.white;
@@ -389,15 +413,15 @@ class _FloorNumberState extends State<FloorNumber> {
                 if (dataList.water == '0') {
                   bgColor = ColorsTheme.bgqr0;
                   fontColor = Colors.black;
-                } else if (dataList.water == '0') {
+                } else if (dataList.water == '1') {
                   bgColor = ColorsTheme.bgqr1;
                   fontColor = Colors.black;
                 } else if (dataList.water == '2') {
                   bgColor = ColorsTheme.bgqr2;
-                  fontColor = Colors.black;
+                  fontColor = Colors.white;
                 } else if (dataList.water == '3') {
                   bgColor = ColorsTheme.bgqr3;
-                  fontColor = Colors.black;
+                  fontColor = Colors.white;
                 } else if (dataList.water == '4') {
                   bgColor = ColorsTheme.bgqr4;
                   fontColor = Colors.white;

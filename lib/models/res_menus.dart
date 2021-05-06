@@ -35,18 +35,24 @@ class Menu {
     this.titleName,
     this.className,
     this.icons,
+    this.local,
+    this.color,
   });
 
   String appName;
   String titleName;
   String className;
   String icons;
+  String local;
+  String color;
 
   factory Menu.fromJson(Map<String, dynamic> json) => Menu(
         appName: json["app_name"] == null ? null : json["app_name"],
         titleName: json["title_name"] == null ? null : json["title_name"],
         className: json["class_name"] == null ? null : json["class_name"],
         icons: json["icons"] == null ? null : json["icons"],
+        local: json["local"] == null ? null : json["local"],
+        color: json["color"] == null ? null : json["color"],
       );
 
   Map<String, dynamic> toJson() => {

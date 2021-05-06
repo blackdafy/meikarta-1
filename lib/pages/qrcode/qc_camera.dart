@@ -151,13 +151,10 @@ class _QCCameraState extends State<QCCamera> {
     String insertDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(now);
 
     if (table == 'tbl_waters_qc') {
-      var check = await Tbl_waters_temp()
+      var check = await Tbl_waters_temp_qc()
           .select()
           .unit_code
           .equals(paramUnitCode)
-          .and
-          .bulan
-          .equals(bulan)
           .toSingle();
       if (check == null) {
         final dataSave = Tbl_waters_temp_qc();
@@ -169,30 +166,31 @@ class _QCCameraState extends State<QCCamera> {
         dataSave.qc_date = insertDate;
         dataSave.qc_id = sesIduser;
         final res = await dataSave.save();
-        print(res.toString());
+        print("====================== INSERT WATER" + res.toString());
       } else {
         final res = await Tbl_waters_temp_qc()
             .select()
             .unit_code
             .equals(paramUnitCode)
-            .and
-            .bulan
-            .equals(bulan)
             .update({
           "qc_check": '1',
           "qc_id": sesIduser,
           "qc_date": insertDate,
         });
-        print(res.toString());
+        print("====================== UPDATE WATER" + res.toString());
       }
+      final resDel = await Tbl_waters_temp_problem_qc()
+          .select()
+          .unit_code
+          .equals(paramUnitCode)
+          .delete();
+      print(
+          "====================== DELETE PROBLEM ELECTRIC" + resDel.toString());
     } else {
       var check = await Tbl_electrics_temp_qc()
           .select()
           .unit_code
           .equals(paramUnitCode)
-          .and
-          .bulan
-          .equals(bulan)
           .toSingle();
       if (check == null) {
         final dataSave = Tbl_electrics_temp_qc();
@@ -204,22 +202,26 @@ class _QCCameraState extends State<QCCamera> {
         dataSave.qc_date = insertDate;
         dataSave.qc_id = sesIduser;
         final res = await dataSave.save();
-        print(res.toString());
+        print("====================== INSERT ELECTRIC" + res.toString());
       } else {
         final res = await Tbl_electrics_temp_qc()
             .select()
             .unit_code
             .equals(paramUnitCode)
-            .and
-            .bulan
-            .equals(bulan)
             .update({
           "qc_check": '1',
           "qc_id": sesIduser,
           "qc_date": insertDate,
         });
-        print(res.toString());
+        print("====================== UPDATE ELECTRIC" + res.toString());
       }
+      final resDel = await Tbl_electrics_temp_problem_qc()
+          .select()
+          .unit_code
+          .equals(paramUnitCode)
+          .delete();
+      print(
+          "====================== DELETE PROBLEM ELECTRIC" + resDel.toString());
     }
     Navigator.pop(context);
     goToHome();
@@ -246,6 +248,7 @@ class _QCCameraState extends State<QCCamera> {
   @override
   void initState() {
     super.initState();
+    getSession();
     paramUnit = widget.mkrtUnit.blocks +
         "-" +
         widget.mkrtUnit.tower +
@@ -313,7 +316,7 @@ class _QCCameraState extends State<QCCamera> {
                       color: Colors.white,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text(textQR),
+                        child: Text(textQR + "-" + paramType),
                       )),
                 )),
             Align(

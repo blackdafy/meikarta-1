@@ -37,6 +37,8 @@ class _HomeState extends State<Home> {
   List<Tbl_mkrt_unit> listMkrtUnit = [];
   int countTempWater = 0;
   int countTempElectric = 0;
+  int countTempWaterQC = 0;
+  int countTempElectricQC = 0;
   int totalTemp = 0;
   List<Menu> menus = [];
 
@@ -183,6 +185,8 @@ class _HomeState extends State<Home> {
     var dataWaterProblem = await Tbl_waters_temp_problem().select().toList();
 
     for (var e in dataElectric) {
+      print(e.insert_by);
+      print(e.insert_date);
       electrics.add(new WaterElectric(
           unitCode: e.unit_code,
           type: "Electric",
@@ -190,11 +194,14 @@ class _HomeState extends State<Home> {
           tahun: e.tahun,
           nomorSeri: e.nomor_seri,
           pemakaian: e.pemakaian,
+          problem: e.problem,
           foto: e.foto,
           insertBy: e.insert_by,
           insertDate: e.insert_date));
     }
     for (var w in dataWater) {
+      print(w.insert_by);
+      print(w.insert_date);
       waters.add(new WaterElectric(
           unitCode: w.unit_code,
           type: "Water",
@@ -202,6 +209,7 @@ class _HomeState extends State<Home> {
           tahun: w.tahun,
           nomorSeri: w.nomor_seri,
           pemakaian: w.pemakaian,
+          problem: w.problem,
           insertBy: w.insert_by,
           foto: w.foto,
           insertDate: w.insert_date));
@@ -209,7 +217,7 @@ class _HomeState extends State<Home> {
     for (var ep in dataElectricProblem) {
       electricsProblem.add(new WaterElectricProblem(
           unitCode: ep.unit_code,
-          type: "READING",
+          type: "Reading",
           bulan: ep.bulan,
           tahun: ep.tahun,
           idxProblem: ep.idx_problem));
@@ -217,7 +225,7 @@ class _HomeState extends State<Home> {
     for (var wp in dataWaterProblem) {
       watersProblem.add(new WaterElectricProblem(
           unitCode: wp.unit_code,
-          type: "READING",
+          type: "Reading",
           bulan: wp.bulan,
           tahun: wp.tahun,
           idxProblem: wp.idx_problem));
@@ -234,12 +242,7 @@ class _HomeState extends State<Home> {
         await Tbl_waters_temp().select().delete();
         await Tbl_electrics_temp_problem().select().delete();
         await Tbl_waters_temp_problem().select().delete();
-        if (dataElectric.length > 0 || dataElectricProblem.length > 0) {
-          syncElectrics();
-        }
-        if (dataWater.length > 0 || dataWaterProblem.length > 0) {
-          syncWaters();
-        }
+        syncUnits(sesBlock);
       } else {
         WidgetSnackbar(
             context: context, message: "Failed to upload", warna: "merah");
@@ -295,6 +298,17 @@ class _HomeState extends State<Home> {
           qcId: e.qc_id));
     }
     for (var w in dataWaterQC) {
+      print(w.unit_code +
+          " == " +
+          w.tahun +
+          " == " +
+          w.bulan +
+          " == " +
+          w.qc_check +
+          " == " +
+          w.qc_date +
+          " == " +
+          w.qc_id.toString());
       watersQC.add(new WaterElectricQc(
           unitCode: w.unit_code,
           bulan: w.bulan,
@@ -326,20 +340,15 @@ class _HomeState extends State<Home> {
     getClient().synchronizeQC(dataPost).then((res) async {
       Navigator.pop(context);
       if (res.status) {
-        // await Tbl_electrics_temp_qc().select().delete();
-        // await Tbl_waters_temp_qc().select().delete();
-        // await Tbl_electrics_temp_problem_qc().select().delete();
-        // await Tbl_waters_temp_problem_qc().select().delete();
+        await Tbl_electrics_temp_qc().select().delete();
+        await Tbl_waters_temp_qc().select().delete();
+        await Tbl_electrics_temp_problem_qc().select().delete();
+        await Tbl_waters_temp_problem_qc().select().delete();
         WidgetSnackbar(
             context: context,
             message: "Successfully Uploaded to Server",
             warna: "hijau");
-        if (dataElectricQC.length > 0 || dataElectricProblemQC.length > 0) {
-          syncElectrics();
-        }
-        if (dataWaterQC.length > 0 || dataWaterProblemQC.length > 0) {
-          syncWaters();
-        }
+        syncUnits(sesBlock);
       } else {
         WidgetSnackbar(
             context: context, message: "Failed to upload", warna: "merah");
@@ -365,7 +374,8 @@ class _HomeState extends State<Home> {
         listMkrtUnit = res.mkrtUnit;
         await Tbl_mkrt_unit().select().blocks.equals(blocks).delete();
         final results = await Tbl_mkrt_unit().upsertAll(listMkrtUnit);
-        WidgetSnackbar(context: context, message: res.remarks, warna: "hijau");
+        syncElectrics();
+        syncWaters();
       } else {
         WidgetSnackbar(context: context, message: res.remarks, warna: "merah");
       }
@@ -380,7 +390,6 @@ class _HomeState extends State<Home> {
   }
 
   syncElectrics() {
-    print(sesBlock);
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -391,6 +400,7 @@ class _HomeState extends State<Home> {
         listElectric = res.listElectric;
         listElectricPR = res.listElectricProblem;
         await Tbl_electric().select().delete();
+        await Tbl_electrics_problem().select().delete();
         final results = await Tbl_electric().upsertAll(listElectric);
         final results_pr =
             await Tbl_electrics_problem().upsertAll(listElectricPR);
@@ -418,6 +428,7 @@ class _HomeState extends State<Home> {
       if (res.status) {
         listWater = res.listWater;
         listWaterPR = res.listWaterPR;
+        print(listWaterPR.length.toString());
         await Tbl_water().select().delete();
         await Tbl_waters_problem().select().delete();
         final results = await Tbl_water().upsertAll(listWater);
@@ -438,18 +449,45 @@ class _HomeState extends State<Home> {
 
   getLocalElectric() async {
     final el = await Tbl_electrics_temp().select().toList();
-    setState(() {
-      countTempElectric = el.length;
-      totalTemp = countTempWater + countTempElectric;
-    });
+    if (mounted)
+      setState(() {
+        countTempElectric = el.length;
+        final changeTo =
+            menus.firstWhere((item) => item.className == "ReadingListrik");
+        changeTo.local = countTempElectric.toString();
+      });
   }
 
   getLocalWater() async {
     final wa = await Tbl_waters_temp().select().toList();
-    setState(() {
-      countTempWater = wa.length;
-      totalTemp = countTempWater + countTempElectric;
-    });
+    if (mounted)
+      setState(() {
+        countTempWater = wa.length;
+        final changeTo =
+            menus.firstWhere((item) => item.className == "ReadingAir");
+        changeTo.local = countTempWater.toString();
+      });
+  }
+
+  getLocalElectricQC() async {
+    final el = await Tbl_electrics_temp_qc().select().toList();
+    if (mounted)
+      setState(() {
+        countTempElectricQC = el.length;
+        final changeTo =
+            menus.firstWhere((item) => item.className == "QCListrik");
+        changeTo.local = countTempElectricQC.toString();
+      });
+  }
+
+  getLocalWaterQC() async {
+    final wa = await Tbl_waters_temp_qc().select().toList();
+    if (mounted)
+      setState(() {
+        countTempWaterQC = wa.length;
+        final changeTo = menus.firstWhere((item) => item.className == "QCAir");
+        changeTo.local = countTempWaterQC.toString();
+      });
   }
 
   getData() async {
@@ -477,25 +515,29 @@ class _HomeState extends State<Home> {
       sesBlock = preferences.getString("PREF_PICBLOCK");
       sesName = preferences.getString("PREF_FULLNAME");
       menus.add(Menu(
-          appName: "Meter Air\nQC",
+          appName: "METER AIR\nQC",
           titleName: "Meter Air QC",
           className: "QCAir",
-          icons: ""));
+          icons: "",
+          local: "0"));
       menus.add(Menu(
-          appName: "Meter Listrik\nQC",
-          titleName: "Meter Listrik QC",
-          className: "QCListrik",
-          icons: ""));
-      menus.add(Menu(
-          appName: "Meter Air\nReading",
+          appName: "METER AIR\nREADING",
           titleName: "Meter Air Reading",
           className: "ReadingAir",
-          icons: ""));
+          icons: "",
+          local: "0"));
       menus.add(Menu(
-          appName: "Meter Listrik\nReading",
+          appName: "METER LISTRIK\nQC",
+          titleName: "Meter Listrik QC",
+          className: "QCListrik",
+          icons: "",
+          local: "0"));
+      menus.add(Menu(
+          appName: "METER LISTRIK\nREADING",
           titleName: "Meter Listrik Reading",
           className: "ReadingListrik",
-          icons: ""));
+          icons: "",
+          local: "0"));
     });
   }
 
@@ -503,6 +545,13 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     getData();
+    timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      checkConnection();
+      getLocalElectric();
+      getLocalWater();
+      getLocalElectricQC();
+      getLocalWaterQC();
+    });
   }
 
   @override
@@ -542,13 +591,14 @@ class _HomeState extends State<Home> {
                   syncUploadQC();
                 } else if (val == "Upload Reading") {
                   syncUpload();
-                } else if (val == "Sync Units") {
+                } else if (val == "Synchronize") {
                   syncUnits(sesBlock);
-                } else if (val == "Sync Electrics") {
-                  syncElectrics();
-                } else if (val == "Sync Waters") {
-                  syncWaters();
                 }
+                // else if (val == "Sync Electrics") {
+                //   syncElectrics();
+                // } else if (val == "Sync Waters") {
+                //   syncWaters();
+                // }
               },
               itemBuilder: (context) => [
                 PopupMenuItem(
@@ -577,19 +627,19 @@ class _HomeState extends State<Home> {
                 ),
                 PopupMenuItem(
                   height: SizeConfig.screenHeight * 0.05,
-                  child: Text("Sync Units"),
-                  value: "Sync Units",
+                  child: Text("Synchronize"),
+                  value: "Synchronize",
                 ),
-                PopupMenuItem(
-                  height: SizeConfig.screenHeight * 0.05,
-                  child: Text("Sync Electrics"),
-                  value: "Sync Electrics",
-                ),
-                PopupMenuItem(
-                  height: SizeConfig.screenHeight * 0.05,
-                  child: Text("Sync Waters"),
-                  value: "Sync Waters",
-                ),
+                // PopupMenuItem(
+                //   height: SizeConfig.screenHeight * 0.05,
+                //   child: Text("Sync Electrics"),
+                //   value: "Sync Electrics",
+                // ),
+                // PopupMenuItem(
+                //   height: SizeConfig.screenHeight * 0.05,
+                //   child: Text("Sync Waters"),
+                //   value: "Sync Waters",
+                // ),
                 PopupMenuItem(
                   height: SizeConfig.screenHeight * 0.05,
                   child: Text("Logout"),
@@ -646,7 +696,8 @@ class _HomeState extends State<Home> {
                 padding: EdgeInsets.all(0),
                 shrinkWrap: true,
                 crossAxisCount: 2,
-                mainAxisSpacing: 1,
+                mainAxisSpacing: 8,
+                crossAxisSpacing: 8,
                 physics: NeverScrollableScrollPhysics(),
                 staggeredTiles: List.generate(
                     menus.length, (int index) => StaggeredTile.fit(1)),
@@ -676,17 +727,40 @@ class _HomeState extends State<Home> {
     return Card(
       elevation: 2,
       child: Container(
-        height: SizeConfig.screenHeight * 0.1,
-        child: Padding(
-          padding: EdgeInsets.all(8),
-          child: Center(
-              child: Text(
-            menu.appName,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: SizeConfig.screenHeight * 0.02),
-          )),
+        height: SizeConfig.screenHeight * 0.15,
+        child: Stack(
+          children: [
+            menu.local != "0"
+                ? Align(
+                    alignment: Alignment.topRight,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius:
+                            BorderRadius.only(bottomLeft: Radius.circular(8)),
+                        color: ColorsTheme.merah,
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.all(4),
+                        child: Text(
+                          "BELUM DI UPLOAD : " + menu.local,
+                          style: TextStyle(fontSize: 14, color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  )
+                : Container(),
+            Padding(
+              padding: EdgeInsets.all(8),
+              child: Center(
+                  child: Text(
+                menu.appName,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: SizeConfig.screenHeight * 0.02),
+              )),
+            ),
+          ],
         ),
       ),
     );

@@ -40,7 +40,14 @@ class _LoginPageState extends State<LoginPage> {
         pref.setString("PREF_EMAIL", res.dataUser.email);
         pref.setString("PREF_PROFILEID", res.dataUser.profileId);
         pref.setString("PREF_PICBLOCK", res.dataUser.picBlock);
-        navigateToHome();
+        if (res.dataUser.picBlock == null || res.dataUser.picBlock == "") {
+          WidgetSnackbar(
+              context: context,
+              message: "Akun anda tidak mempunyai block default",
+              warna: "merah");
+        } else {
+          navigateToHome();
+        }
       } else {
         WidgetSnackbar(context: context, message: res.remarks, warna: "merah");
       }
@@ -77,7 +84,6 @@ class _LoginPageState extends State<LoginPage> {
 
   getMasterProblem() {
     getClient().getMasterProblem().then((res) async {
-      Navigator.pop(context);
       if (res.status) {
         List<Tbl_master_problem> listProblem = [];
         await Tbl_master_problem().select().delete();
@@ -208,7 +214,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: Container(
                       width: SizeConfig.screenWidth,
                       child: SizedBox(
-                        height: SizeConfig.screenHeight * 0.045,
+                        height: SizeConfig.screenHeight * 0.048,
                         child: RaisedButton(
                           onPressed: () {
                             String check = checkMandatory();
@@ -228,7 +234,7 @@ class _LoginPageState extends State<LoginPage> {
                           child: Text(
                             "LOGIN",
                             style: TextStyle(
-                                color: Colors.black,
+                                color: Colors.white,
                                 fontSize: SizeConfig.fontSize4),
                           ),
                         ),
