@@ -65,6 +65,7 @@ class DataUser {
     this.signPad,
     this.colorAgent,
     this.picBlock,
+    this.qr,
   });
 
   String idUser;
@@ -93,6 +94,7 @@ class DataUser {
   dynamic signPad;
   dynamic colorAgent;
   dynamic picBlock;
+  dynamic qr;
 
   factory DataUser.fromJson(Map<String, dynamic> json) => DataUser(
         idUser: json["id_user"] == null ? null : json["id_user"],
@@ -124,6 +126,7 @@ class DataUser {
         signPad: json["sign_pad"],
         colorAgent: json["color_agent"],
         picBlock: json["pic_block"],
+        qr: json["qr"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -153,5 +156,6 @@ class DataUser {
         "sign_pad": signPad,
         "color_agent": colorAgent,
         "pic_block": picBlock,
+        "qr": qr,
       };
 }

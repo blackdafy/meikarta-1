@@ -27,6 +27,7 @@ class _HomeState extends State<Home> {
   int index = 0;
   String sesBlock = "";
   String sesName = "";
+  String sesQR = "";
   String title = "Meikarta App";
   bool permissionCamera = false;
   bool isConnect = true;
@@ -41,6 +42,8 @@ class _HomeState extends State<Home> {
   int countTempElectricQC = 0;
   int totalTemp = 0;
   List<Menu> menus = [];
+  bool loadingAuto = false;
+  String remarkAuto = "";
 
   Timer timer;
   checkConnection() async {
@@ -363,6 +366,242 @@ class _HomeState extends State<Home> {
     });
   }
 
+  syncUploadQCAuto() async {
+    setState(() {
+      loadingAuto = true;
+      remarkAuto = "Sedang upload data QC to server";
+    });
+
+    ModelPostQrCodeListQc dataPost = new ModelPostQrCodeListQc();
+    List<WaterElectricQc> electricsQC = [];
+    List<WaterElectricQc> watersQC = [];
+    List<WaterElectricProblem> electricsProblemQC = [];
+    List<WaterElectricProblem> watersProblemQC = [];
+    final dataElectricQC =
+        await Tbl_electrics_temp_qc().select().orderBy("bulan").toList();
+    final dataWaterQC =
+        await Tbl_waters_temp_qc().select().orderBy("bulan").toList();
+    final dataElectricProblemQC =
+        await Tbl_electrics_temp_problem_qc().select().toList();
+    final dataWaterProblemQC =
+        await Tbl_waters_temp_problem_qc().select().toList();
+
+    for (var e in dataElectricQC) {
+      print(e.unit_code +
+          " == " +
+          e.tahun +
+          " == " +
+          e.bulan +
+          " == " +
+          e.qc_check +
+          " == " +
+          e.qc_date +
+          " == " +
+          e.qc_id.toString());
+      electricsQC.add(new WaterElectricQc(
+          unitCode: e.unit_code,
+          bulan: e.bulan,
+          tahun: e.tahun,
+          qcCheck: e.qc_check,
+          qcDate: e.qc_date,
+          qcId: e.qc_id));
+    }
+    for (var w in dataWaterQC) {
+      print(w.unit_code +
+          " == " +
+          w.tahun +
+          " == " +
+          w.bulan +
+          " == " +
+          w.qc_check +
+          " == " +
+          w.qc_date +
+          " == " +
+          w.qc_id.toString());
+      watersQC.add(new WaterElectricQc(
+          unitCode: w.unit_code,
+          bulan: w.bulan,
+          tahun: w.tahun,
+          qcCheck: w.qc_check,
+          qcDate: w.qc_date,
+          qcId: w.qc_id));
+    }
+    for (var ep in dataElectricProblemQC) {
+      electricsProblemQC.add(new WaterElectricProblem(
+          unitCode: ep.unit_code,
+          type: "QC",
+          bulan: ep.bulan,
+          tahun: ep.tahun,
+          idxProblem: ep.idx_problem));
+    }
+    for (var wp in dataWaterProblemQC) {
+      watersProblemQC.add(new WaterElectricProblem(
+          unitCode: wp.unit_code,
+          type: "QC",
+          bulan: wp.bulan,
+          tahun: wp.tahun,
+          idxProblem: wp.idx_problem));
+    }
+    dataPost.electricQc = electricsQC;
+    dataPost.waterQc = watersQC;
+    dataPost.electricsProblemQc = electricsProblemQC;
+    dataPost.watersProblemQc = watersProblemQC;
+    getClient().synchronizeQC(dataPost).then((res) async {
+      if (res.status) {
+        await Tbl_electrics_temp_qc().select().delete();
+        await Tbl_waters_temp_qc().select().delete();
+        await Tbl_electrics_temp_problem_qc().select().delete();
+        await Tbl_waters_temp_problem_qc().select().delete();
+        syncUnitsAuto(sesBlock);
+        setState(() {
+          remarkAuto = "Berhasil upload data QC to server";
+        });
+      } else {
+        setState(() {
+          loadingAuto = false;
+          remarkAuto = "Gagal upload data QC to server, mohon upload manual";
+        });
+      }
+    }).catchError((Object obj) {
+      setState(() {
+        loadingAuto = false;
+        remarkAuto = "Gagal upload data QC to server, mohon upload manual";
+      });
+    });
+  }
+
+  syncUploadAuto() async {
+    setState(() {
+      loadingAuto = true;
+      remarkAuto = "Sedang upload data to server";
+    });
+
+    ModelPostQrCodeList dataPost = new ModelPostQrCodeList();
+    List<WaterElectric> electrics = [];
+    List<WaterElectric> waters = [];
+    List<WaterElectricProblem> electricsProblem = [];
+    List<WaterElectricProblem> watersProblem = [];
+    var dataElectric = await Tbl_electrics_temp()
+        .select()
+        .orderBy("bulan")
+        .orderBy("insert_date")
+        .toList();
+    var dataWater = await Tbl_waters_temp()
+        .select()
+        .orderBy("bulan")
+        .orderBy("insert_date")
+        .toList();
+    var dataElectricProblem =
+        await Tbl_electrics_temp_problem().select().toList();
+    var dataWaterProblem = await Tbl_waters_temp_problem().select().toList();
+
+    for (var e in dataElectric) {
+      print(e.insert_by);
+      print(e.insert_date);
+      electrics.add(new WaterElectric(
+          unitCode: e.unit_code,
+          type: "Electric",
+          bulan: e.bulan,
+          tahun: e.tahun,
+          nomorSeri: e.nomor_seri,
+          pemakaian: e.pemakaian,
+          problem: e.problem,
+          foto: e.foto,
+          insertBy: e.insert_by,
+          insertDate: e.insert_date));
+    }
+    for (var w in dataWater) {
+      print(w.insert_by);
+      print(w.insert_date);
+      waters.add(new WaterElectric(
+          unitCode: w.unit_code,
+          type: "Water",
+          bulan: w.bulan,
+          tahun: w.tahun,
+          nomorSeri: w.nomor_seri,
+          pemakaian: w.pemakaian,
+          problem: w.problem,
+          insertBy: w.insert_by,
+          foto: w.foto,
+          insertDate: w.insert_date));
+    }
+    for (var ep in dataElectricProblem) {
+      electricsProblem.add(new WaterElectricProblem(
+          unitCode: ep.unit_code,
+          type: "Reading",
+          bulan: ep.bulan,
+          tahun: ep.tahun,
+          idxProblem: ep.idx_problem));
+    }
+    for (var wp in dataWaterProblem) {
+      watersProblem.add(new WaterElectricProblem(
+          unitCode: wp.unit_code,
+          type: "Reading",
+          bulan: wp.bulan,
+          tahun: wp.tahun,
+          idxProblem: wp.idx_problem));
+    }
+
+    dataPost.electrics = electrics;
+    dataPost.waters = waters;
+    dataPost.electricsProblem = electricsProblem;
+    dataPost.watersProblem = watersProblem;
+    getClient().synchronize(dataPost).then((res) async {
+      Navigator.pop(context);
+      if (res.status) {
+        await Tbl_electrics_temp().select().delete();
+        await Tbl_waters_temp().select().delete();
+        await Tbl_electrics_temp_problem().select().delete();
+        await Tbl_waters_temp_problem().select().delete();
+        syncUnitsAuto(sesBlock);
+        setState(() {
+          remarkAuto = "Berhasil upload data to server";
+        });
+      } else {
+        setState(() {
+          loadingAuto = false;
+          remarkAuto = "Gagal upload data to server, mohon upload manual";
+        });
+      }
+    }).catchError((Object obj) {
+      setState(() {
+        loadingAuto = false;
+        remarkAuto = "Gagal upload data to server, mohon upload manual";
+      });
+    });
+  }
+
+  syncUnitsAuto(String blocks) {
+    setState(() {
+      loadingAuto = true;
+      remarkAuto = "Sedang mengambil data unit terbaru";
+    });
+    getClient().getUnits(blocks).then((res) async {
+      if (res.status) {
+        listMkrtUnit = res.mkrtUnit;
+        await Tbl_mkrt_unit().select().blocks.equals(blocks).delete();
+        await Tbl_mkrt_unit().upsertAll(listMkrtUnit);
+        setState(() {
+          remarkAuto = "Berhasil mengambil data unit terbaru";
+        });
+        syncElectricsAuto();
+        syncWatersAuto();
+      } else {
+        setState(() {
+          loadingAuto = false;
+          remarkAuto =
+              "Gagal mengambil data unit terbaru, mohon synchronize manual";
+        });
+      }
+    }).catchError((Object obj) {
+      setState(() {
+        loadingAuto = false;
+        remarkAuto =
+            "Gagal mengambil data unit terbaru, mohon synchronize manual";
+      });
+    });
+  }
+
   syncUnits(String blocks) {
     showDialog(
         context: context,
@@ -386,6 +625,37 @@ class _HomeState extends State<Home> {
           context: context,
           message: "Failed connect to server!",
           warna: "merah");
+    });
+  }
+
+  syncElectricsAuto() {
+    setState(() {
+      loadingAuto = true;
+      remarkAuto = "Sedang mengambil data electric terbaru";
+    });
+    getClient().getElectrics(sesBlock).then((res) async {
+      if (res.status) {
+        listElectric = res.listElectric;
+        listElectricPR = res.listElectricProblem;
+        await Tbl_electric().select().delete();
+        await Tbl_electrics_problem().select().delete();
+        await Tbl_electric().upsertAll(listElectric);
+        await Tbl_electrics_problem().upsertAll(listElectricPR);
+        setState(() {
+          loadingAuto = false;
+          remarkAuto = "Berhasil mengambil data electric terbaru";
+        });
+      } else {
+        setState(() {
+          loadingAuto = false;
+          remarkAuto = "Gagal mengambil data electric terbaru";
+        });
+      }
+    }).catchError((Object obj) {
+      setState(() {
+        loadingAuto = false;
+        remarkAuto = "Gagal mengambil data electric terbaru";
+      });
     });
   }
 
@@ -444,6 +714,39 @@ class _HomeState extends State<Home> {
           context: context,
           message: "Failed connect to server!",
           warna: "merah");
+    });
+  }
+
+  syncWatersAuto() {
+    setState(() {
+      loadingAuto = true;
+      remarkAuto = "Sedang mengambil data water terbaru";
+    });
+    getClient().getWaters(sesBlock).then((res) async {
+      if (res.status) {
+        listWater = res.listWater;
+        listWaterPR = res.listWaterPR;
+        print(listWaterPR.length.toString());
+        await Tbl_water().select().delete();
+        await Tbl_waters_problem().select().delete();
+        await Tbl_water().upsertAll(listWater);
+        await Tbl_waters_problem().upsertAll(listWaterPR);
+
+        setState(() {
+          loadingAuto = false;
+          remarkAuto = "Berhasil mengambil data water terbaru";
+        });
+      } else {
+        setState(() {
+          loadingAuto = false;
+          remarkAuto = "Gagal mengambil data water terbaru";
+        });
+      }
+    }).catchError((Object obj) {
+      setState(() {
+        loadingAuto = false;
+        remarkAuto = "Gagal mengambil data water terbaru";
+      });
     });
   }
 
@@ -514,6 +817,7 @@ class _HomeState extends State<Home> {
     setState(() {
       sesBlock = preferences.getString("PREF_PICBLOCK");
       sesName = preferences.getString("PREF_FULLNAME");
+      sesQR = preferences.getString("PREF_QR");
       menus.add(Menu(
           appName: "METER AIR\nQC",
           titleName: "Meter Air QC",
@@ -541,6 +845,17 @@ class _HomeState extends State<Home> {
     });
   }
 
+  runAfterSubmit() {
+    Future.delayed(Duration(seconds: 3), () {
+      print("RUNNING SERVICE ....");
+      if (sesQR == "Reading") {
+        syncUploadAuto();
+      } else {
+        syncUploadQCAuto();
+      }
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -552,6 +867,7 @@ class _HomeState extends State<Home> {
       getLocalElectricQC();
       getLocalWaterQC();
     });
+    runAfterSubmit();
   }
 
   @override
@@ -661,6 +977,7 @@ class _HomeState extends State<Home> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
             children: [
               Row(
                 children: [
@@ -716,6 +1033,15 @@ class _HomeState extends State<Home> {
                   },
                 ),
               ),
+              SizedBox(height: 16),
+              loadingAuto
+                  ? Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Text(
+                        remarkAuto,
+                        textAlign: TextAlign.center,
+                      ))
+                  : Container()
             ],
           ),
         ),
