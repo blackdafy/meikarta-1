@@ -22,6 +22,7 @@ class TowerFloor extends StatefulWidget {
 class _TowerFloorState extends State<TowerFloor> {
   bool loading = true;
   String table = '';
+  String tableServer = '';
   String title = "";
   String blocks = "";
   String tower = "1B";
@@ -214,21 +215,23 @@ class _TowerFloorState extends State<TowerFloor> {
     String tower = dataList.tower;
     String floor = dataList.floor;
     String unit = blocks + "-" + tower + "-" + floor + "-" + floor;
-    final dataColor = await DbModel().execDataTable(
-        "SELECT DISTINCT mu.tipe FROM tbl_mkrt_units AS mu " +
-            " WHERE mu.blocks = '" +
-            widget.blocks +
-            "' AND mu.tower = '" +
-            tower +
-            "' AND mu.floor = '" +
-            floor +
-            "' and mu.ho = '1' ");
+
     List<ModelTempProblem> resData = await getDatatemp(unit);
+    String resDataServer = await getDatatempServer(blocks, tower, floor);
+    String resDataServerHO = await getDatatempServerHO(blocks, tower, floor);
     String result;
+    List dataSuccess = resData.where((i) => i.problem.contains('1')).toList();
+    List dataProblem = resData.where((i) => i.problem.contains('2')).toList();
+    int total = dataSuccess.length + dataProblem.length;
+
     if (resData.length == 0) {
       result = '0';
-    } else {
+    } else if (total == int.parse(resDataServerHO) ||
+        resDataServer == resDataServerHO ||
+        total + int.parse(resDataServer) >= int.parse(resDataServerHO)) {
       result = '1';
+    } else {
+      result = '2';
     }
     return result;
   }
@@ -268,6 +271,77 @@ class _TowerFloorState extends State<TowerFloor> {
     return resData;
   }
 
+  Future<String> getDatatempServer(blocks, tower, floor) async {
+    DateTime now = DateTime.now();
+    if (now.day >= 19) {
+      now = new DateTime(now.year, now.month + 1, now.day);
+    }
+    List<Tbl_mkrt_unit> resData = [];
+    if (widget.menu.className == 'QCListrik' ||
+        widget.menu.className == 'ReadingListrik') {
+      resData = await Tbl_mkrt_unit()
+          .distinct(columnsToSelect: ["unit_code", "electric"])
+          .blocks
+          .equals(blocks)
+          .and
+          .tower
+          .equals(tower)
+          .and
+          .floor
+          .equals(floor)
+          .and
+          .electric
+          .inValues(["1", "2", "3", "4"])
+          .toList();
+      if (widget.menu.className == 'ReadingListrik') {
+        resData = resData
+            .where((i) => i.electric == "2" || i.electric == "3")
+            .toList();
+      }
+    } else {
+      resData = await Tbl_mkrt_unit()
+          .distinct(columnsToSelect: ["unit_code", "water"])
+          .blocks
+          .equals(blocks)
+          .and
+          .tower
+          .equals(tower)
+          .and
+          .floor
+          .equals(floor)
+          .toList();
+      if (widget.menu.className == 'ReadingAir') {
+        resData = resData
+            .where((i) => i.electric == "2" || i.electric == "3")
+            .toList();
+      }
+    }
+    return resData.length.toString();
+  }
+
+  Future<String> getDatatempServerHO(blocks, tower, floor) async {
+    DateTime now = DateTime.now();
+    if (now.day >= 19) {
+      now = new DateTime(now.year, now.month + 1, now.day);
+    }
+    List<Tbl_mkrt_unit> resData = [];
+    resData = await Tbl_mkrt_unit()
+        .distinct(columnsToSelect: ["unit_code"])
+        .blocks
+        .equals(blocks)
+        .and
+        .tower
+        .equals(tower)
+        .and
+        .floor
+        .equals(floor)
+        .and
+        .ho
+        .equals("1")
+        .toList();
+    return resData.length.toString();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -276,12 +350,16 @@ class _TowerFloorState extends State<TowerFloor> {
     blocks = widget.blocks;
     if (widget.menu.className == 'QCListrik') {
       table = 'tbl_electrics_temp_qc';
+      tableServer = 'tbl_electrics';
     } else if (widget.menu.className == 'QCAir') {
       table = 'tbl_waters_temp_qc';
+      tableServer = 'tbl_waters';
     } else if (widget.menu.className == 'ReadingListrik') {
       table = 'tbl_electrics_temp';
+      tableServer = 'tbl_electrics';
     } else if (widget.menu.className == 'ReadingAir') {
       table = 'tbl_waters_temp';
+      tableServer = 'tbl_waters';
     }
   }
 
@@ -423,55 +501,55 @@ class _TowerFloorState extends State<TowerFloor> {
             if (tempData != '0') {
               isLocal = true;
               if (tempData == '1') {
-                bgColor = Colors.green;
+                bgColor = Colors.green[800];
                 fontColor = Colors.white;
               } else {
-                bgColor = Colors.yellow;
+                bgColor = Colors.yellow[600];
                 fontColor = Colors.black;
               }
             } else {
               if (param == 'QCListrik') {
                 if (dataList.electric == '0') {
-                  bgColor = Colors.red;
+                  bgColor = Colors.red[800];
                   fontColor = Colors.white;
                 } else if (dataList.electric == '1') {
-                  bgColor = Colors.green;
+                  bgColor = Colors.green[800];
                   fontColor = Colors.white;
                 } else if (dataList.electric == '4') {
-                  bgColor = Colors.yellow;
+                  bgColor = Colors.yellow[600];
                   fontColor = Colors.black;
                 }
               } else if (param == 'QCAir') {
                 if (dataList.water == '0') {
-                  bgColor = Colors.red;
+                  bgColor = Colors.red[800];
                   fontColor = Colors.white;
                 } else if (dataList.water == '1') {
-                  bgColor = Colors.green;
+                  bgColor = Colors.green[800];
                   fontColor = Colors.white;
                 } else if (dataList.water == '4') {
-                  bgColor = Colors.yellow;
+                  bgColor = Colors.yellow[600];
                   fontColor = Colors.black;
                 }
               } else if (param == 'ReadingListrik') {
                 if (dataList.electric == '1') {
-                  bgColor = Colors.red;
+                  bgColor = Colors.red[800];
                   fontColor = Colors.white;
                 } else if (dataList.electric == '2') {
-                  bgColor = Colors.green;
+                  bgColor = Colors.green[800];
                   fontColor = Colors.white;
                 } else if (dataList.electric == '3') {
-                  bgColor = Colors.yellow;
+                  bgColor = Colors.yellow[600];
                   fontColor = Colors.black;
                 }
               } else if (param == 'ReadingAir') {
                 if (dataList.water == '1') {
-                  bgColor = Colors.red;
+                  bgColor = Colors.red[800];
                   fontColor = Colors.white;
                 } else if (dataList.water == '2') {
-                  bgColor = Colors.green;
+                  bgColor = Colors.green[800];
                   fontColor = Colors.white;
                 } else if (dataList.water == '3') {
-                  bgColor = Colors.yellow;
+                  bgColor = Colors.yellow[600];
                   fontColor = Colors.black;
                 }
               }
