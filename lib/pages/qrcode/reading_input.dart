@@ -1392,40 +1392,40 @@ class _ReadingInputState extends State<ReadingInput> {
                           ],
                         ),
                       ),
-                      // Padding(
-                      //   padding: const EdgeInsets.all(4),
-                      //   child: Center(
-                      //     child: InkWell(
-                      //         onTap: () {
-                      //           Navigator.push(
-                      //               context,
-                      //               MaterialPageRoute(
-                      //                   builder: (context) => ViewImage(
-                      //                         header: "Preview",
-                      //                         urlImage: foto,
-                      //                       )));
-                      //         },
-                      //         child: ClipRRect(
-                      //           borderRadius: BorderRadius.circular(8),
-                      //           child: Container(
-                      //             width: SizeConfig.screenWidth * 0.1,
-                      //             decoration: BoxDecoration(
-                      //                 borderRadius: BorderRadius.circular(8)),
-                      //             child: CachedNetworkImage(
-                      //               imageUrl: foto,
-                      //               fit: BoxFit.fill,
-                      //               placeholder:
-                      //                   (BuildContext context, String url) {
-                      //                 return Container(
-                      //                   height: 40,
-                      //                   color: ColorsTheme.background1,
-                      //                 );
-                      //               },
-                      //             ),
-                      //           ),
-                      //         )),
-                      //   ),
-                      // ),
+                      Padding(
+                        padding: const EdgeInsets.all(4),
+                        child: Center(
+                          child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ViewImage(
+                                              header: "Preview",
+                                              urlImage: foto,
+                                            )));
+                              },
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(8),
+                                child: Container(
+                                  width: SizeConfig.screenWidth * 0.1,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8)),
+                                  child: CachedNetworkImage(
+                                    imageUrl: foto,
+                                    fit: BoxFit.fill,
+                                    placeholder:
+                                        (BuildContext context, String url) {
+                                      return Container(
+                                        height: 40,
+                                        color: ColorsTheme.background1,
+                                      );
+                                    },
+                                  ),
+                                ),
+                              )),
+                        ),
+                      ),
                     ],
                   ),
                 ],
