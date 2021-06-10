@@ -3,7 +3,6 @@ import 'package:easymoveinapp/style/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:easymoveinapp/pages/auth/splash_screen.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_background_service/flutter_background_service.dart';
 
 void main() async {
   runApp(MyApp());

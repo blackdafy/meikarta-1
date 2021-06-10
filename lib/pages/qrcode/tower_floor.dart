@@ -140,34 +140,37 @@ class _TowerFloorState extends State<TowerFloor> {
       } else if (widget.menu.className == 'ReadingListrik') {
         hoElec = '1';
         if (dataElec.length != dataHo.length) {
-          List<Tbl_mkrt_unit> dataElecP = dataCheck
-              .where((i) => i.electric.contains('3') && i.ho.contains('1'))
-              .toList();
-          List<Tbl_mkrt_unit> dataElecOK = dataCheck
-              .where((i) => i.electric.contains('2') && i.ho.contains('1'))
-              .toList();
-          int totalReading = dataElecP.length + dataElecOK.length;
+          String dataElecP =
+              await getDatatempServerPRReading(blocks, tower, e['floor']);
+          String dataElecOK =
+              await getDatatempServerOKReading(blocks, tower, e['floor']);
+          int totalReading = int.parse(dataElecP) + int.parse(dataElecOK);
           if (totalReading == dataHo.length) {
             hoElec = '2';
-          } else if (totalReading != dataHo.length) {
+          } else if (totalReading != dataHo.length && totalReading != 0)
             hoElec = '3';
-          }
         }
       } else if (widget.menu.className == 'ReadingAir') {
         hoWater = '1';
+
         if (dataWater.length != dataHo.length) {
-          List<Tbl_mkrt_unit> dataWaterP = dataCheck
-              .where((i) => i.water.contains('3') && i.ho.contains('1'))
-              .toList();
-          List<Tbl_mkrt_unit> dataWaterOK = dataCheck
-              .where((i) => i.water.contains('2') && i.ho.contains('1'))
-              .toList();
-          int totalReading = dataWaterP.length + dataWaterOK.length;
+          String dataWaterP =
+              await getDatatempServerPRReading(blocks, tower, e['floor']);
+          String dataWaterOK =
+              await getDatatempServerOKReading(blocks, tower, e['floor']);
+          int totalReading = int.parse(dataWaterP) + int.parse(dataWaterOK);
           if (totalReading == dataHo.length) {
             hoWater = '2';
-          } else if (totalReading != dataHo.length) {
+          } else if (totalReading != dataHo.length && totalReading != 0)
             hoWater = '3';
-          }
+
+          // print(blocks +
+          //     "-" +
+          //     tower +
+          //     "-" +
+          //     e['floor'] +
+          //     " - " +
+          //     dataWaterP.toString());
         }
       }
 
@@ -319,6 +322,86 @@ class _TowerFloorState extends State<TowerFloor> {
     return resData.length.toString();
   }
 
+  Future<String> getDatatempServerPRReading(blocks, tower, floor) async {
+    DateTime now = DateTime.now();
+    if (now.day >= 19) {
+      now = new DateTime(now.year, now.month + 1, now.day);
+    }
+    List<Tbl_mkrt_unit> resData = [];
+    if (widget.menu.className == 'ReadingListrik') {
+      resData = await Tbl_mkrt_unit()
+          .distinct(columnsToSelect: ["unit_code", "electric"])
+          .blocks
+          .equals(blocks)
+          .and
+          .tower
+          .equals(tower)
+          .and
+          .floor
+          .equals(floor)
+          .and
+          .electric
+          .inValues(["3"])
+          .toList();
+    } else if (widget.menu.className == 'ReadingAir') {
+      resData = await Tbl_mkrt_unit()
+          .distinct(columnsToSelect: ["unit_code", "water"])
+          .blocks
+          .equals(blocks)
+          .and
+          .tower
+          .equals(tower)
+          .and
+          .floor
+          .equals(floor)
+          .and
+          .water
+          .equals("3")
+          .toList();
+    }
+    return resData.length.toString();
+  }
+
+  Future<String> getDatatempServerOKReading(blocks, tower, floor) async {
+    DateTime now = DateTime.now();
+    if (now.day >= 19) {
+      now = new DateTime(now.year, now.month + 1, now.day);
+    }
+    List<Tbl_mkrt_unit> resData = [];
+    if (widget.menu.className == 'ReadingListrik') {
+      resData = await Tbl_mkrt_unit()
+          .distinct(columnsToSelect: ["unit_code", "electric"])
+          .blocks
+          .equals(blocks)
+          .and
+          .tower
+          .equals(tower)
+          .and
+          .floor
+          .equals(floor)
+          .and
+          .electric
+          .inValues(["2"])
+          .toList();
+    } else {
+      resData = await Tbl_mkrt_unit()
+          .distinct(columnsToSelect: ["unit_code", "water"])
+          .blocks
+          .equals(blocks)
+          .and
+          .tower
+          .equals(tower)
+          .and
+          .floor
+          .equals(floor)
+          .and
+          .water
+          .inValues(["2"])
+          .toList();
+    }
+    return resData.length.toString();
+  }
+
   Future<String> getDatatempServerHO(blocks, tower, floor) async {
     DateTime now = DateTime.now();
     if (now.day >= 19) {
@@ -466,7 +549,6 @@ class _TowerFloorState extends State<TowerFloor> {
                       children: List.generate(
                         dataList.length,
                         (i) {
-                          // print(dataList[i].toJson().toString());
                           return InkWell(
                               onTap: () {
                                 Navigator.push(

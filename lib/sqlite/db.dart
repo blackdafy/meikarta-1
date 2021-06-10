@@ -79,6 +79,8 @@ const TableMkrtUnits = SqfEntityTable(
       SqfEntityField("electric", DbType.text),
       SqfEntityField("water_color", DbType.text),
       SqfEntityField("electric_color", DbType.text),
+      SqfEntityField("avg_water", DbType.text),
+      SqfEntityField("avg_electric", DbType.text),
       SqfEntityField("sync_date", DbType.text)
     ]);
 

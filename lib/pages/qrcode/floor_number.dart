@@ -336,7 +336,7 @@ class _FloorNumberState extends State<FloorNumber> {
           bool isLocal = false;
           String tempData = snapshot.data[0];
           Tbl_mkrt_unit dataList = snapshot.data[1];
-          print(dataList.unit_code + " == " + snapshot.data[0]);
+          print(dataList.unit_code + " == " + dataList.electric);
           if (dataList.ho == '1') {
             if (tempData != '0') {
               isLocal = true;

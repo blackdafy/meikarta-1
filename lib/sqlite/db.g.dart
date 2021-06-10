@@ -54,6 +54,8 @@ class TableTbl_mkrt_unit extends SqfEntityTableBase {
       SqfEntityFieldBase('electric', DbType.text, isNotNull: false),
       SqfEntityFieldBase('water_color', DbType.text, isNotNull: false),
       SqfEntityFieldBase('electric_color', DbType.text, isNotNull: false),
+      SqfEntityFieldBase('avg_water', DbType.text, isNotNull: false),
+      SqfEntityFieldBase('avg_electric', DbType.text, isNotNull: false),
       SqfEntityFieldBase('sync_date', DbType.text, isNotNull: false),
     ];
     super.init();
@@ -519,6 +521,8 @@ class Tbl_mkrt_unit {
       this.electric,
       this.water_color,
       this.electric_color,
+      this.avg_water,
+      this.avg_electric,
       this.sync_date}) {
     _setDefaultValues();
   }
@@ -545,6 +549,8 @@ class Tbl_mkrt_unit {
       this.electric,
       this.water_color,
       this.electric_color,
+      this.avg_water,
+      this.avg_electric,
       this.sync_date) {
     _setDefaultValues();
   }
@@ -572,6 +578,8 @@ class Tbl_mkrt_unit {
       this.electric,
       this.water_color,
       this.electric_color,
+      this.avg_water,
+      this.avg_electric,
       this.sync_date) {
     _setDefaultValues();
   }
@@ -647,6 +655,12 @@ class Tbl_mkrt_unit {
     if (o['electric_color'] != null) {
       electric_color = o['electric_color'] as String;
     }
+    if (o['avg_water'] != null) {
+      avg_water = o['avg_water'] as String;
+    }
+    if (o['avg_electric'] != null) {
+      avg_electric = o['avg_electric'] as String;
+    }
     if (o['sync_date'] != null) {
       sync_date = o['sync_date'] as String;
     }
@@ -675,6 +689,8 @@ class Tbl_mkrt_unit {
   String electric;
   String water_color;
   String electric_color;
+  String avg_water;
+  String avg_electric;
   String sync_date;
 
   BoolResult saveResult;
@@ -782,6 +798,14 @@ class Tbl_mkrt_unit {
       map['electric_color'] = electric_color;
     }
 
+    if (avg_water != null) {
+      map['avg_water'] = avg_water;
+    }
+
+    if (avg_electric != null) {
+      map['avg_electric'] = avg_electric;
+    }
+
     if (sync_date != null) {
       map['sync_date'] = sync_date;
     }
@@ -885,6 +909,14 @@ class Tbl_mkrt_unit {
       map['electric_color'] = electric_color;
     }
 
+    if (avg_water != null) {
+      map['avg_water'] = avg_water;
+    }
+
+    if (avg_electric != null) {
+      map['avg_electric'] = avg_electric;
+    }
+
     if (sync_date != null) {
       map['sync_date'] = sync_date;
     }
@@ -926,6 +958,8 @@ class Tbl_mkrt_unit {
       electric,
       water_color,
       electric_color,
+      avg_water,
+      avg_electric,
       sync_date
     ];
   }
@@ -955,6 +989,8 @@ class Tbl_mkrt_unit {
       electric,
       water_color,
       electric_color,
+      avg_water,
+      avg_electric,
       sync_date
     ];
   }
@@ -1069,7 +1105,7 @@ class Tbl_mkrt_unit {
   /// Returns a <List<BoolResult>>
   static Future<List<dynamic>> saveAll(
       List<Tbl_mkrt_unit> tbl_mkrt_units) async {
-    // final results = _mnTbl_mkrt_unit.saveAll('INSERT OR REPLACE INTO tbl_mkrt_units (ROWID,unit_code, blocks, tower, floor, tipe, customer_name, customer_address, email, electric_id, water_id, phone, pppu, date_pppu, date_ho, eligible, tanggal_dari, tanggal_sampai, ho, water, electric, water_color, electric_color, sync_date)  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',tbl_mkrt_units);
+    // final results = _mnTbl_mkrt_unit.saveAll('INSERT OR REPLACE INTO tbl_mkrt_units (ROWID,unit_code, blocks, tower, floor, tipe, customer_name, customer_address, email, electric_id, water_id, phone, pppu, date_pppu, date_ho, eligible, tanggal_dari, tanggal_sampai, ho, water, electric, water_color, electric_color, avg_water, avg_electric, sync_date)  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',tbl_mkrt_units);
     // return results; removed in sqfentity_gen 1.3.0+6
     await DbModel().batchStart();
     for (final obj in tbl_mkrt_units) {
@@ -1092,7 +1128,7 @@ class Tbl_mkrt_unit {
   Future<int> upsert() async {
     try {
       if (await _mnTbl_mkrt_unit.rawInsert(
-              'INSERT OR REPLACE INTO tbl_mkrt_units (ROWID,unit_code, blocks, tower, floor, tipe, customer_name, customer_address, email, electric_id, water_id, phone, pppu, date_pppu, date_ho, eligible, tanggal_dari, tanggal_sampai, ho, water, electric, water_color, electric_color, sync_date)  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+              'INSERT OR REPLACE INTO tbl_mkrt_units (ROWID,unit_code, blocks, tower, floor, tipe, customer_name, customer_address, email, electric_id, water_id, phone, pppu, date_pppu, date_ho, eligible, tanggal_dari, tanggal_sampai, ho, water, electric, water_color, electric_color, avg_water, avg_electric, sync_date)  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
               [
                 ROWID,
                 unit_code,
@@ -1117,6 +1153,8 @@ class Tbl_mkrt_unit {
                 electric,
                 water_color,
                 electric_color,
+                avg_water,
+                avg_electric,
                 sync_date
               ]) ==
           1) {
@@ -1144,7 +1182,7 @@ class Tbl_mkrt_unit {
   /// Returns a BoolCommitResult
   Future<BoolCommitResult> upsertAll(List<Tbl_mkrt_unit> tbl_mkrt_units) async {
     final results = await _mnTbl_mkrt_unit.rawInsertAll(
-        'INSERT OR REPLACE INTO tbl_mkrt_units (ROWID,unit_code, blocks, tower, floor, tipe, customer_name, customer_address, email, electric_id, water_id, phone, pppu, date_pppu, date_ho, eligible, tanggal_dari, tanggal_sampai, ho, water, electric, water_color, electric_color, sync_date)  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+        'INSERT OR REPLACE INTO tbl_mkrt_units (ROWID,unit_code, blocks, tower, floor, tipe, customer_name, customer_address, email, electric_id, water_id, phone, pppu, date_pppu, date_ho, eligible, tanggal_dari, tanggal_sampai, ho, water, electric, water_color, electric_color, avg_water, avg_electric, sync_date)  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
         tbl_mkrt_units);
     return results;
   }
@@ -1723,6 +1761,16 @@ class Tbl_mkrt_unitFilterBuilder extends SearchCriteria {
         setField(_electric_color, 'electric_color', DbType.text);
   }
 
+  Tbl_mkrt_unitField _avg_water;
+  Tbl_mkrt_unitField get avg_water {
+    return _avg_water = setField(_avg_water, 'avg_water', DbType.text);
+  }
+
+  Tbl_mkrt_unitField _avg_electric;
+  Tbl_mkrt_unitField get avg_electric {
+    return _avg_electric = setField(_avg_electric, 'avg_electric', DbType.text);
+  }
+
   Tbl_mkrt_unitField _sync_date;
   Tbl_mkrt_unitField get sync_date {
     return _sync_date = setField(_sync_date, 'sync_date', DbType.text);
@@ -2166,6 +2214,18 @@ class Tbl_mkrt_unitFields {
   static TableField get electric_color {
     return _fElectric_color = _fElectric_color ??
         SqlSyntax.setField(_fElectric_color, 'electric_color', DbType.text);
+  }
+
+  static TableField _fAvg_water;
+  static TableField get avg_water {
+    return _fAvg_water = _fAvg_water ??
+        SqlSyntax.setField(_fAvg_water, 'avg_water', DbType.text);
+  }
+
+  static TableField _fAvg_electric;
+  static TableField get avg_electric {
+    return _fAvg_electric = _fAvg_electric ??
+        SqlSyntax.setField(_fAvg_electric, 'avg_electric', DbType.text);
   }
 
   static TableField _fSync_date;

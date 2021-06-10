@@ -788,7 +788,17 @@ class _QCCheckState extends State<QCCheck> {
                                             "Tanggal MI",
                                             dataUnit.tanggal_dari == null
                                                 ? ""
-                                                : dataUnit.tanggal_dari)
+                                                : dataUnit.tanggal_dari),
+                                        SizedBox(height: 4),
+                                        informasiPribadiRow(
+                                            "AVG 2 Bulan",
+                                            table == 'tbl_waters_qc'
+                                                ? dataUnit.avg_water
+                                                : dataUnit.avg_electric == null
+                                                    ? ""
+                                                    : table == 'tbl_waters_qc'
+                                                        ? dataUnit.avg_water
+                                                        : dataUnit.avg_electric)
                                       ],
                                     )),
                               ),

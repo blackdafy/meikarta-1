@@ -16,6 +16,7 @@ import 'package:easymoveinapp/style/size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
@@ -44,6 +45,7 @@ class _HomeState extends State<Home> {
   List<Menu> menus = [];
   bool loadingAuto = false;
   String remarkAuto = "";
+  DateTime now = DateTime.now();
 
   Timer timer;
   checkConnection() async {
@@ -675,9 +677,13 @@ class _HomeState extends State<Home> {
         final results_pr =
             await Tbl_electrics_problem().upsertAll(listElectricPR);
 
-        WidgetSnackbar(context: context, message: res.remarks, warna: "hijau");
+        WidgetSnackbar(
+            context: context,
+            message: "Berhasil Sync Electric",
+            warna: "hijau");
       } else {
-        WidgetSnackbar(context: context, message: res.remarks, warna: "merah");
+        WidgetSnackbar(
+            context: context, message: "Gagal Sync Electric", warna: "merah");
       }
     }).catchError((Object obj) {
       Navigator.pop(context);
@@ -704,9 +710,11 @@ class _HomeState extends State<Home> {
         final results = await Tbl_water().upsertAll(listWater);
         final results_pr = await Tbl_waters_problem().upsertAll(listWaterPR);
 
-        WidgetSnackbar(context: context, message: res.remarks, warna: "hijau");
+        WidgetSnackbar(
+            context: context, message: "Berhasil Sync Water", warna: "hijau");
       } else {
-        WidgetSnackbar(context: context, message: res.remarks, warna: "merah");
+        WidgetSnackbar(
+            context: context, message: "Gagal Sync Water", warna: "merah");
       }
     }).catchError((Object obj) {
       Navigator.pop(context);
@@ -856,6 +864,7 @@ class _HomeState extends State<Home> {
     });
   }
 
+  String dateNow;
   @override
   void initState() {
     super.initState();
@@ -868,6 +877,7 @@ class _HomeState extends State<Home> {
       getLocalWaterQC();
     });
     runAfterSubmit();
+    dateNow = DateFormat('dd-MM-yyyy').format(now);
   }
 
   @override
@@ -1023,15 +1033,40 @@ class _HomeState extends State<Home> {
                   (i) {
                     return InkWell(
                         onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => TowerFloor(
-                                      menu: menus[i], blocks: sesBlock)));
+                          if ((menus[i].className == "QCAir" ||
+                              menus[i].className == "QCListrik")) {
+                            if (dateNow == "15-05-2021") {
+                              WidgetSnackbar(
+                                  context: context,
+                                  message:
+                                      "Sudah tidak bisa melakukan QC Check",
+                                  warna: "merah");
+                            } else {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => TowerFloor(
+                                          menu: menus[i], blocks: sesBlock)));
+                            }
+                          } else {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => TowerFloor(
+                                        menu: menus[i], blocks: sesBlock)));
+                          }
                         },
                         child: cardMenu(context, menus[i]));
                   },
                 ),
+              ),
+              Text("Jumlah Unit : " + listMkrtUnit.length.toString()),
+              Text("Jumlah Electric : " + listElectric.length.toString()),
+              Text("Jumlah Water : " + listWater.length.toString()),
+              SizedBox(height: 4),
+              Text(
+                "Jika terdapat jumlah data sama dengan 0, harap lakukan synchronize ulang!",
+                style: TextStyle(color: Colors.red),
               ),
               SizedBox(height: 16),
               loadingAuto
@@ -1041,7 +1076,7 @@ class _HomeState extends State<Home> {
                         remarkAuto,
                         textAlign: TextAlign.center,
                       ))
-                  : Container()
+                  : Container(),
             ],
           ),
         ),
